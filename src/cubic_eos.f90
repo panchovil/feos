@@ -87,15 +87,13 @@ module cubic_eos
         ! Apply combining rule
         select case (ncomb)
             case default
-                call quadtratic(a, b, kij, dadt, da2dt2,  dkijdt, dkij2dt2, &
-                    lij, aij, daijdt, daij2dt2, bij, nc)
+                call quadtratic(nc, a, b, kij, dadt, da2dt2,  dkijdt, dkij2dt2, &
+                    lij, aij, daijdt, daij2dt2, bij)
         end select
     end subroutine aijTder
 
-    subroutine aTnder(T, n, a, dadni, da2dniT2, da2dnij2, dadT, da2dT2)
-       use mixture, only: nc
-       implicit none
-
+    subroutine amixTnder(nc, T, n, a, dadni, da2dniT2, da2dnij2, dadT, da2dT2)
+       integer, intent(in) :: nc !! Number of components
        real(wp), intent(in) :: T !! Temperature
        real(wp), intent(in) :: n(nc) !! Matrix with number of moles
 
@@ -111,10 +109,13 @@ module cubic_eos
        real(wp) :: aux, aux2
        integer :: i, j
 
+       ! TODO: An already calculated aij matrix could be the input
        call aijTder(T, aij, daijdT, daijdT2)
+
        a = 0.0_wp
        dadT = 0.0_wp
        da2dT2 = 0.0_wp
+
        do i = 1, nc
           aux = 0.0_wp
           aux2 = 0.0_wp
@@ -132,5 +133,65 @@ module cubic_eos
           dadT = dadT + n(i)*da2dniT2(i)/2
           da2dT2 = da2dT2 + n(i)*aux2
        end do
-    end subroutine aTnder
+    end subroutine amixTnder
+
+    subroutine d1nder(nc, n, d1, d1_mix, dD1dni, dD12dnij2)
+        integer, intent(in) :: nc !! Number of components.
+        real(wp), intent(in) :: n(nc) !! Array of mole numbers for each component.
+        real(wp), intent(in) :: d1(nc) !! Array of delta 1 parameters for each component.
+        real(wp), intent(out) :: d1_mix !! ??
+        real(wp), intent(out) :: dD1dni(nc) !! delta1 parameter first derivative with composition.
+        real(wp), intent(out) :: dD12dnij2(nc,nc) !! delta1 parameter second derivative with composition.
+
+       integer :: i, j
+       real(wp) :: totn ! Total number of moles
+
+       d1_mix = 0.0_wp
+
+       do i = 1, nc
+          d1_mix = d1_mix + n(i)*d1(i)
+       end do
+       totn = sum(n)
+       d1_mix = d1_mix/totn
+       do i = 1, nc
+          dD1dni(i) = (d1(i) - d1_mix)/totn
+          do j = 1, nc
+             dD12dnij2(i, j) = (2.0_wp*d1_mix - d1(i) - d1(j))/totn**2
+          end do
+       end do
+    end subroutine d1nder
+
+    subroutine Bnder(nc, n, bij, B_mix, dBdni, dB2dnij2)
+        integer, intent(in) :: nc
+        real(wp), intent(in) :: n(nc)
+        real(wp), intent(in) :: bij(nc, nc)
+
+        real(wp), intent(out) :: B_mix
+        real(wp), intent(out) :: dBdni(nc)
+        real(wp), intent(out) :: dB2dnij2(nc, nc)
+
+        real(wp) :: totn, aux(nc)
+        integer :: i, j
+
+       totn = sum(n)
+       B_mix = 0.0_wp
+       aux = 0.0_wp
+
+       do i = 1, nc
+          do j = 1, nc
+             aux(i) = aux(i) + n(j)*bij(i, j)
+          end do
+          B_mix = B_mix + n(i)*aux(i)
+       end do
+
+       B_mix = B_mix/totn
+
+       do i = 1, nc
+          dBdni(i) = (2*aux(i) - B_mix)/totn
+          do j = 1, i
+             dB2dnij2(i, j) = (2*bij(i, j) - dBdni(i) - dBdni(j))/totn
+             dB2dnij2(j, i) = dB2dnij2(i, j)
+          end do
+      end do
+end subroutine Bnder
 end module cubic_eos
