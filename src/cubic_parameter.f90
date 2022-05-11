@@ -5,7 +5,6 @@ module parameters
    real(8), save :: a, b, del1
 end module parameters
 
-
 module converter
    use iso_fortran_env
    use constants
@@ -27,7 +26,7 @@ contains
 
       ! Internal varibles
       real(8) :: del1 = 1.0d0 + sqrt(2.d0) ! delta_1 for PR since the parameters are calculated based on the RKPR method
-      real(8) :: OMa, OMb, Zc, Vceos ! 
+      real(8) :: OMa, OMb, Zc, Vceos !
       real(8) :: RT ! R*T product
 
       RT = R*Tc
@@ -99,8 +98,8 @@ contains
       real(8), intent(out) :: k    !! k to calculate "a" with ac and T
 
       real(8) :: OMa, OMb, Zc, RT, del1ini, dc, Tr, &
-                      a, Pv, RHOL, RHOV, phiL, delta_k, Pold, oldk, &
-                      Trho, RHOld, del1_old, delta_del1
+                 a, Pv, RHOL, RHOV, phiL, delta_k, Pold, oldk, &
+                 Trho, RHOld, del1_old, delta_del1
 
       logical :: del1_spec, Pv_spec, rhoL_spec
       del1_spec = .false.
@@ -217,7 +216,6 @@ contains
    end subroutine rkpr_params_from_crit
    ! =============================================================================
 
-   
    ! ==========================================================================
    !  Subroutines to obtain critical constants from EOS parameters
    ! --------------------------------------------------------------------------
@@ -323,7 +321,7 @@ contains
       real(8), intent(in) ::  del1_ini
       real(8), intent(out) ::  del1
 
-      real(8) :: d1, y, del1_old, Zc, Z_old, aux, error=1.d0
+      real(8) :: d1, y, del1_old, Zc, Z_old, aux, error = 1.d0
 
       del1 = del1_ini
       d1 = (1 + del1**2)/(1 + del1)
@@ -350,9 +348,9 @@ contains
       end do
    end subroutine getdel1
 
-   recursive subroutine VaporPressure(&
-         a, b, del1, Tc, dc, Tr, PVini, Pv, RHOL, RHOV, phiL&
-         )
+   recursive subroutine VaporPressure( &
+      a, b, del1, Tc, dc, Tr, PVini, Pv, RHOL, RHOV, phiL &
+      )
       use constants
       real(8), intent(in) :: a
       real(8), intent(in) :: b
@@ -367,7 +365,7 @@ contains
       real(8), intent(out) :: RHOV
       real(8), intent(out) :: phiL
 
-      real(8) :: dphi= 0.d0, P, T, V, phi, phiV, dphiold, Pold, Plast
+      real(8) :: dphi = 0.d0, P, T, V, phi, phiV, dphiold, Pold, Plast
       P = PVini
       T = Tr*Tc
 
@@ -423,7 +421,7 @@ contains
       integer :: ITER
       logical :: FIRST_RUN
       real(8) :: ZETMIN, ZETMAX, ZETA, F, F_V, F_2V, F_N, &
-         PCALC, del, AT, DER, VVAP, AVAP
+                 PCALC, del, AT, DER, VVAP, AVAP
 
       FIRST_RUN = .TRUE.
       ITER = 0
@@ -518,11 +516,11 @@ contains
       real(8), intent(out) :: phi
 
       real(8) :: RT, Z, F, F_V, F_2V, F_N
-      
+
       RT = RGAS*T
       Z = P*V/RT
       call vdWg_Derivs(a, b, del1, T, V, F, F_V, F_2V, F_N)
-      phi=exp(F_N)/Z
+      phi = exp(F_N)/Z
    end
    ! ==========================================================================
 end module converter
