@@ -1,0 +1,956 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+   <meta name="description" content="RKPR EoS">
+    <meta name="author" content="Federico Benelli" >
+    <link rel="icon" href="../favicon.png">
+
+    <title>converter &ndash; fedebenelli/rkpr</title>
+
+    <link href="../css/bootstrap.min.css" rel="stylesheet">
+    <link href="../css/pygments.css" rel="stylesheet">
+    <link href="../css/font-awesome.min.css" rel="stylesheet">
+    <link href="../css/local.css" rel="stylesheet">
+    <link  href="../tipuesearch/tipuesearch.css" rel="stylesheet">
+
+    <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
+    <!--[if lt IE 9]>
+      <script src="https://oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js"></script>
+      <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
+    <![endif]-->
+    
+    <script src="../js/jquery-2.1.3.min.js"></script>
+    <script src="../js/svg-pan-zoom.min.js"></script>
+
+  </head>
+
+  <body>
+
+    <!-- Fixed navbar -->
+    <nav class="navbar navbar-inverse navbar-fixed-top">
+      <div class="container">
+        <div class="navbar-header">
+          <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
+            <span class="sr-only">Toggle navigation</span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          </button>
+          <a class="navbar-brand" href="../index.html">fedebenelli/rkpr </a>
+        </div>
+        <div id="navbar" class="navbar-collapse collapse">
+          <ul class="nav navbar-nav">
+            <li class="dropdown hidden-xs visible-sm visible-md hidden-lg">
+              <a href="#" class="dropdown-toggle"
+              data-toggle="dropdown" role="button"
+              aria-haspopup="true"
+     aria-expanded="false">Contents <span class="caret"></span></a>
+        <ul class="dropdown-menu">
+            <li><a href="../lists/files.html">Source Files</a></li>
+            <li><a href="../lists/modules.html">Modules</a></li>
+            <li><a href="../lists/procedures.html">Procedures</a></li>
+                   <li><a href="../lists/types.html">Derived Types</a></li>
+            <li><a href="../program/main.html">Program</a></li>
+       
+            </ul>
+        
+            </li>
+<li class="visible-xs hidden-sm visible-lg"><a href="../lists/files.html">Source Files</a></li>
+<li class="visible-xs hidden-sm visible-lg"><a href="../lists/modules.html">Modules</a></li>
+<li class="visible-xs hidden-sm visible-lg"><a href="../lists/procedures.html">Procedures</a></li>
+                             <li class="visible-xs hidden-sm visible-lg"><a href="../lists/types.html">Derived Types</a></li>
+<li class="visible-xs hidden-sm visible-lg"><a href="../program/main.html">Program</a></li>
+          </ul>
+        <form action="../search.html" class="navbar-form navbar-right" role="search">
+        <div class="form-group">
+          <input type="text" class="form-control" placeholder="Search" name="q" id="tipue_search_input" autocomplete="off" required>
+        </div>
+<!--
+        <button type="submit" class="btn btn-default">Submit</button>
+-->
+        </form>
+        </div><!--/.nav-collapse -->
+      </div>
+    </nav>
+
+    <div class="container">
+  <div class="row">
+    <h1>converter 
+    <small>Module</small>
+    </h1>
+    <div class="row">
+  <div class="col-lg-12">
+<div class="well well-sm">
+  <ul class="list-inline" style="margin-bottom:0px;display:inline">
+    <li><i class="fa fa-legal"></i> <a rel="license" href="https://opensource.org/licenses/MIT">MIT</a></li> 
+     <li><i class="fa fa-list-ol"></i>
+       <a data-toggle="tooltip"
+    data-placement="bottom" data-html="true"
+    title="47.5% of total for modules and submodules.">376 statements</a>
+     </li> 
+    <li><i class="fa fa-code"></i><a href="../src/cubic_parameter.f90"> Source File</a></li>
+  </ul>
+  <ol class="breadcrumb in-well text-right">
+     <li><a href='../sourcefile/cubic_parameter.f90.html'>cubic_parameter.f90</a></li>
+     <li class="active">converter</li>
+  </ol>
+</div>
+</div>
+</div>
+<script>
+  $(function () {
+  $('[data-toggle="tooltip"]').tooltip()
+  })
+</script>
+
+  </div>
+  
+  <div class="row">
+    <div class="col-md-3 hidden-xs hidden-sm visible-md visible-lg">
+    <div id="sidebar">
+  <h3>Contents</h3>
+ 
+<div class="panel panel-primary">
+  <div class="panel-heading text-left"><h3 class="panel-title"><a data-toggle="collapse" href="#subs-0">Subroutines</a></h3></div>
+  <div class="list-group">
+    <div id="subs-0" class="panel-collapse collapse">
+      <a class="list-group-item" href="../module/converter.html#proc-fug_calc">FUG_CALC</a>
+      <a class="list-group-item" href="../module/converter.html#proc-vcalc">VCALC</a>
+      <a class="list-group-item" href="../module/converter.html#proc-vaporpressure">VaporPressure</a>
+      <a class="list-group-item" href="../module/converter.html#proc-get_zc_oma_omb">get_Zc_OMa_OMb</a>
+      <a class="list-group-item" href="../module/converter.html#proc-getdel1">getdel1</a>
+      <a class="list-group-item" href="../module/converter.html#proc-pr_critical_from_params">pr_critical_from_params</a>
+      <a class="list-group-item" href="../module/converter.html#proc-pr_params_from_crit">pr_params_from_crit</a>
+      <a class="list-group-item" href="../module/converter.html#proc-rkpr_critical_from_params">rkpr_critical_from_params</a>
+      <a class="list-group-item" href="../module/converter.html#proc-rkpr_params_from_crit">rkpr_params_from_crit</a>
+      <a class="list-group-item" href="../module/converter.html#proc-srk_critical_from_params">srk_critical_from_params</a>
+      <a class="list-group-item" href="../module/converter.html#proc-srk_params_from_crit">srk_params_from_crit</a>
+      <a class="list-group-item" href="../module/converter.html#proc-vdwg_derivs">vdWg_Derivs</a>
+    </div>
+  </div>
+</div>
+
+</div>
+
+    </div>
+    
+    <div class="col-md-9" id='text'>
+    
+<br>        <div class="panel panel-default">
+      <div class="panel-heading">
+  <h3 class="panel-title">Uses</h3>
+      </div>
+      <ul class="list-group">
+      <li class="list-group-item">
+  <ul class="list-inline">
+    <li><a href='../module/constants.html'>constants</a></li>
+    <li><a href="http://fortranwiki.org/fortran/show/iso_fortran_env">iso_fortran_env</a></li>
+  </ul>
+      </li>
+      </ul>
+    </div>
+
+    
+    <br>
+
+    <section class="visible-xs visible-sm hidden-md">
+      <h3>Contents</h3>
+ 
+<div class="panel panel-primary">
+  <div class="panel-heading text-left"><h3 class="panel-title"><a data-toggle="collapse" href="#subs-1">Subroutines</a></h3></div>
+  <div class="list-group">
+    <div id="subs-1" class="panel-collapse collapse">
+      <a class="list-group-item" href="../module/converter.html#proc-fug_calc">FUG_CALC</a>
+      <a class="list-group-item" href="../module/converter.html#proc-vcalc">VCALC</a>
+      <a class="list-group-item" href="../module/converter.html#proc-vaporpressure">VaporPressure</a>
+      <a class="list-group-item" href="../module/converter.html#proc-get_zc_oma_omb">get_Zc_OMa_OMb</a>
+      <a class="list-group-item" href="../module/converter.html#proc-getdel1">getdel1</a>
+      <a class="list-group-item" href="../module/converter.html#proc-pr_critical_from_params">pr_critical_from_params</a>
+      <a class="list-group-item" href="../module/converter.html#proc-pr_params_from_crit">pr_params_from_crit</a>
+      <a class="list-group-item" href="../module/converter.html#proc-rkpr_critical_from_params">rkpr_critical_from_params</a>
+      <a class="list-group-item" href="../module/converter.html#proc-rkpr_params_from_crit">rkpr_params_from_crit</a>
+      <a class="list-group-item" href="../module/converter.html#proc-srk_critical_from_params">srk_critical_from_params</a>
+      <a class="list-group-item" href="../module/converter.html#proc-srk_params_from_crit">srk_params_from_crit</a>
+      <a class="list-group-item" href="../module/converter.html#proc-vdwg_derivs">vdWg_Derivs</a>
+    </div>
+  </div>
+</div>
+
+    </section>
+    <br class="visible-xs visible-sm hidden-md">
+
+
+    
+    
+
+    
+    
+
+    <section>
+    <h2>Subroutines</h2>
+      <div class="panel panel-default">
+  <div class="panel-heading codesum"><span class="anchor" id="proc-fug_calc"></span><h3>public subroutine <a href='../proc/fug_calc.html'>FUG_CALC</a>(a, b, del1, T, P, V, phi)</h3></div>
+  <div class="panel-body">
+           
+<h4>Arguments</h4>      <table class="table table-striped varlist">
+<thead><tr><th>Type</th><th>Intent</th><th>Optional</th><th>Attributes</th><th></th><th>Name</th><th></th></thead>
+<tbody>
+<tr>
+  <td><span class="anchor" ></span>real(kind=8),</td>
+<td>intent(in)</td>
+  <td></td>  <td></td><td>::</td>
+  <td><strong>a</strong></td><td></td>
+</tr>
+<tr>
+  <td><span class="anchor" ></span>real(kind=8),</td>
+<td>intent(in)</td>
+  <td></td>  <td></td><td>::</td>
+  <td><strong>b</strong></td><td></td>
+</tr>
+<tr>
+  <td><span class="anchor" ></span>real(kind=8),</td>
+<td>intent(in)</td>
+  <td></td>  <td></td><td>::</td>
+  <td><strong>del1</strong></td><td></td>
+</tr>
+<tr>
+  <td><span class="anchor" ></span>real(kind=8),</td>
+<td>intent(in)</td>
+  <td></td>  <td></td><td>::</td>
+  <td><strong>T</strong></td><td></td>
+</tr>
+<tr>
+  <td><span class="anchor" ></span>real(kind=8),</td>
+<td>intent(in)</td>
+  <td></td>  <td></td><td>::</td>
+  <td><strong>P</strong></td><td></td>
+</tr>
+<tr>
+  <td><span class="anchor" ></span>real(kind=8),</td>
+<td>intent(in)</td>
+  <td></td>  <td></td><td>::</td>
+  <td><strong>V</strong></td><td></td>
+</tr>
+<tr>
+  <td><span class="anchor" ></span>real(kind=8),</td>
+<td>intent(out)</td>
+  <td></td>  <td></td><td>::</td>
+  <td><strong>phi</strong></td><td></td>
+</tr>
+</tbody>
+</table>
+
+
+  </div>
+  </div>
+
+      <div class="panel panel-default">
+  <div class="panel-heading codesum"><span class="anchor" id="proc-vcalc"></span><h3>public recursive subroutine <a href='../proc/vcalc.html'>VCALC</a>(ITYP, a, b, del1, T, P, V)</h3></div>
+  <div class="panel-body">
+           
+<h4>Arguments</h4>      <table class="table table-striped varlist">
+<thead><tr><th>Type</th><th>Intent</th><th>Optional</th><th>Attributes</th><th></th><th>Name</th><th></th></thead>
+<tbody>
+<tr>
+  <td><span class="anchor" ></span>integer,</td>
+<td>intent(in)</td>
+  <td></td>  <td></td><td>::</td>
+  <td><strong>ITYP</strong></td><td></td>
+</tr>
+<tr>
+  <td><span class="anchor" ></span>real(kind=8),</td>
+<td>intent(in)</td>
+  <td></td>  <td></td><td>::</td>
+  <td><strong>a</strong></td><td></td>
+</tr>
+<tr>
+  <td><span class="anchor" ></span>real(kind=8),</td>
+<td>intent(in)</td>
+  <td></td>  <td></td><td>::</td>
+  <td><strong>b</strong></td><td></td>
+</tr>
+<tr>
+  <td><span class="anchor" ></span>real(kind=8),</td>
+<td>intent(in)</td>
+  <td></td>  <td></td><td>::</td>
+  <td><strong>del1</strong></td><td></td>
+</tr>
+<tr>
+  <td><span class="anchor" ></span>real(kind=8),</td>
+<td>intent(in)</td>
+  <td></td>  <td></td><td>::</td>
+  <td><strong>T</strong></td><td></td>
+</tr>
+<tr>
+  <td><span class="anchor" ></span>real(kind=8),</td>
+<td>intent(in)</td>
+  <td></td>  <td></td><td>::</td>
+  <td><strong>P</strong></td><td></td>
+</tr>
+<tr>
+  <td><span class="anchor" ></span>real(kind=8),</td>
+<td>intent(out)</td>
+  <td></td>  <td></td><td>::</td>
+  <td><strong>V</strong></td><td></td>
+</tr>
+</tbody>
+</table>
+
+
+  </div>
+  </div>
+
+      <div class="panel panel-default">
+  <div class="panel-heading codesum"><span class="anchor" id="proc-vaporpressure"></span><h3>public recursive subroutine <a href='../proc/vaporpressure.html'>VaporPressure</a>(a, b, del1, Tc, dc, Tr, PVini, Pv, RHOL, RHOV, phiL)</h3></div>
+  <div class="panel-body">
+           
+<h4>Arguments</h4>      <table class="table table-striped varlist">
+<thead><tr><th>Type</th><th>Intent</th><th>Optional</th><th>Attributes</th><th></th><th>Name</th><th></th></thead>
+<tbody>
+<tr>
+  <td><span class="anchor" ></span>real(kind=8),</td>
+<td>intent(in)</td>
+  <td></td>  <td></td><td>::</td>
+  <td><strong>a</strong></td><td></td>
+</tr>
+<tr>
+  <td><span class="anchor" ></span>real(kind=8),</td>
+<td>intent(in)</td>
+  <td></td>  <td></td><td>::</td>
+  <td><strong>b</strong></td><td></td>
+</tr>
+<tr>
+  <td><span class="anchor" ></span>real(kind=8),</td>
+<td>intent(in)</td>
+  <td></td>  <td></td><td>::</td>
+  <td><strong>del1</strong></td><td></td>
+</tr>
+<tr>
+  <td><span class="anchor" ></span>real(kind=8),</td>
+<td>intent(in)</td>
+  <td></td>  <td></td><td>::</td>
+  <td><strong>Tc</strong></td><td></td>
+</tr>
+<tr>
+  <td><span class="anchor" ></span>real(kind=8),</td>
+<td>intent(in)</td>
+  <td></td>  <td></td><td>::</td>
+  <td><strong>dc</strong></td><td></td>
+</tr>
+<tr>
+  <td><span class="anchor" ></span>real(kind=8),</td>
+<td>intent(in)</td>
+  <td></td>  <td></td><td>::</td>
+  <td><strong>Tr</strong></td><td></td>
+</tr>
+<tr>
+  <td><span class="anchor" ></span>real(kind=8),</td>
+<td>intent(in)</td>
+  <td></td>  <td></td><td>::</td>
+  <td><strong>PVini</strong></td><td></td>
+</tr>
+<tr>
+  <td><span class="anchor" ></span>real(kind=8),</td>
+<td>intent(out)</td>
+  <td></td>  <td></td><td>::</td>
+  <td><strong>Pv</strong></td><td></td>
+</tr>
+<tr>
+  <td><span class="anchor" ></span>real(kind=8),</td>
+<td>intent(out)</td>
+  <td></td>  <td></td><td>::</td>
+  <td><strong>RHOL</strong></td><td></td>
+</tr>
+<tr>
+  <td><span class="anchor" ></span>real(kind=8),</td>
+<td>intent(out)</td>
+  <td></td>  <td></td><td>::</td>
+  <td><strong>RHOV</strong></td><td></td>
+</tr>
+<tr>
+  <td><span class="anchor" ></span>real(kind=8),</td>
+<td>intent(out)</td>
+  <td></td>  <td></td><td>::</td>
+  <td><strong>phiL</strong></td><td></td>
+</tr>
+</tbody>
+</table>
+
+
+  </div>
+  </div>
+
+      <div class="panel panel-default">
+  <div class="panel-heading codesum"><span class="anchor" id="proc-get_zc_oma_omb"></span><h3>public subroutine <a href='../proc/get_zc_oma_omb.html'>get_Zc_OMa_OMb</a>(del1, Zc, OMa, OMb)</h3></div>
+  <div class="panel-body">
+           
+<h4>Arguments</h4>      <table class="table table-striped varlist">
+<thead><tr><th>Type</th><th>Intent</th><th>Optional</th><th>Attributes</th><th></th><th>Name</th><th></th></thead>
+<tbody>
+<tr>
+  <td><span class="anchor" ></span>real(kind=8),</td>
+<td>intent(in)</td>
+  <td></td>  <td></td><td>::</td>
+  <td><strong>del1</strong></td><td></td>
+</tr>
+<tr>
+  <td><span class="anchor" ></span>real(kind=8),</td>
+<td>intent(out)</td>
+  <td></td>  <td></td><td>::</td>
+  <td><strong>Zc</strong></td><td></td>
+</tr>
+<tr>
+  <td><span class="anchor" ></span>real(kind=8),</td>
+<td>intent(out)</td>
+  <td></td>  <td></td><td>::</td>
+  <td><strong>OMa</strong></td><td></td>
+</tr>
+<tr>
+  <td><span class="anchor" ></span>real(kind=8),</td>
+<td>intent(out)</td>
+  <td></td>  <td></td><td>::</td>
+  <td><strong>OMb</strong></td><td></td>
+</tr>
+</tbody>
+</table>
+
+
+  </div>
+  </div>
+
+      <div class="panel panel-default">
+  <div class="panel-heading codesum"><span class="anchor" id="proc-getdel1"></span><h3>public subroutine <a href='../proc/getdel1.html'>getdel1</a>(Zc_in, del1_ini, del1)</h3></div>
+  <div class="panel-body">
+           
+<h4>Arguments</h4>      <table class="table table-striped varlist">
+<thead><tr><th>Type</th><th>Intent</th><th>Optional</th><th>Attributes</th><th></th><th>Name</th><th></th></thead>
+<tbody>
+<tr>
+  <td><span class="anchor" ></span>real(kind=8),</td>
+<td>intent(in)</td>
+  <td></td>  <td></td><td>::</td>
+  <td><strong>Zc_in</strong></td><td></td>
+</tr>
+<tr>
+  <td><span class="anchor" ></span>real(kind=8),</td>
+<td>intent(in)</td>
+  <td></td>  <td></td><td>::</td>
+  <td><strong>del1_ini</strong></td><td></td>
+</tr>
+<tr>
+  <td><span class="anchor" ></span>real(kind=8),</td>
+<td>intent(out)</td>
+  <td></td>  <td></td><td>::</td>
+  <td><strong>del1</strong></td><td></td>
+</tr>
+</tbody>
+</table>
+
+
+  </div>
+  </div>
+
+      <div class="panel panel-default">
+  <div class="panel-heading codesum"><span class="anchor" id="proc-pr_critical_from_params"></span><h3>public subroutine <a href='../proc/pr_critical_from_params.html'>pr_critical_from_params</a>(ac, b, m, R, Tc, Pc, w, Vceos)</h3></div>
+  <div class="panel-body">
+           
+<h4>Arguments</h4>      <table class="table table-striped varlist">
+<thead><tr><th>Type</th><th>Intent</th><th>Optional</th><th>Attributes</th><th></th><th>Name</th><th></th></thead>
+<tbody>
+<tr>
+  <td><span class="anchor" ></span>real(kind=8),</td>
+<td>intent(in)</td>
+  <td></td>  <td></td><td>::</td>
+  <td><strong>ac</strong></td><td></td>
+</tr>
+<tr>
+  <td><span class="anchor" ></span>real(kind=8),</td>
+<td>intent(in)</td>
+  <td></td>  <td></td><td>::</td>
+  <td><strong>b</strong></td><td></td>
+</tr>
+<tr>
+  <td><span class="anchor" ></span>real(kind=8),</td>
+<td>intent(in)</td>
+  <td></td>  <td></td><td>::</td>
+  <td><strong>m</strong></td><td></td>
+</tr>
+<tr>
+  <td><span class="anchor" ></span>real(kind=8),</td>
+<td>intent(in)</td>
+  <td></td>  <td></td><td>::</td>
+  <td><strong>R</strong></td><td></td>
+</tr>
+<tr>
+  <td><span class="anchor" ></span>real(kind=8),</td>
+<td>intent(out)</td>
+  <td></td>  <td></td><td>::</td>
+  <td><strong>Tc</strong></td><td></td>
+</tr>
+<tr>
+  <td><span class="anchor" ></span>real(kind=8),</td>
+<td>intent(out)</td>
+  <td></td>  <td></td><td>::</td>
+  <td><strong>Pc</strong></td><td></td>
+</tr>
+<tr>
+  <td><span class="anchor" ></span>real(kind=8),</td>
+<td>intent(out)</td>
+  <td></td>  <td></td><td>::</td>
+  <td><strong>w</strong></td><td></td>
+</tr>
+<tr>
+  <td><span class="anchor" ></span>real(kind=8),</td>
+<td>intent(out)</td>
+  <td></td>  <td></td><td>::</td>
+  <td><strong>Vceos</strong></td><td></td>
+</tr>
+</tbody>
+</table>
+
+
+  </div>
+  </div>
+
+      <div class="panel panel-default">
+  <div class="panel-heading codesum"><span class="anchor" id="proc-pr_params_from_crit"></span><h3>public subroutine <a href='../proc/pr_params_from_crit.html'>pr_params_from_crit</a>(Tc, Pc, w, R, ac, b, m)</h3></div>
+  <div class="panel-body">
+           
+<h4>Arguments</h4>      <table class="table table-striped varlist">
+<thead><tr><th>Type</th><th>Intent</th><th>Optional</th><th>Attributes</th><th></th><th>Name</th><th></th></thead>
+<tbody>
+<tr>
+  <td><span class="anchor" ></span>real(kind=8),</td>
+<td>intent(in)</td>
+  <td></td>  <td></td><td>::</td>
+  <td><strong>Tc</strong></td><td></td>
+</tr>
+<tr>
+  <td><span class="anchor" ></span>real(kind=8),</td>
+<td>intent(in)</td>
+  <td></td>  <td></td><td>::</td>
+  <td><strong>Pc</strong></td><td></td>
+</tr>
+<tr>
+  <td><span class="anchor" ></span>real(kind=8),</td>
+<td>intent(in)</td>
+  <td></td>  <td></td><td>::</td>
+  <td><strong>w</strong></td><td></td>
+</tr>
+<tr>
+  <td><span class="anchor" ></span>real(kind=8),</td>
+<td>intent(in)</td>
+  <td></td>  <td></td><td>::</td>
+  <td><strong>R</strong></td><td></td>
+</tr>
+<tr>
+  <td><span class="anchor" ></span>real(kind=8),</td>
+<td>intent(out)</td>
+  <td></td>  <td></td><td>::</td>
+  <td><strong>ac</strong></td><td></td>
+</tr>
+<tr>
+  <td><span class="anchor" ></span>real(kind=8),</td>
+<td>intent(out)</td>
+  <td></td>  <td></td><td>::</td>
+  <td><strong>b</strong></td><td></td>
+</tr>
+<tr>
+  <td><span class="anchor" ></span>real(kind=8),</td>
+<td>intent(out)</td>
+  <td></td>  <td></td><td>::</td>
+  <td><strong>m</strong></td><td></td>
+</tr>
+</tbody>
+</table>
+
+
+  </div>
+  </div>
+
+      <div class="panel panel-default">
+  <div class="panel-heading codesum"><span class="anchor" id="proc-rkpr_critical_from_params"></span><h3>public subroutine <a href='../proc/rkpr_critical_from_params.html'>rkpr_critical_from_params</a>(ac, b, del1, k, Tc, Pc, w, Vceos)</h3></div>
+  <div class="panel-body">
+           
+<h4>Arguments</h4>      <table class="table table-striped varlist">
+<thead><tr><th>Type</th><th>Intent</th><th>Optional</th><th>Attributes</th><th></th><th>Name</th><th></th></thead>
+<tbody>
+<tr>
+  <td><span class="anchor" ></span>real(kind=8),</td>
+<td>intent(in)</td>
+  <td></td>  <td></td><td>::</td>
+  <td><strong>ac</strong></td><td></td>
+</tr>
+<tr>
+  <td><span class="anchor" ></span>real(kind=8),</td>
+<td>intent(in)</td>
+  <td></td>  <td></td><td>::</td>
+  <td><strong>b</strong></td><td></td>
+</tr>
+<tr>
+  <td><span class="anchor" ></span>real(kind=8),</td>
+<td>intent(in)</td>
+  <td></td>  <td></td><td>::</td>
+  <td><strong>del1</strong></td><td></td>
+</tr>
+<tr>
+  <td><span class="anchor" ></span>real(kind=8),</td>
+<td>intent(in)</td>
+  <td></td>  <td></td><td>::</td>
+  <td><strong>k</strong></td><td></td>
+</tr>
+<tr>
+  <td><span class="anchor" ></span>real(kind=8),</td>
+<td>intent(out)</td>
+  <td></td>  <td></td><td>::</td>
+  <td><strong>Tc</strong></td><td></td>
+</tr>
+<tr>
+  <td><span class="anchor" ></span>real(kind=8),</td>
+<td>intent(out)</td>
+  <td></td>  <td></td><td>::</td>
+  <td><strong>Pc</strong></td><td></td>
+</tr>
+<tr>
+  <td><span class="anchor" ></span>real(kind=8),</td>
+<td>intent(out)</td>
+  <td></td>  <td></td><td>::</td>
+  <td><strong>w</strong></td><td></td>
+</tr>
+<tr>
+  <td><span class="anchor" ></span>real(kind=8),</td>
+<td>intent(out)</td>
+  <td></td>  <td></td><td>::</td>
+  <td><strong>Vceos</strong></td><td></td>
+</tr>
+</tbody>
+</table>
+
+
+  </div>
+  </div>
+
+      <div class="panel panel-default">
+  <div class="panel-heading codesum"><span class="anchor" id="proc-rkpr_params_from_crit"></span><h3>public subroutine <a href='../proc/rkpr_params_from_crit.html'>rkpr_params_from_crit</a>(Tc, Pc, w, R, ac, b, k, del1, Vceos, T, Pvdat, RhoLsat)</h3></div>
+  <div class="panel-body">
+       
+<p>Get the RKPR EOS parameters from the substance critical properties.</p>
+    
+<h4>Arguments</h4>      <table class="table table-striped varlist">
+<thead><tr><th>Type</th><th>Intent</th><th>Optional</th><th>Attributes</th><th></th><th>Name</th><th></th></thead>
+<tbody>
+<tr>
+  <td><span class="anchor" ></span>real(kind=8),</td>
+<td>intent(in)</td>
+  <td></td>  <td></td><td>::</td>
+  <td><strong>Tc</strong></td><td><p>Critical temperature</p></td>
+</tr>
+<tr>
+  <td><span class="anchor" ></span>real(kind=8),</td>
+<td>intent(in)</td>
+  <td></td>  <td></td><td>::</td>
+  <td><strong>Pc</strong></td><td><p>Critical pressure</p></td>
+</tr>
+<tr>
+  <td><span class="anchor" ></span>real(kind=8),</td>
+<td>intent(in)</td>
+  <td></td>  <td></td><td>::</td>
+  <td><strong>w</strong></td><td><p>accentric factor</p></td>
+</tr>
+<tr>
+  <td><span class="anchor" ></span>real(kind=8),</td>
+<td>intent(in)</td>
+  <td></td>  <td></td><td>::</td>
+  <td><strong>R</strong></td><td><p>Gas constant</p></td>
+</tr>
+<tr>
+  <td><span class="anchor" ></span>real(kind=8),</td>
+<td>intent(out)</td>
+  <td></td>  <td></td><td>::</td>
+  <td><strong>ac</strong></td><td><p>ac parameter</p></td>
+</tr>
+<tr>
+  <td><span class="anchor" ></span>real(kind=8),</td>
+<td>intent(out)</td>
+  <td></td>  <td></td><td>::</td>
+  <td><strong>b</strong></td><td><p>covolume</p></td>
+</tr>
+<tr>
+  <td><span class="anchor" ></span>real(kind=8),</td>
+<td>intent(out)</td>
+  <td></td>  <td></td><td>::</td>
+  <td><strong>k</strong></td><td><p>k to calculate &ldquo;a&rdquo; with ac and T</p></td>
+</tr>
+<tr>
+  <td><span class="anchor" ></span>real(kind=8),</td>
+<td>intent(inout),</td>
+  <td>optional</td>  <td></td><td>::</td>
+  <td><strong>del1</strong></td><td><p>delta_1</p></td>
+</tr>
+<tr>
+  <td><span class="anchor" ></span>real(kind=8),</td>
+<td>intent(inout),</td>
+  <td>optional</td>  <td></td><td>::</td>
+  <td><strong>Vceos</strong></td><td><p>Critical volume at specification</p></td>
+</tr>
+<tr>
+  <td><span class="anchor" ></span>real(kind=8),</td>
+<td>intent(in),</td>
+  <td>optional</td>  <td></td><td>::</td>
+  <td><strong>T</strong></td><td><p>Temperature used to either estimate k or del1</p></td>
+</tr>
+<tr>
+  <td><span class="anchor" ></span>real(kind=8),</td>
+<td>intent(inout),</td>
+  <td>optional</td>  <td></td><td>::</td>
+  <td><strong>Pvdat</strong></td><td><p>Vapor pressure used to estimate k</p></td>
+</tr>
+<tr>
+  <td><span class="anchor" ></span>real(kind=8),</td>
+<td>intent(in),</td>
+  <td>optional</td>  <td></td><td>::</td>
+  <td><strong>RhoLsat</strong></td><td><p>Saturation density used to estimate del1</p></td>
+</tr>
+</tbody>
+</table>
+
+
+  </div>
+  </div>
+
+      <div class="panel panel-default">
+  <div class="panel-heading codesum"><span class="anchor" id="proc-srk_critical_from_params"></span><h3>public subroutine <a href='../proc/srk_critical_from_params.html'>srk_critical_from_params</a>(ac, b, m, Tc, Pc, w, Vceos)</h3></div>
+  <div class="panel-body">
+           
+<h4>Arguments</h4>      <table class="table table-striped varlist">
+<thead><tr><th>Type</th><th>Intent</th><th>Optional</th><th>Attributes</th><th></th><th>Name</th><th></th></thead>
+<tbody>
+<tr>
+  <td><span class="anchor" ></span>real(kind=8),</td>
+<td>intent(in)</td>
+  <td></td>  <td></td><td>::</td>
+  <td><strong>ac</strong></td><td></td>
+</tr>
+<tr>
+  <td><span class="anchor" ></span>real(kind=8),</td>
+<td>intent(in)</td>
+  <td></td>  <td></td><td>::</td>
+  <td><strong>b</strong></td><td></td>
+</tr>
+<tr>
+  <td><span class="anchor" ></span>real(kind=8),</td>
+<td>intent(in)</td>
+  <td></td>  <td></td><td>::</td>
+  <td><strong>m</strong></td><td></td>
+</tr>
+<tr>
+  <td><span class="anchor" ></span>real(kind=8),</td>
+<td>intent(out)</td>
+  <td></td>  <td></td><td>::</td>
+  <td><strong>Tc</strong></td><td></td>
+</tr>
+<tr>
+  <td><span class="anchor" ></span>real(kind=8),</td>
+<td>intent(out)</td>
+  <td></td>  <td></td><td>::</td>
+  <td><strong>Pc</strong></td><td></td>
+</tr>
+<tr>
+  <td><span class="anchor" ></span>real(kind=8),</td>
+<td>intent(out)</td>
+  <td></td>  <td></td><td>::</td>
+  <td><strong>w</strong></td><td></td>
+</tr>
+<tr>
+  <td><span class="anchor" ></span>real(kind=8),</td>
+<td>intent(out)</td>
+  <td></td>  <td></td><td>::</td>
+  <td><strong>Vceos</strong></td><td></td>
+</tr>
+</tbody>
+</table>
+
+
+  </div>
+  </div>
+
+      <div class="panel panel-default">
+  <div class="panel-heading codesum"><span class="anchor" id="proc-srk_params_from_crit"></span><h3>public subroutine <a href='../proc/srk_params_from_crit.html'>srk_params_from_crit</a>(Tc, Pc, w, R, ac, b, m)</h3></div>
+  <div class="panel-body">
+           
+<h4>Arguments</h4>      <table class="table table-striped varlist">
+<thead><tr><th>Type</th><th>Intent</th><th>Optional</th><th>Attributes</th><th></th><th>Name</th><th></th></thead>
+<tbody>
+<tr>
+  <td><span class="anchor" ></span>real(kind=8),</td>
+<td>intent(in)</td>
+  <td></td>  <td></td><td>::</td>
+  <td><strong>Tc</strong></td><td></td>
+</tr>
+<tr>
+  <td><span class="anchor" ></span>real(kind=8),</td>
+<td>intent(in)</td>
+  <td></td>  <td></td><td>::</td>
+  <td><strong>Pc</strong></td><td></td>
+</tr>
+<tr>
+  <td><span class="anchor" ></span>real(kind=8),</td>
+<td>intent(out)</td>
+  <td></td>  <td></td><td>::</td>
+  <td><strong>w</strong></td><td></td>
+</tr>
+<tr>
+  <td><span class="anchor" ></span>real(kind=8),</td>
+<td>intent(in)</td>
+  <td></td>  <td></td><td>::</td>
+  <td><strong>R</strong></td><td></td>
+</tr>
+<tr>
+  <td><span class="anchor" ></span>real(kind=8),</td>
+<td>intent(out)</td>
+  <td></td>  <td></td><td>::</td>
+  <td><strong>ac</strong></td><td></td>
+</tr>
+<tr>
+  <td><span class="anchor" ></span>real(kind=8),</td>
+<td>intent(out)</td>
+  <td></td>  <td></td><td>::</td>
+  <td><strong>b</strong></td><td></td>
+</tr>
+<tr>
+  <td><span class="anchor" ></span>real(kind=8),</td>
+<td>intent(out)</td>
+  <td></td>  <td></td><td>::</td>
+  <td><strong>m</strong></td><td></td>
+</tr>
+</tbody>
+</table>
+
+
+  </div>
+  </div>
+
+      <div class="panel panel-default">
+  <div class="panel-heading codesum"><span class="anchor" id="proc-vdwg_derivs"></span><h3>public subroutine <a href='../proc/vdwg_derivs.html'>vdWg_Derivs</a>(a, b, del1, T, V, F, F_V, F_2V, F_N)</h3></div>
+  <div class="panel-body">
+           
+<h4>Arguments</h4>      <table class="table table-striped varlist">
+<thead><tr><th>Type</th><th>Intent</th><th>Optional</th><th>Attributes</th><th></th><th>Name</th><th></th></thead>
+<tbody>
+<tr>
+  <td><span class="anchor" ></span>real(kind=8),</td>
+<td>intent(in)</td>
+  <td></td>  <td></td><td>::</td>
+  <td><strong>a</strong></td><td></td>
+</tr>
+<tr>
+  <td><span class="anchor" ></span>real(kind=8),</td>
+<td>intent(in)</td>
+  <td></td>  <td></td><td>::</td>
+  <td><strong>b</strong></td><td></td>
+</tr>
+<tr>
+  <td><span class="anchor" ></span>real(kind=8),</td>
+<td>intent(in)</td>
+  <td></td>  <td></td><td>::</td>
+  <td><strong>del1</strong></td><td></td>
+</tr>
+<tr>
+  <td><span class="anchor" ></span>real(kind=8),</td>
+<td>intent(in)</td>
+  <td></td>  <td></td><td>::</td>
+  <td><strong>T</strong></td><td></td>
+</tr>
+<tr>
+  <td><span class="anchor" ></span>real(kind=8),</td>
+<td>intent(in)</td>
+  <td></td>  <td></td><td>::</td>
+  <td><strong>V</strong></td><td></td>
+</tr>
+<tr>
+  <td><span class="anchor" ></span>real(kind=8),</td>
+<td>intent(out)</td>
+  <td></td>  <td></td><td>::</td>
+  <td><strong>F</strong></td><td></td>
+</tr>
+<tr>
+  <td><span class="anchor" ></span>real(kind=8),</td>
+<td>intent(out)</td>
+  <td></td>  <td></td><td>::</td>
+  <td><strong>F_V</strong></td><td></td>
+</tr>
+<tr>
+  <td><span class="anchor" ></span>real(kind=8),</td>
+<td>intent(out)</td>
+  <td></td>  <td></td><td>::</td>
+  <td><strong>F_2V</strong></td><td></td>
+</tr>
+<tr>
+  <td><span class="anchor" ></span>real(kind=8),</td>
+<td>intent(out)</td>
+  <td></td>  <td></td><td>::</td>
+  <td><strong>F_N</strong></td><td></td>
+</tr>
+</tbody>
+</table>
+
+
+  </div>
+  </div>
+
+    </section>    
+    <br>
+    
+    </div>
+  </div>
+
+    <hr>    
+    </div> <!-- /container -->
+    <footer>
+      <div class="container">
+      <div class="row">
+        <div class="col-xs-6 col-md-6"><p>fedebenelli/rkpr was developed by Federico Benelli<br>&copy; 2022 <a rel="license" href="https://opensource.org/licenses/MIT">MIT</a>
+</p>
+        </div>
+        <div class="col-xs-6 col-md-6">
+          <p class="text-right">
+            Documentation generated by 
+            <a href="https://github.com/Fortran-FOSS-Programmers/ford">FORD</a>
+ on 2022-05-11 17:22            </p>
+        </div>
+      </div>
+      <br>
+      </div> <!-- /container -->    
+    </footer>
+
+    <!-- Bootstrap core JavaScript
+    ================================================== -->
+    <!-- Placed at the end of the document so the pages load faster -->
+<!--
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+-->
+    <script src="../js/bootstrap.min.js"></script>
+    <!-- IE10 viewport hack for Surface/desktop Windows 8 bug -->
+    <script src="../js/ie10-viewport-bug-workaround.js"></script>
+
+    <!-- MathJax JavaScript
+    ================================================== -->
+    <!-- Placed at the end of the document so the pages load faster -->
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Config({
+        TeX: { extensions: ['AMSmath.js','AMSsymbols.js','noErrors.js','noUndefined.js'], equationNumbers: { autoNumber: 'AMS' } },
+        jax: ['input/TeX','input/MathML','output/HTML-CSS'],
+        extensions: ['tex2jax.js','mml2jax.js','MathMenu.js','MathZoom.js']
+      });
+    </script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    
+    <script src="../tipuesearch/tipuesearch_content.js"></script>
+    <script src="../tipuesearch/tipuesearch_set.js"></script>
+    <script src="../tipuesearch/tipuesearch.js"></script>
+    
+  </body>
+</html>
