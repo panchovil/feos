@@ -1,11 +1,12 @@
 src_dir: ..
+exclude_dir: .
 output_dir: ./docs
 project_github: https://github.com/fedebenelli/rkpr
 project_website: pyforfluids.readthedocs.io
 summary: RKPR EoS
 author: Federico Benelli
 author_description: Doctoral student with focus on reservoir PVT simulation.
-github: https://github.com/fedebenelli/rkpr
+github: https://github.com/fedebenelli
 email: federico.benelli@mi.unc.edu.ar
 fpp_extensions: fpp
 predocmark: >
@@ -21,6 +22,7 @@ search: true
 macro: TEST
        LOGIC=.true.
 extra_mods: json_module: http://jacobwilliams.github.io/json-fortran/
+            ftools: https://github.com/fedebenelli/ftools
 license: MIT
 extra_filetypes: sh #
 

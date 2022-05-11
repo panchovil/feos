@@ -15,3 +15,4 @@ library = false
 
 [dependencies]
 json-fortran.git = "https://github.com/jacobwilliams/json-fortran"
+ftools.git = "https://github.com/fedebenelli/ftools"

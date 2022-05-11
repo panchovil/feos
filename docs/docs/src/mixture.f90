@@ -71,7 +71,7 @@ module mixture
 
     ! Mixing parameters
     real(wp), dimension(:, :), allocatable :: kij !! Kij matrix
-    real(wp), dimension(:, :), allocatable :: kij0 !! Kij standard
+    real(wp), dimension(:, :), allocatable :: kij_0 !! Kij standard
     real(wp), dimension(:, :), allocatable :: kij_inf !! Kij at infinite temperature
     real(wp), dimension(:, :), allocatable :: T_star !! Reference temperature for temperature dependent Kij
 
@@ -89,5 +89,6 @@ module mixture
         read(nin, *) nc
         read(nin, *) nmodel
         read(nin, *) ncomb, ntdep
+
     end subroutine setup
 end module mixture

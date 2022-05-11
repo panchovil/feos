@@ -89,7 +89,7 @@
      <li><i class="fa fa-list-ol"></i>
        <a data-toggle="tooltip"
     data-placement="bottom" data-html="true"
-    title=" 6.0% of total for procedures.">28 statements</a>
+    title=" 5.5% of total for procedures.">28 statements</a>
      </li> 
     <li><i class="fa fa-code"></i><a href="../src/cubic_parameter.f90"> Source File</a></li>
   </ul>
@@ -236,13 +236,13 @@
 <thead><tr><th>Type</th><th>Intent</th><th>Optional</th><th>Attributes</th><th></th><th>Name</th><th></th></thead>
 <tbody>
 <tr>
-  <td><span class="anchor" id="variable-a~3"></span>real(kind=8),</td>
+  <td><span class="anchor" id="variable-a~5"></span>real(kind=8),</td>
 <td>intent(in)</td>
   <td></td>  <td></td><td>::</td>
   <td><strong>a</strong></td><td></td>
 </tr>
 <tr>
-  <td><span class="anchor" id="variable-b~10"></span>real(kind=8),</td>
+  <td><span class="anchor" id="variable-b~11"></span>real(kind=8),</td>
 <td>intent(in)</td>
   <td></td>  <td></td><td>::</td>
   <td><strong>b</strong></td><td></td>
@@ -254,7 +254,7 @@
   <td><strong>del1</strong></td><td></td>
 </tr>
 <tr>
-  <td><span class="anchor" id="variable-t~3"></span>real(kind=8),</td>
+  <td><span class="anchor" id="variable-t~7"></span>real(kind=8),</td>
 <td>intent(in)</td>
   <td></td>  <td></td><td>::</td>
   <td><strong>T</strong></td><td></td>
@@ -312,86 +312,86 @@
 <!-- proc~vdwg_derivs -->
 <g id="proc~~vdwg_derivs~~CalledByGraph_node1" class="node">
 <title>proc~vdwg_derivs</title>
-<polygon fill="none" stroke="black" points="457,-45 381,-45 381,-21 457,-21 457,-45"/>
-<text text-anchor="middle" x="419" y="-30.6" font-family="Helvetica,sans-Serif" font-size="10.50">vdWg_Derivs</text>
-</g>
-<!-- proc~vcalc -->
-<g id="proc~~vdwg_derivs~~CalledByGraph_node2" class="node">
-<title>proc~vcalc</title>
-<g id="a_proc~~vdwg_derivs~~CalledByGraph_node2"><a xlink:href=".././proc/vcalc.html" xlink:title="VCALC">
-<polygon fill="#d9534f" stroke="#d9534f" points="337.5,-66 283.5,-66 283.5,-42 337.5,-42 337.5,-66"/>
-<text text-anchor="middle" x="310.5" y="-51.6" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">VCALC</text>
-</a>
-</g>
-</g>
-<!-- proc~vcalc&#45;&gt;proc~vdwg_derivs -->
-<g id="proc~~vdwg_derivs~~CalledByGraph_edge1" class="edge">
-<title>proc~vcalc&#45;&gt;proc~vdwg_derivs</title>
-<path fill="none" stroke="#000000" d="M337.55,-48.86C347.65,-46.87 359.53,-44.53 371.02,-42.26"/>
-<polygon fill="#000000" stroke="#000000" points="371.82,-45.67 380.95,-40.3 370.47,-38.81 371.82,-45.67"/>
-</g>
-<!-- proc~vcalc&#45;&gt;proc~vcalc -->
-<g id="proc~~vdwg_derivs~~CalledByGraph_edge3" class="edge">
-<title>proc~vcalc&#45;&gt;proc~vcalc</title>
-<path fill="none" stroke="#000000" d="M292.64,-66.01C286.41,-74.97 292.36,-84 310.5,-84 321.55,-84 328.08,-80.65 330.09,-76"/>
-<polygon fill="#000000" stroke="#000000" points="333.51,-75.27 328.36,-66.01 326.61,-76.46 333.51,-75.27"/>
+<polygon fill="none" stroke="black" points="457,-54 381,-54 381,-30 457,-30 457,-54"/>
+<text text-anchor="middle" x="419" y="-39.6" font-family="Helvetica,sans-Serif" font-size="10.50">vdWg_Derivs</text>
 </g>
 <!-- proc~fug_calc -->
-<g id="proc~~vdwg_derivs~~CalledByGraph_node3" class="node">
+<g id="proc~~vdwg_derivs~~CalledByGraph_node2" class="node">
 <title>proc~fug_calc</title>
-<g id="a_proc~~vdwg_derivs~~CalledByGraph_node3"><a xlink:href=".././proc/fug_calc.html" xlink:title="FUG_CALC">
-<polygon fill="#d9534f" stroke="#d9534f" points="345,-24 276,-24 276,0 345,0 345,-24"/>
-<text text-anchor="middle" x="310.5" y="-9.6" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">FUG_CALC</text>
+<g id="a_proc~~vdwg_derivs~~CalledByGraph_node2"><a xlink:href=".././proc/fug_calc.html" xlink:title="FUG_CALC">
+<polygon fill="#d9534f" stroke="#d9534f" points="345,-84 276,-84 276,-60 345,-60 345,-84"/>
+<text text-anchor="middle" x="310.5" y="-69.6" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">FUG_CALC</text>
 </a>
 </g>
 </g>
 <!-- proc~fug_calc&#45;&gt;proc~vdwg_derivs -->
-<g id="proc~~vdwg_derivs~~CalledByGraph_edge2" class="edge">
+<g id="proc~~vdwg_derivs~~CalledByGraph_edge1" class="edge">
 <title>proc~fug_calc&#45;&gt;proc~vdwg_derivs</title>
-<path fill="none" stroke="#000000" d="M345.2,-18.64C353.34,-20.25 362.2,-22 370.84,-23.7"/>
-<polygon fill="#000000" stroke="#000000" points="370.34,-27.17 380.83,-25.67 371.69,-20.3 370.34,-27.17"/>
+<path fill="none" stroke="#000000" d="M345.2,-62.51C353.43,-60.19 362.39,-57.66 371.12,-55.21"/>
+<polygon fill="#000000" stroke="#000000" points="372.15,-58.55 380.83,-52.47 370.25,-51.81 372.15,-58.55"/>
+</g>
+<!-- proc~vcalc -->
+<g id="proc~~vdwg_derivs~~CalledByGraph_node3" class="node">
+<title>proc~vcalc</title>
+<g id="a_proc~~vdwg_derivs~~CalledByGraph_node3"><a xlink:href=".././proc/vcalc.html" xlink:title="VCALC">
+<polygon fill="#d9534f" stroke="#d9534f" points="337.5,-24 283.5,-24 283.5,0 337.5,0 337.5,-24"/>
+<text text-anchor="middle" x="310.5" y="-9.6" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">VCALC</text>
+</a>
+</g>
+</g>
+<!-- proc~vcalc&#45;&gt;proc~vdwg_derivs -->
+<g id="proc~~vdwg_derivs~~CalledByGraph_edge2" class="edge">
+<title>proc~vcalc&#45;&gt;proc~vdwg_derivs</title>
+<path fill="none" stroke="#000000" d="M337.55,-19.34C347.65,-22.18 359.53,-25.53 371.02,-28.77"/>
+<polygon fill="#000000" stroke="#000000" points="370.38,-32.22 380.95,-31.56 372.28,-25.48 370.38,-32.22"/>
+</g>
+<!-- proc~vcalc&#45;&gt;proc~vcalc -->
+<g id="proc~~vdwg_derivs~~CalledByGraph_edge5" class="edge">
+<title>proc~vcalc&#45;&gt;proc~vcalc</title>
+<path fill="none" stroke="#000000" d="M292.64,-24.01C286.41,-32.97 292.36,-42 310.5,-42 321.55,-42 328.08,-38.65 330.09,-34"/>
+<polygon fill="#000000" stroke="#000000" points="333.51,-33.27 328.36,-24.01 326.61,-34.46 333.51,-33.27"/>
 </g>
 <!-- proc~vaporpressure -->
 <g id="proc~~vdwg_derivs~~CalledByGraph_node4" class="node">
 <title>proc~vaporpressure</title>
 <g id="a_proc~~vdwg_derivs~~CalledByGraph_node4"><a xlink:href=".././proc/vaporpressure.html" xlink:title="VaporPressure">
-<polygon fill="#d9534f" stroke="#d9534f" points="240,-45 157,-45 157,-21 240,-21 240,-45"/>
-<text text-anchor="middle" x="198.5" y="-30.6" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">VaporPressure</text>
+<polygon fill="#d9534f" stroke="#d9534f" points="240,-54 157,-54 157,-30 240,-30 240,-54"/>
+<text text-anchor="middle" x="198.5" y="-39.6" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">VaporPressure</text>
 </a>
 </g>
+</g>
+<!-- proc~vaporpressure&#45;&gt;proc~fug_calc -->
+<g id="proc~~vdwg_derivs~~CalledByGraph_edge3" class="edge">
+<title>proc~vaporpressure&#45;&gt;proc~fug_calc</title>
+<path fill="none" stroke="#000000" d="M240.15,-53.09C248.59,-55.39 257.52,-57.82 266.07,-60.15"/>
+<polygon fill="#000000" stroke="#000000" points="265.29,-63.57 275.86,-62.83 267.13,-56.82 265.29,-63.57"/>
 </g>
 <!-- proc~vaporpressure&#45;&gt;proc~vcalc -->
 <g id="proc~~vdwg_derivs~~CalledByGraph_edge4" class="edge">
 <title>proc~vaporpressure&#45;&gt;proc~vcalc</title>
-<path fill="none" stroke="#000000" d="M240.15,-40.76C251.09,-42.85 262.85,-45.09 273.52,-47.13"/>
-<polygon fill="#000000" stroke="#000000" points="272.88,-50.57 283.36,-49.01 274.19,-43.7 272.88,-50.57"/>
-</g>
-<!-- proc~vaporpressure&#45;&gt;proc~fug_calc -->
-<g id="proc~~vdwg_derivs~~CalledByGraph_edge5" class="edge">
-<title>proc~vaporpressure&#45;&gt;proc~fug_calc</title>
-<path fill="none" stroke="#000000" d="M240.15,-25.24C248.5,-23.65 257.33,-21.96 265.79,-20.35"/>
-<polygon fill="#000000" stroke="#000000" points="266.69,-23.74 275.86,-18.42 265.38,-16.86 266.69,-23.74"/>
+<path fill="none" stroke="#000000" d="M240.15,-30.91C251.09,-27.93 262.85,-24.72 273.52,-21.81"/>
+<polygon fill="#000000" stroke="#000000" points="274.63,-25.14 283.36,-19.13 272.79,-18.38 274.63,-25.14"/>
 </g>
 <!-- proc~vaporpressure&#45;&gt;proc~vaporpressure -->
 <g id="proc~~vdwg_derivs~~CalledByGraph_edge7" class="edge">
 <title>proc~vaporpressure&#45;&gt;proc~vaporpressure</title>
-<path fill="none" stroke="#000000" d="M179.98,-45.01C173.51,-53.97 179.69,-63 198.5,-63 209.96,-63 216.73,-59.65 218.81,-55"/>
-<polygon fill="#000000" stroke="#000000" points="222.23,-54.24 217.02,-45.01 215.34,-55.47 222.23,-54.24"/>
+<path fill="none" stroke="#000000" d="M179.98,-54.01C173.51,-62.97 179.69,-72 198.5,-72 209.96,-72 216.73,-68.65 218.81,-64"/>
+<polygon fill="#000000" stroke="#000000" points="222.23,-63.24 217.02,-54.01 215.34,-64.47 222.23,-63.24"/>
 </g>
 <!-- proc~rkpr_params_from_crit -->
 <g id="proc~~vdwg_derivs~~CalledByGraph_node5" class="node">
 <title>proc~rkpr_params_from_crit</title>
 <g id="a_proc~~vdwg_derivs~~CalledByGraph_node5"><a xlink:href=".././proc/rkpr_params_from_crit.html" xlink:title="rkpr_params_from_crit">
-<polygon fill="#d9534f" stroke="#d9534f" points="121,-45 0,-45 0,-21 121,-21 121,-45"/>
-<text text-anchor="middle" x="60.5" y="-30.6" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">rkpr_params_from_crit</text>
+<polygon fill="#d9534f" stroke="#d9534f" points="121,-54 0,-54 0,-30 121,-30 121,-54"/>
+<text text-anchor="middle" x="60.5" y="-39.6" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">rkpr_params_from_crit</text>
 </a>
 </g>
 </g>
 <!-- proc~rkpr_params_from_crit&#45;&gt;proc~vaporpressure -->
 <g id="proc~~vdwg_derivs~~CalledByGraph_edge6" class="edge">
 <title>proc~rkpr_params_from_crit&#45;&gt;proc~vaporpressure</title>
-<path fill="none" stroke="#000000" d="M121.15,-33C129.58,-33 138.19,-33 146.44,-33"/>
-<polygon fill="#000000" stroke="#000000" points="146.66,-36.5 156.66,-33 146.66,-29.5 146.66,-36.5"/>
+<path fill="none" stroke="#000000" d="M121.15,-42C129.58,-42 138.19,-42 146.44,-42"/>
+<polygon fill="#000000" stroke="#000000" points="146.66,-45.5 156.66,-42 146.66,-38.5 146.66,-45.5"/>
 </g>
 </g>
 </svg>
