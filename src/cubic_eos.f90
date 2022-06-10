@@ -148,13 +148,14 @@ contains
 
       d1_mix = 0.0_wp
 
-      do i = 1, nc
-         d1_mix = d1_mix + n(i)*d1(i)
-      end do
+      d1_mix = sum(n*d1)
+
       totn = sum(n)
       d1_mix = d1_mix/totn
+      dD1dni = (d1 - d1_mix)/totn
+
       do i = 1, nc
-         dD1dni(i) = (d1(i) - d1_mix)/totn
+         
          do j = 1, nc
             dD12dnij2(i, j) = (2.0_wp*d1_mix - d1(i) - d1(j))/totn**2
          end do
