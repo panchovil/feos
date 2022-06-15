@@ -3,7 +3,37 @@ module mixing_rules
    use constants
    implicit none
 
+   type :: kij_exp_t
+      integer :: nc
+      real(wp) :: kij_0(nc, nc)
+      real(wp) :: kij_inf(nc, nc)
+      real(wp) :: T_star(nc, nc)
+      contains
+         procedure :: kij => kij_tdep
+   end type
+
 contains
+   subroutine kij_tdep(self, T, kij, dkijdt, dkij2dt2)
+      !! Kij with temperature dependance according to the equation:
+      !! \[ K_{ij}(T) = K_{ij\infty} + K_{ij0} e^{T/T^*} \]
+      !! The parameters of the equation are obtained from the mixture module
+      implicit none
+      class(kij_exp_t) :: self
+      real(wp), intent(in) :: T !! Temperature
+
+      integer :: nc = self%nc
+      real(wp), intent(out) :: kij(nc, nc) !! Binary interaction parameter matrix
+      real(wp), intent(out) :: dkijdt(nc, nc) !! Binary interaction parameter first derivative with T matrix
+      real(wp), intent(out) :: dkij2dt2(nc, nc) !! Binary interaction parameter second derivative with T matrix
+
+      integer :: i
+
+      do i = 1, nc
+         kij(:i - 1, i) = kij_inf(:i - 1, i) + kij_0(:i - 1, i)*exp(-T/T_star(:i - 1, i))
+         dkijdt(:i - 1, i) = -kij_0(:i - 1, i)/T_star(:i - 1, i)*exp(-T/T_star(:i - 1, i))
+         dkij2dt2(:i - 1, i) = kij_0(:i - 1, i)/T_star(:i - 1, i)**2*exp(-T/T_star(:i - 1, i))
+      end do
+   end subroutine kij_tdep
 
    subroutine quadratic(nc, a, b, kij, dadt, da2dt2, dkijdt, dkij2dt2, lij, aij, daijdt, daij2dt2, bij)
         !! Classic quadratic mixing rules.
