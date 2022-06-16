@@ -19,19 +19,22 @@ contains
 
       integer :: i
 
-      do i = 1, nc
-         kij(:i - 1, i) = kij_inf(:i - 1, i) + kij_0(:i - 1, i)*exp(-T/T_star(:i - 1, i))
-         dkijdt(:i - 1, i) = -kij_0(:i - 1, i)/T_star(:i - 1, i)*exp(-T/T_star(:i - 1, i))
-         dkij2dt2(:i - 1, i) = kij_0(:i - 1, i)/T_star(:i - 1, i)**2*exp(-T/T_star(:i - 1, i))
-      end do
-   end subroutine kij_tdep
+   subroutine aTder(&
+       nc, ac, tc, k, &
+       T, &
+       a, dadT, dadT2&
+      )
+      !! Calculate the atractive parameter at T temperature.
+      !! the subroutine will read the mixture's model and based on that
+      !! will use the corresponding rule.
+      use mixture, only: nmodel
 
-   subroutine aTder(T, a, dadT, dadT2)
-        !! Calculate the atractive parameter at T temperature.
-        !! the subroutine will read the mixture's model and based on that
-        !! will use the corresponding rule.
-      use mixture, only: nmodel, ac, k, tc, nc
-      real(wp), intent(in) :: T  !! Temperature
+      integer, intent(in) :: nc !! Number of components
+      real(wp), intent(in) :: ac(nc) !! Critical atractive parameter 
+      real(wp), intent(in) :: tc(nc) !! Critical temperatures
+      real(wp), intent(in) :: k(nc) !! Accentric factor related constant
+      
+      real(wp), intent(in) :: T !! Temperature
 
       real(wp), intent(out) :: a(nc)  !! Atractive parameter at T
       real(wp), intent(out) :: dadT(nc) !! First deritvative with T
