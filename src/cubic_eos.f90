@@ -1,23 +1,66 @@
 module cubic_eos
-    !! Module that encompass the calculations of the residual Helmholtz energy
-    !! and related properties like fugacity coefficents.
+   !! Module that encompass the calculations of the residual Helmholtz energy
+   !! and related properties like fugacity coefficents.
    use constants
    implicit none
 
+   type :: ceos
+      real(8) :: ac
+      real(8) :: b
+      real(8) :: tc
+      real(8) :: pc
+      real(8) :: k
+      real(8) :: v
+      real(8) :: t
+      real(8) :: a
+      real(8) :: dadt
+      real(8) :: da2dt2
+      contains
+         procedure :: a_t => a_parameter
+   end type ceos
+
+   type, extends(ceos) :: pr
+      real(8) :: del1 = 1
+   end type pr
+   
+   type, extends(ceos) :: srk
+      real(8) :: del1 = 1 + sqrt(2.d0)
+   end type srk
+
+   type, extends(ceos) :: rkpr
+      real(8) :: del1 = 1 + sqrt(2.d0)
+   end type rkpr
+
 contains
 
-   subroutine kij_tdep(T, kij, dkijdt, dkij2dt2)
-        !! Kij with temperature dependance according to the equation:
-        !! \[ K_{ij}(T) = K_{ij\infty} + K_{ij0} e^{T/T^*} \]
-        !! The parameters of the equation are obtained from the mixture module
-      use mixture, only: nc, kij_0, kij_inf, T_star
-      implicit none
-      real(wp), intent(in) :: T !! Temperature
-      real(wp), intent(out) :: kij(nc, nc) !! Binary interaction parameter matrix
-      real(wp), intent(out) :: dkijdt(nc, nc) !! Binary interaction parameter first derivative with T matrix
-      real(wp), intent(out) :: dkij2dt2(nc, nc) !! Binary interaction parameter second derivative with T matrix
+   subroutine a_parameter(self, T)
+      class(ceos) :: self
+      real(8), intent(in) :: T !! Temperature where to calculate 
 
-      integer :: i
+      real(8) :: Tr
+      real(8) :: ac, k, Tc
+
+      select type (self)
+      class is (rkpr)
+         Tc = self%Tc
+         ac = self%ac
+         k = self%k
+         Tr = T/Tc
+
+         self%a = ac*(3/(2 + Tr))**k
+         self%dadT = -k*self%a/Tc/(2 + Tr)
+         self%da2dT2 = -(k + 1)*self%dadT/Tc/(2 + Tr)
+
+      class is (ceos)
+         Tc = self%Tc
+         ac = self%ac
+         k = self%k
+         Tr = T/Tc
+         self%a = ac*(1 + k*(1 - sqrt(Tr)))**2
+         self%dadT = ac*k*(k - (k + 1)/sqrt(Tr))/Tc
+         self%da2dT2 = ac*k*(k + 1)/(2*Tc**2*Tr**1.5)
+      end select
+   end subroutine a_parameter
 
    subroutine aTder(&
        nc, ac, tc, k, &
