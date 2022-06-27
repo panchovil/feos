@@ -16,3 +16,4 @@ library = false
 [dependencies]
 json-fortran.git = "https://github.com/jacobwilliams/json-fortran"
 ftools.git = "https://github.com/fedebenelli/ftools"
+test-drive.git = "https://github.com/fortran-lang/test-drive"
