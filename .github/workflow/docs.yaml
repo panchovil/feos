@@ -1,0 +1,29 @@
+# Continuous Integration
+name: Docs generation
+
+on:
+  - push
+  - pull_request
+  - release
+
+jobs:
+  docs:
+    strategy:
+      matrix:
+        platform: [ubuntu-latest]
+        python-version: [3.9]
+
+    runs-on: ${{ matrix.platform }}
+
+    steps:
+      - uses: actions/checkout@master
+      - name: Set up Python ${{ matrix.python-version }}
+        uses: actions/setup-python@v2
+        with:
+          python-version: ${{ matrix.python-version}}
+      - name: Install ford
+        run: pip install ford
+      - name: Install fpm
+        run: bash tools/install_fpm.sh
+      - name: make docs
+        run: ford docs.md
