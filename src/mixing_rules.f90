@@ -35,6 +35,27 @@ contains
       end do
    end subroutine kij_tdep
 
+   subroutine kij_const(self, T, kij, dkijdt, dkij2dt2)
+      class(kij_constant) :: self
+      real(wp), intent(in) :: T !! Temperature
+
+      real(wp), allocatable, intent(out) :: kij(:, :) !! Binary interaction parameter matrix
+      real(wp), allocatable, intent(out) :: dkijdt(:, :) !! Binary interaction parameter first derivative with T matrix
+      real(wp), allocatable, intent(out) :: dkij2dt2(:, :) !! Binary interaction parameter second derivative with T matrix
+
+      kij = self%kij
+      dkijdt = 0*kij
+      dkij2dt2 = 0*kij
+   end subroutine kij_const
+   
+   subroutine lij_const(self, T, lij)
+      class(lij_constant) :: self
+      real(wp), intent(in) :: T !! Temperature
+      real(wp), allocatable, intent(out) :: lij(:, :) !! Binary repulsive parameter matrix
+
+      lij = self%lij
+   end subroutine lij_const
+
    subroutine quadratic(nc, a, b, kij, dadt, da2dt2, dkijdt, dkij2dt2, lij, aij, daijdt, daij2dt2, bij)
       !! Classic quadratic mixing rules.
       integer, intent(in) :: nc !! Number of components
