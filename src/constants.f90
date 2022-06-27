@@ -1,6 +1,5 @@
 module constants
    implicit none
-
    integer, parameter :: wp = 8
    real(wp), parameter :: RGAS = 0.08314472d0
    real(wp), parameter :: A0 = 0.0017, B0 = 1.9681, C0 = -2.7238
