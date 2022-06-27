@@ -1,8 +1,7 @@
 ---
-project: fedebenelli/rkpr
+project: Multicomponent Equations of State
 summary: RKPR EoS
-project_github: https://github.com/fedebenelli/rkpr
-project_download: https://github.com/fortran-lang/fpm/archive/main.zip
+project_github: https://github.com/fedebenelli/multicomponent-eos
 author: Federico Benelli
 author_description: Doctoral student with focus on reservoir PVT simulation.
 author_email: federico.benelli@mi.unc.edu.ar
@@ -25,8 +24,9 @@ extra_mods: json_module: http://jacobwilliams.github.io/json-fortran/
 creation_date: %Y-%m-%d %H:%M %z
 md_extensions: markdown.extensions.toc
                markdown.extensions.smarty
+graph: true
 license: MIT
 ---
 
 Fortran program for the calculation of the residual Helmholtz Energy using the
-RKPR EoS (hence, PR and SRK are also included).
+RKPR EoS (hence, PR and SRK are also included), for multicomponent mixtures.
