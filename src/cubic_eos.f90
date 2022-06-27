@@ -2,60 +2,62 @@ module cubic_eos
    !! Module that encompass the calculations of the residual Helmholtz energy
    !! and related properties like fugacity coefficents.
    use constants
+   use mixing_rules
    implicit none
 
-   type :: ceos
-      real(8) :: ac
-      real(8) :: b
-      real(8) :: tc
-      real(8) :: pc
-      real(8) :: k
-      real(8) :: v
-      real(8) :: t
-      real(8) :: a
-      real(8) :: dadt
-      real(8) :: da2dt2
+   type :: pure_compound
+      !! Generic EoS
+      character(len=100) :: name !! Compound name
+      real(8) :: ac !! Critical atractive parameter
+      real(8) :: b !! Repulsive parameter
+      real(8) :: tc !! Critical temperature
+      real(8) :: pc !! Critical pressure
+      real(8) :: w !! Accentric factor
+      real(8) :: k !! Atractive parameter constant
+      real(8) :: a = 0 !! Atractive parameter valuated at temperature
+      real(8) :: dadt = 0 !! Atractive parameter first derivative with tempetarue
+      real(8) :: da2dt2 = 0 !! Atractive parameter second derivative with tempetarue 
       contains
          procedure :: a_t => a_parameter
-   end type ceos
+   end type pure_compound
 
-   type, extends(ceos) :: pr
-      real(8) :: del1 = 1
+   type, extends(pure_compound) :: pr
+      !! Peng-Robinson EoS
+      real(8), private :: del1 = 1 !! \[\delta_1\] parameter.
    end type pr
    
-   type, extends(ceos) :: srk
-      real(8) :: del1 = 1 + sqrt(2.d0)
+   type, extends(pure_compound) :: srk
+      !! Soave-Redlich-Kwong EoS
+      real(8), private :: del1 = 1 + sqrt(2.d0) !! \[\delta_1\] parameter.
    end type srk
 
-   type, extends(ceos) :: rkpr
-      real(8) :: del1 = 1 + sqrt(2.d0)
+   type, extends(pure_compound) :: rkpr
+      real(8) :: del1
    end type rkpr
 
 contains
 
    subroutine a_parameter(self, T)
-      class(ceos) :: self
+      !! Calculate the atractive parameter at T temperature.
+      !! the subroutine will read the mixture's model and based on that
+      !! will use the corresponding rule.
+      class(pure_compound) :: self
       real(8), intent(in) :: T !! Temperature where to calculate 
 
       real(8) :: Tr
       real(8) :: ac, k, Tc
 
+      Tc = self%Tc
+      ac = self%ac
+      k = self%k
+      Tr = T/Tc
       select type (self)
       class is (rkpr)
-         Tc = self%Tc
-         ac = self%ac
-         k = self%k
-         Tr = T/Tc
-
          self%a = ac*(3/(2 + Tr))**k
          self%dadT = -k*self%a/Tc/(2 + Tr)
          self%da2dT2 = -(k + 1)*self%dadT/Tc/(2 + Tr)
 
-      class is (ceos)
-         Tc = self%Tc
-         ac = self%ac
-         k = self%k
-         Tr = T/Tc
+      class default
          self%a = ac*(1 + k*(1 - sqrt(Tr)))**2
          self%dadT = ac*k*(k - (k + 1)/sqrt(Tr))/Tc
          self%da2dT2 = ac*k*(k + 1)/(2*Tc**2*Tr**1.5)
