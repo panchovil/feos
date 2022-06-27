@@ -1,18 +1,36 @@
 module mixing_rules
-    !! Module that contains the available mixing rules to be used.
+   !! Module that contains the available mixing rules to be used.
    use constants
    implicit none
 
-   type :: kij_exp_t
-      integer :: nc
-      real(wp) :: kij_0(nc, nc)
-      real(wp) :: kij_inf(nc, nc)
-      real(wp) :: T_star(nc, nc)
+   type :: kij_constant
+      !! \[K_ij\] constant type
+      real(wp), allocatable :: kij(:, :) !! \[K_ij\] matrix
       contains
-         procedure :: kij => kij_tdep
+         procedure :: get_kij => kij_const
    end type
 
+   type, extends(kij_constant) :: kij_exp_t
+      !! Kij with temperature dependance according to the equation:
+      !! \[ K_{ij}(T) = K_{ij\infty} + K_{ij0} e^{-T/T^*} \]
+      !! The parameters of the equation are obtained from the mixture module.
+      real(wp), allocatable :: dkijdt(:, :) !! \[K_ij\] matrix
+      real(wp), allocatable :: dkij2dt2(:, :) !! \[K_ij\] matrix      
+      real(wp), allocatable :: kij_0(:, :) !! Exponential 
+      real(wp), allocatable :: kij_inf(:, :) !! K_ij at infinite Temperature
+      real(wp), allocatable :: T_star(:, :) !! Reference temperature
+      contains
+         procedure :: get_kij => kij_tdep
+   end type
+
+   type :: lij_constant
+      real(wp), allocatable :: lij(:, :)
+      contains
+         procedure :: get_lij => lij_const
+   end type lij_constant
+
 contains
+
    subroutine kij_tdep(self, T, kij, dkijdt, dkij2dt2)
       implicit none
       class(kij_exp_t) :: self
