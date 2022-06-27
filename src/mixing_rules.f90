@@ -36,7 +36,7 @@ contains
    end subroutine kij_tdep
 
    subroutine quadratic(nc, a, b, kij, dadt, da2dt2, dkijdt, dkij2dt2, lij, aij, daijdt, daij2dt2, bij)
-        !! Classic quadratic mixing rules.
+      !! Classic quadratic mixing rules.
       integer, intent(in) :: nc !! Number of components
       real(wp), intent(in) :: a(nc) !! Atractive parameter at working temperature
       real(wp), intent(in) :: b(nc) !! Repulsive parameter
