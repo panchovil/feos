@@ -8,7 +8,7 @@
     <meta name="author" content="Federico Benelli" >
     <link rel="icon" href="../favicon.png">
 
-    <title>quadratic &ndash; fedebenelli/rkpr</title>
+    <title>quadratic &ndash; Multicomponent Equations of State</title>
 
     <link href="../css/bootstrap.min.css" rel="stylesheet">
     <link href="../css/pygments.css" rel="stylesheet">
@@ -39,7 +39,7 @@
             <span class="icon-bar"></span>
             <span class="icon-bar"></span>
           </button>
-          <a class="navbar-brand" href="../index.html">fedebenelli/rkpr </a>
+          <a class="navbar-brand" href="../index.html">Multicomponent Equations of State </a>
         </div>
         <div id="navbar" class="navbar-collapse collapse">
           <ul class="nav navbar-nav">
@@ -53,7 +53,7 @@
             <li><a href="../lists/modules.html">Modules</a></li>
             <li><a href="../lists/procedures.html">Procedures</a></li>
                    <li><a href="../lists/types.html">Derived Types</a></li>
-            <li><a href="../program/main.html">Program</a></li>
+            <li><a href="../lists/programs.html">Programs</a></li>
        
             </ul>
         
@@ -62,7 +62,7 @@
 <li class="visible-xs hidden-sm visible-lg"><a href="../lists/modules.html">Modules</a></li>
 <li class="visible-xs hidden-sm visible-lg"><a href="../lists/procedures.html">Procedures</a></li>
                              <li class="visible-xs hidden-sm visible-lg"><a href="../lists/types.html">Derived Types</a></li>
-<li class="visible-xs hidden-sm visible-lg"><a href="../program/main.html">Program</a></li>
+<li class="visible-xs hidden-sm visible-lg"><a href="../lists/programs.html">Programs</a></li>
           </ul>
         <form action="../search.html" class="navbar-form navbar-right" role="search">
         <div class="form-group">
@@ -89,7 +89,7 @@
      <li><i class="fa fa-list-ol"></i>
        <a data-toggle="tooltip"
     data-placement="bottom" data-html="true"
-    title=" 4.4% of total for procedures.">31 statements</a>
+    title=" 6.1% of total for procedures.">31 statements</a>
      </li> 
     <li><i class="fa fa-code"></i><a href="../src/mixing_rules.f90"> Source File</a></li>
   </ul>
@@ -118,8 +118,8 @@
   <div class="panel-heading text-left"><h3 class="panel-title"><a data-toggle="collapse" href="#vars-0">Variables</a></h3></div>
   <div id="vars-0" class="panel-collapse collapse">
     <div class="list-group">
-      <a class="list-group-item" href="../proc/quadratic.html#variable-i~6">i</a>
-      <a class="list-group-item" href="../proc/quadratic.html#variable-j~5">j</a>
+      <a class="list-group-item" href="../proc/quadratic.html#variable-i~2">i</a>
+      <a class="list-group-item" href="../proc/quadratic.html#variable-j~2">j</a>
     </div>
   </div>
 </div>
@@ -145,79 +145,79 @@
 <thead><tr><th>Type</th><th>Intent</th><th>Optional</th><th>Attributes</th><th></th><th>Name</th><th></th></thead>
 <tbody>
 <tr>
-  <td><span class="anchor" id="variable-nc~7"></span>integer,</td>
+  <td><span class="anchor" id="variable-nc~3"></span>integer,</td>
 <td>intent(in)</td>
   <td></td>  <td></td><td>::</td>
   <td><strong>nc</strong></td><td><p>Number of components</p></td>
 </tr>
 <tr>
-  <td><span class="anchor" id="variable-a~5"></span>real(kind=wp),</td>
+  <td><span class="anchor" id="variable-a~3"></span>real(kind=wp),</td>
 <td>intent(in)</td>
   <td></td>  <td></td><td>::</td>
   <td><strong>a</strong>(nc)</td><td><p>Atractive parameter at working temperature</p></td>
 </tr>
 <tr>
-  <td><span class="anchor" id="variable-b~6"></span>real(kind=wp),</td>
+  <td><span class="anchor" id="variable-b~3"></span>real(kind=wp),</td>
 <td>intent(in)</td>
   <td></td>  <td></td><td>::</td>
   <td><strong>b</strong>(nc)</td><td><p>Repulsive parameter</p></td>
 </tr>
 <tr>
-  <td><span class="anchor" id="variable-kij~4"></span>real(kind=wp),</td>
+  <td><span class="anchor" id="variable-kij~5"></span>real(kind=wp),</td>
 <td>intent(in)</td>
   <td></td>  <td></td><td>::</td>
   <td><strong>kij</strong>(nc,nc)</td><td><p>Kij matrix</p></td>
 </tr>
 <tr>
-  <td><span class="anchor" id="variable-dadt~2"></span>real(kind=wp),</td>
+  <td><span class="anchor" id="variable-dadt~3"></span>real(kind=wp),</td>
 <td>intent(in)</td>
   <td></td>  <td></td><td>::</td>
   <td><strong>dadt</strong>(nc)</td><td><p>First derivative with T</p></td>
 </tr>
 <tr>
-  <td><span class="anchor" id="variable-da2dt2~2"></span>real(kind=wp),</td>
+  <td><span class="anchor" id="variable-da2dt2~3"></span>real(kind=wp),</td>
 <td>intent(in)</td>
   <td></td>  <td></td><td>::</td>
   <td><strong>da2dt2</strong>(nc)</td><td><p>Second derivative with T</p></td>
 </tr>
 <tr>
-  <td><span class="anchor" id="variable-dkijdt~4"></span>real(kind=wp),</td>
+  <td><span class="anchor" id="variable-dkijdt~5"></span>real(kind=wp),</td>
 <td>intent(in)</td>
   <td></td>  <td></td><td>::</td>
   <td><strong>dkijdt</strong>(nc,nc)</td><td><p>Kij matrix first derivative</p></td>
 </tr>
 <tr>
-  <td><span class="anchor" id="variable-dkij2dt2~4"></span>real(kind=wp),</td>
+  <td><span class="anchor" id="variable-dkij2dt2~5"></span>real(kind=wp),</td>
 <td>intent(in)</td>
   <td></td>  <td></td><td>::</td>
   <td><strong>dkij2dt2</strong>(nc,nc)</td><td><p>Kij matrix second derivative</p></td>
 </tr>
 <tr>
-  <td><span class="anchor" id="variable-lij~3"></span>real(kind=wp),</td>
+  <td><span class="anchor" id="variable-lij~2"></span>real(kind=wp),</td>
 <td>intent(in)</td>
   <td></td>  <td></td><td>::</td>
   <td><strong>lij</strong>(nc,nc)</td><td><p>Lij matrix</p></td>
 </tr>
 <tr>
-  <td><span class="anchor" id="variable-aij~6"></span>real(kind=wp),</td>
+  <td><span class="anchor" id="variable-aij~2"></span>real(kind=wp),</td>
 <td>intent(out)</td>
   <td></td>  <td></td><td>::</td>
   <td><strong>aij</strong>(nc,nc)</td><td><p>Binary atractive parameters matrix</p></td>
 </tr>
 <tr>
-  <td><span class="anchor" id="variable-daijdt~2"></span>real(kind=wp),</td>
+  <td><span class="anchor" id="variable-daijdt"></span>real(kind=wp),</td>
 <td>intent(out)</td>
   <td></td>  <td></td><td>::</td>
   <td><strong>daijdt</strong>(nc,nc)</td><td><p>First derivative with T</p></td>
 </tr>
 <tr>
-  <td><span class="anchor" id="variable-daij2dt2~2"></span>real(kind=wp),</td>
+  <td><span class="anchor" id="variable-daij2dt2"></span>real(kind=wp),</td>
 <td>intent(out)</td>
   <td></td>  <td></td><td>::</td>
   <td><strong>daij2dt2</strong>(nc,nc)</td><td><p>Second derivative with T</p></td>
 </tr>
 <tr>
-  <td><span class="anchor" id="variable-bij~4"></span>real(kind=wp),</td>
+  <td><span class="anchor" id="variable-bij~2"></span>real(kind=wp),</td>
 <td>intent(out)</td>
   <td></td>  <td></td><td>::</td>
   <td><strong>bij</strong>(nc,nc)</td><td><p>Repulse parameter matrix</p></td>
@@ -234,8 +234,8 @@
   <div class="panel-heading text-left"><h3 class="panel-title"><a data-toggle="collapse" href="#vars-1">Variables</a></h3></div>
   <div id="vars-1" class="panel-collapse collapse">
     <div class="list-group">
-      <a class="list-group-item" href="../proc/quadratic.html#variable-i~6">i</a>
-      <a class="list-group-item" href="../proc/quadratic.html#variable-j~5">j</a>
+      <a class="list-group-item" href="../proc/quadratic.html#variable-i~2">i</a>
+      <a class="list-group-item" href="../proc/quadratic.html#variable-j~2">j</a>
     </div>
   </div>
 </div>
@@ -256,12 +256,12 @@
 <thead><tr><th>Type</th><th>Visibility</th><th>Attributes</th><th></th><th>Name</th><th></th><th>Initial</th><th></th></thead>
 <tbody>
 <tr>
-  <td><span class="anchor" id="variable-i~6"></span>integer,</td>
+  <td><span class="anchor" id="variable-i~2"></span>integer,</td>
 <td>public</td>  <td></td><td>::</td>
   <td><strong>i</strong></td><td></td><td></td><td></td>
 </tr>
 <tr>
-  <td><span class="anchor" id="variable-j~5"></span>integer,</td>
+  <td><span class="anchor" id="variable-j~2"></span>integer,</td>
 <td>public</td>  <td></td><td>::</td>
   <td><strong>j</strong></td><td></td><td></td><td></td>
 </tr>
@@ -336,14 +336,14 @@
     <footer>
       <div class="container">
       <div class="row">
-        <div class="col-xs-6 col-md-6"><p>fedebenelli/rkpr was developed by Federico Benelli<br>&copy; 2022 <a rel="license" href="https://opensource.org/licenses/MIT">MIT</a>
+        <div class="col-xs-6 col-md-6"><p>Multicomponent Equations of State was developed by Federico Benelli<br>&copy; 2022 <a rel="license" href="https://opensource.org/licenses/MIT">MIT</a>
 </p>
         </div>
         <div class="col-xs-6 col-md-6">
           <p class="text-right">
             Documentation generated by 
             <a href="https://github.com/Fortran-FOSS-Programmers/ford">FORD</a>
- on 2022-05-11 17:22            </p>
+ on 2022-06-23 11:49            </p>
         </div>
       </div>
       <br>

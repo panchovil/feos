@@ -8,7 +8,7 @@
     <meta name="author" content="Federico Benelli" >
     <link rel="icon" href="../favicon.png">
 
-    <title>kij_tdep &ndash; fedebenelli/rkpr</title>
+    <title>kij_tdep &ndash; Multicomponent Equations of State</title>
 
     <link href="../css/bootstrap.min.css" rel="stylesheet">
     <link href="../css/pygments.css" rel="stylesheet">
@@ -39,7 +39,7 @@
             <span class="icon-bar"></span>
             <span class="icon-bar"></span>
           </button>
-          <a class="navbar-brand" href="../index.html">fedebenelli/rkpr </a>
+          <a class="navbar-brand" href="../index.html">Multicomponent Equations of State </a>
         </div>
         <div id="navbar" class="navbar-collapse collapse">
           <ul class="nav navbar-nav">
@@ -53,7 +53,7 @@
             <li><a href="../lists/modules.html">Modules</a></li>
             <li><a href="../lists/procedures.html">Procedures</a></li>
                    <li><a href="../lists/types.html">Derived Types</a></li>
-            <li><a href="../program/main.html">Program</a></li>
+            <li><a href="../lists/programs.html">Programs</a></li>
        
             </ul>
         
@@ -62,7 +62,7 @@
 <li class="visible-xs hidden-sm visible-lg"><a href="../lists/modules.html">Modules</a></li>
 <li class="visible-xs hidden-sm visible-lg"><a href="../lists/procedures.html">Procedures</a></li>
                              <li class="visible-xs hidden-sm visible-lg"><a href="../lists/types.html">Derived Types</a></li>
-<li class="visible-xs hidden-sm visible-lg"><a href="../program/main.html">Program</a></li>
+<li class="visible-xs hidden-sm visible-lg"><a href="../lists/programs.html">Programs</a></li>
           </ul>
         <form action="../search.html" class="navbar-form navbar-right" role="search">
         <div class="form-group">
@@ -89,13 +89,13 @@
      <li><i class="fa fa-list-ol"></i>
        <a data-toggle="tooltip"
     data-placement="bottom" data-html="true"
-    title=" 2.0% of total for procedures.">14 statements</a>
+    title=" 4.7% of total for procedures.">24 statements</a>
      </li> 
-    <li><i class="fa fa-code"></i><a href="../src/cubic_eos.f90"> Source File</a></li>
+    <li><i class="fa fa-code"></i><a href="../src/mixing_rules.f90"> Source File</a></li>
   </ul>
   <ol class="breadcrumb in-well text-right">
-     <li><a href='../sourcefile/cubic_eos.f90.html'>cubic_eos.f90</a></li>
-     <li><a href='../module/cubic_eos.html'>cubic_eos</a></li>
+     <li><a href='../sourcefile/mixing_rules.f90.html'>mixing_rules.f90</a></li>
+     <li><a href='../module/mixing_rules.html'>mixing_rules</a></li>
      <li class="active">kij_tdep</li>
   </ol>
 </div>
@@ -118,7 +118,11 @@
   <div class="panel-heading text-left"><h3 class="panel-title"><a data-toggle="collapse" href="#vars-0">Variables</a></h3></div>
   <div id="vars-0" class="panel-collapse collapse">
     <div class="list-group">
-      <a class="list-group-item" href="../proc/kij_tdep.html#variable-i~4">i</a>
+      <a class="list-group-item" href="../proc/kij_tdep.html#variable-t_star~2">T_star</a>
+      <a class="list-group-item" href="../proc/kij_tdep.html#variable-kij_0~2">kij_0</a>
+      <a class="list-group-item" href="../proc/kij_tdep.html#variable-kij_inf~2">kij_inf</a>
+      <a class="list-group-item" href="../proc/kij_tdep.html#variable-nc~2">nc</a>
+      <a class="list-group-item" href="../proc/kij_tdep.html#variable-sp">sp</a>
     </div>
   </div>
 </div>
@@ -134,52 +138,43 @@
     </div>
     
     <div class="col-md-9" id='text'>
-    <h2>public subroutine kij_tdep(T, kij, dkijdt, dkij2dt2)</h2>
-        <div class="panel panel-default">
-      <div class="panel-heading">
-  <h3 class="panel-title">Uses</h3>
-      </div>
-      <ul class="list-group">
-      <li class="list-group-item">
-  <ul class="list-inline">
-    <li><a href='../module/mixture.html'>mixture</a></li>
-  </ul>
-      </li>
-      </ul>
-    </div>
+    <h2>public subroutine kij_tdep(self, T, kij, dkijdt, dkij2dt2)</h2>
+    
 
-
-    <p>Kij with temperature dependance according to the equation:
-<script type="math/tex; mode=display"> K_{ij}(T) = K_{ij\infty} + K_{ij0} e^{T/T^*} </script>
-The parameters of the equation are obtained from the mixture module</p>
 
     <h3>Arguments</h3>
       <table class="table table-striped varlist">
 <thead><tr><th>Type</th><th>Intent</th><th>Optional</th><th>Attributes</th><th></th><th>Name</th><th></th></thead>
 <tbody>
 <tr>
-  <td><span class="anchor" id="variable-t~6"></span>real(kind=wp),</td>
+  <td><span class="anchor" id="variable-self~4"></span>class(<a href='../type/kij_exp_t.html'>kij_exp_t</a>)</td>
+<td></td>
+  <td></td>  <td></td><td>::</td>
+  <td><strong>self</strong></td><td></td>
+</tr>
+<tr>
+  <td><span class="anchor" id="variable-t~4"></span>real(kind=wp),</td>
 <td>intent(in)</td>
   <td></td>  <td></td><td>::</td>
   <td><strong>T</strong></td><td><p>Temperature</p></td>
 </tr>
 <tr>
-  <td><span class="anchor" id="variable-kij~2"></span>real(kind=wp),</td>
-<td>intent(out)</td>
-  <td></td>  <td></td><td>::</td>
-  <td><strong>kij</strong>(nc,nc)</td><td><p>Binary interaction parameter matrix</p></td>
+  <td><span class="anchor" id="variable-kij~4"></span>real(kind=wp),</td>
+<td>intent(out),</td>
+  <td></td>  <td>allocatable</td><td>::</td>
+  <td><strong>kij</strong>(:,:)</td><td><p>Binary interaction parameter matrix</p></td>
 </tr>
 <tr>
-  <td><span class="anchor" id="variable-dkijdt~2"></span>real(kind=wp),</td>
-<td>intent(out)</td>
-  <td></td>  <td></td><td>::</td>
-  <td><strong>dkijdt</strong>(nc,nc)</td><td><p>Binary interaction parameter first derivative with T matrix</p></td>
+  <td><span class="anchor" id="variable-dkijdt~4"></span>real(kind=wp),</td>
+<td>intent(out),</td>
+  <td></td>  <td>allocatable</td><td>::</td>
+  <td><strong>dkijdt</strong>(:,:)</td><td><p>Binary interaction parameter first derivative with T matrix</p></td>
 </tr>
 <tr>
-  <td><span class="anchor" id="variable-dkij2dt2~2"></span>real(kind=wp),</td>
-<td>intent(out)</td>
-  <td></td>  <td></td><td>::</td>
-  <td><strong>dkij2dt2</strong>(nc,nc)</td><td><p>Binary interaction parameter second derivative with T matrix</p></td>
+  <td><span class="anchor" id="variable-dkij2dt2~4"></span>real(kind=wp),</td>
+<td>intent(out),</td>
+  <td></td>  <td>allocatable</td><td>::</td>
+  <td><strong>dkij2dt2</strong>(:,:)</td><td><p>Binary interaction parameter second derivative with T matrix</p></td>
 </tr>
 </tbody>
 </table>
@@ -193,7 +188,11 @@ The parameters of the equation are obtained from the mixture module</p>
   <div class="panel-heading text-left"><h3 class="panel-title"><a data-toggle="collapse" href="#vars-1">Variables</a></h3></div>
   <div id="vars-1" class="panel-collapse collapse">
     <div class="list-group">
-      <a class="list-group-item" href="../proc/kij_tdep.html#variable-i~4">i</a>
+      <a class="list-group-item" href="../proc/kij_tdep.html#variable-t_star~2">T_star</a>
+      <a class="list-group-item" href="../proc/kij_tdep.html#variable-kij_0~2">kij_0</a>
+      <a class="list-group-item" href="../proc/kij_tdep.html#variable-kij_inf~2">kij_inf</a>
+      <a class="list-group-item" href="../proc/kij_tdep.html#variable-nc~2">nc</a>
+      <a class="list-group-item" href="../proc/kij_tdep.html#variable-sp">sp</a>
     </div>
   </div>
 </div>
@@ -214,9 +213,29 @@ The parameters of the equation are obtained from the mixture module</p>
 <thead><tr><th>Type</th><th>Visibility</th><th>Attributes</th><th></th><th>Name</th><th></th><th>Initial</th><th></th></thead>
 <tbody>
 <tr>
-  <td><span class="anchor" id="variable-i~4"></span>integer,</td>
+  <td><span class="anchor" id="variable-t_star~2"></span>real(kind=wp),</td>
+<td>public,</td>  <td>allocatable</td><td>::</td>
+  <td><strong>T_star</strong>(:,:)</td><td></td><td></td><td></td>
+</tr>
+<tr>
+  <td><span class="anchor" id="variable-kij_0~2"></span>real(kind=wp),</td>
+<td>public,</td>  <td>allocatable</td><td>::</td>
+  <td><strong>kij_0</strong>(:,:)</td><td></td><td></td><td></td>
+</tr>
+<tr>
+  <td><span class="anchor" id="variable-kij_inf~2"></span>real(kind=wp),</td>
+<td>public,</td>  <td>allocatable</td><td>::</td>
+  <td><strong>kij_inf</strong>(:,:)</td><td></td><td></td><td></td>
+</tr>
+<tr>
+  <td><span class="anchor" id="variable-nc~2"></span>integer,</td>
 <td>public</td>  <td></td><td>::</td>
-  <td><strong>i</strong></td><td></td><td></td><td></td>
+  <td><strong>nc</strong></td><td></td><td></td><td></td>
+</tr>
+<tr>
+  <td><span class="anchor" id="variable-sp"></span>integer,</td>
+<td>public</td>  <td></td><td>::</td>
+  <td><strong>sp</strong>(2)</td><td></td><td></td><td></td>
 </tr>
 </tbody>
 </table>
@@ -233,25 +252,37 @@ The parameters of the equation are obtained from the mixture module</p>
     
     <section>
     <h2><span class="anchor" id="src"></span>Source Code</h2>
-    <div class="highlight"><pre><span></span><span class="w">   </span><span class="k">subroutine </span><span class="n">kij_tdep</span><span class="p">(</span><span class="n">T</span><span class="p">,</span><span class="w"> </span><span class="n">kij</span><span class="p">,</span><span class="w"> </span><span class="n">dkijdt</span><span class="p">,</span><span class="w"> </span><span class="n">dkij2dt2</span><span class="p">)</span><span class="w"></span>
-<span class="w">      </span><span class="c">!! Kij with temperature dependance according to the equation:</span>
-<span class="w">      </span><span class="c">!! \[ K_{ij}(T) = K_{ij\infty} + K_{ij0} e^{T/T^*} \]</span>
-<span class="w">      </span><span class="c">!! The parameters of the equation are obtained from the mixture module</span>
-<span class="w">      </span><span class="k">use </span><span class="n">mixture</span><span class="p">,</span><span class="w"> </span><span class="k">only</span><span class="p">:</span><span class="w"> </span><span class="n">nc</span><span class="p">,</span><span class="w"> </span><span class="n">kij_0</span><span class="p">,</span><span class="w"> </span><span class="n">kij_inf</span><span class="p">,</span><span class="w"> </span><span class="n">T_star</span><span class="w"></span>
+    <div class="highlight"><pre><span></span><span class="w">   </span><span class="k">subroutine </span><span class="n">kij_tdep</span><span class="p">(</span><span class="n">self</span><span class="p">,</span><span class="w"> </span><span class="n">T</span><span class="p">,</span><span class="w"> </span><span class="n">kij</span><span class="p">,</span><span class="w"> </span><span class="n">dkijdt</span><span class="p">,</span><span class="w"> </span><span class="n">dkij2dt2</span><span class="p">)</span><span class="w"></span>
 <span class="w">      </span><span class="k">implicit none</span>
-<span class="k">      </span><span class="kt">real</span><span class="p">(</span><span class="n">wp</span><span class="p">),</span><span class="w"> </span><span class="k">intent</span><span class="p">(</span><span class="n">in</span><span class="p">)</span><span class="w"> </span><span class="kd">::</span><span class="w"> </span><span class="n">T</span><span class="w"> </span><span class="c">!! Temperature</span>
-<span class="w">      </span><span class="kt">real</span><span class="p">(</span><span class="n">wp</span><span class="p">),</span><span class="w"> </span><span class="k">intent</span><span class="p">(</span><span class="n">out</span><span class="p">)</span><span class="w"> </span><span class="kd">::</span><span class="w"> </span><span class="n">kij</span><span class="p">(</span><span class="n">nc</span><span class="p">,</span><span class="w"> </span><span class="n">nc</span><span class="p">)</span><span class="w"> </span><span class="c">!! Binary interaction parameter matrix</span>
-<span class="w">      </span><span class="kt">real</span><span class="p">(</span><span class="n">wp</span><span class="p">),</span><span class="w"> </span><span class="k">intent</span><span class="p">(</span><span class="n">out</span><span class="p">)</span><span class="w"> </span><span class="kd">::</span><span class="w"> </span><span class="n">dkijdt</span><span class="p">(</span><span class="n">nc</span><span class="p">,</span><span class="w"> </span><span class="n">nc</span><span class="p">)</span><span class="w"> </span><span class="c">!! Binary interaction parameter first derivative with T matrix</span>
-<span class="w">      </span><span class="kt">real</span><span class="p">(</span><span class="n">wp</span><span class="p">),</span><span class="w"> </span><span class="k">intent</span><span class="p">(</span><span class="n">out</span><span class="p">)</span><span class="w"> </span><span class="kd">::</span><span class="w"> </span><span class="n">dkij2dt2</span><span class="p">(</span><span class="n">nc</span><span class="p">,</span><span class="w"> </span><span class="n">nc</span><span class="p">)</span><span class="w"> </span><span class="c">!! Binary interaction parameter second derivative with T matrix</span>
+<span class="k">      class</span><span class="p">(</span><span class="n">kij_exp_t</span><span class="p">)</span><span class="w"> </span><span class="kd">::</span><span class="w"> </span><span class="n">self</span><span class="w"></span>
+<span class="w">      </span><span class="kt">real</span><span class="p">(</span><span class="n">wp</span><span class="p">),</span><span class="w"> </span><span class="k">intent</span><span class="p">(</span><span class="n">in</span><span class="p">)</span><span class="w"> </span><span class="kd">::</span><span class="w"> </span><span class="n">T</span><span class="w"> </span><span class="c">!! Temperature</span>
 
-<span class="w">      </span><span class="kt">integer</span><span class="w"> </span><span class="kd">::</span><span class="w"> </span><span class="n">i</span><span class="w"></span>
+<span class="w">      </span><span class="kt">real</span><span class="p">(</span><span class="n">wp</span><span class="p">),</span><span class="w"> </span><span class="k">allocatable</span><span class="p">,</span><span class="w"> </span><span class="k">intent</span><span class="p">(</span><span class="n">out</span><span class="p">)</span><span class="w"> </span><span class="kd">::</span><span class="w"> </span><span class="n">kij</span><span class="p">(:,</span><span class="w"> </span><span class="p">:)</span><span class="w"> </span><span class="c">!! Binary interaction parameter matrix</span>
+<span class="w">      </span><span class="kt">real</span><span class="p">(</span><span class="n">wp</span><span class="p">),</span><span class="w"> </span><span class="k">allocatable</span><span class="p">,</span><span class="w"> </span><span class="k">intent</span><span class="p">(</span><span class="n">out</span><span class="p">)</span><span class="w"> </span><span class="kd">::</span><span class="w"> </span><span class="n">dkijdt</span><span class="p">(:,</span><span class="w"> </span><span class="p">:)</span><span class="w"> </span><span class="c">!! Binary interaction parameter first derivative with T matrix</span>
+<span class="w">      </span><span class="kt">real</span><span class="p">(</span><span class="n">wp</span><span class="p">),</span><span class="w"> </span><span class="k">allocatable</span><span class="p">,</span><span class="w"> </span><span class="k">intent</span><span class="p">(</span><span class="n">out</span><span class="p">)</span><span class="w"> </span><span class="kd">::</span><span class="w"> </span><span class="n">dkij2dt2</span><span class="p">(:,</span><span class="w"> </span><span class="p">:)</span><span class="w"> </span><span class="c">!! Binary interaction parameter second derivative with T matrix</span>
 
-<span class="w">      </span><span class="k">do </span><span class="n">i</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span><span class="w"> </span><span class="n">nc</span><span class="w"></span>
-<span class="w">         </span><span class="n">kij</span><span class="p">(:</span><span class="n">i</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span><span class="w"> </span><span class="n">i</span><span class="p">)</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">kij_inf</span><span class="p">(:</span><span class="n">i</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span><span class="w"> </span><span class="n">i</span><span class="p">)</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">kij_0</span><span class="p">(:</span><span class="n">i</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span><span class="w"> </span><span class="n">i</span><span class="p">)</span><span class="o">*</span><span class="nb">exp</span><span class="p">(</span><span class="o">-</span><span class="n">T</span><span class="o">/</span><span class="n">T_star</span><span class="p">(:</span><span class="n">i</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span><span class="w"> </span><span class="n">i</span><span class="p">))</span><span class="w"></span>
-<span class="w">         </span><span class="n">dkijdt</span><span class="p">(:</span><span class="n">i</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span><span class="w"> </span><span class="n">i</span><span class="p">)</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="o">-</span><span class="n">kij_0</span><span class="p">(:</span><span class="n">i</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span><span class="w"> </span><span class="n">i</span><span class="p">)</span><span class="o">/</span><span class="n">T_star</span><span class="p">(:</span><span class="n">i</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span><span class="w"> </span><span class="n">i</span><span class="p">)</span><span class="o">*</span><span class="nb">exp</span><span class="p">(</span><span class="o">-</span><span class="n">T</span><span class="o">/</span><span class="n">T_star</span><span class="p">(:</span><span class="n">i</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span><span class="w"> </span><span class="n">i</span><span class="p">))</span><span class="w"></span>
-<span class="w">         </span><span class="n">dkij2dt2</span><span class="p">(:</span><span class="n">i</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span><span class="w"> </span><span class="n">i</span><span class="p">)</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">kij_0</span><span class="p">(:</span><span class="n">i</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span><span class="w"> </span><span class="n">i</span><span class="p">)</span><span class="o">/</span><span class="n">T_star</span><span class="p">(:</span><span class="n">i</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span><span class="w"> </span><span class="n">i</span><span class="p">)</span><span class="o">**</span><span class="mi">2</span><span class="o">*</span><span class="nb">exp</span><span class="p">(</span><span class="o">-</span><span class="n">T</span><span class="o">/</span><span class="n">T_star</span><span class="p">(:</span><span class="n">i</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span><span class="w"> </span><span class="n">i</span><span class="p">))</span><span class="w"></span>
-<span class="w">      </span><span class="k">end do</span>
-<span class="k">   end subroutine </span><span class="n">kij_tdep</span><span class="w"></span>
+<span class="w">      </span><span class="kt">real</span><span class="p">(</span><span class="n">wp</span><span class="p">),</span><span class="w"> </span><span class="k">allocatable</span><span class="w"> </span><span class="kd">::</span><span class="w"> </span><span class="n">kij_inf</span><span class="p">(:,</span><span class="w"> </span><span class="p">:),</span><span class="w"> </span><span class="n">kij_0</span><span class="p">(:,</span><span class="w"> </span><span class="p">:),</span><span class="w"> </span><span class="n">T_star</span><span class="p">(:,</span><span class="w"> </span><span class="p">:)</span><span class="w"></span>
+<span class="w">      </span><span class="kt">integer</span><span class="w"> </span><span class="kd">::</span><span class="w"> </span><span class="n">nc</span><span class="p">,</span><span class="w"> </span><span class="n">sp</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span><span class="w"></span>
+
+<span class="w">      </span><span class="n">kij_0</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">self</span><span class="p">%</span><span class="n">kij_0</span><span class="w"></span>
+<span class="w">      </span><span class="n">kij_inf</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">self</span><span class="p">%</span><span class="n">kij_inf</span><span class="w"></span>
+<span class="w">      </span><span class="n">T_star</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">self</span><span class="p">%</span><span class="n">T_star</span><span class="w"></span>
+
+<span class="w">      </span><span class="n">sp</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nb">shape</span><span class="p">(</span><span class="n">self</span><span class="p">%</span><span class="n">kij_0</span><span class="p">)</span><span class="w"></span>
+<span class="w">      </span><span class="n">nc</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">sp</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span><span class="w"></span>
+
+<span class="w">      </span><span class="k">allocate</span><span class="p">(</span><span class="n">kij</span><span class="p">(</span><span class="n">nc</span><span class="p">,</span><span class="n">nc</span><span class="p">))</span><span class="w"></span>
+<span class="w">      </span><span class="k">allocate</span><span class="p">(</span><span class="n">dkijdt</span><span class="p">(</span><span class="n">nc</span><span class="p">,</span><span class="n">nc</span><span class="p">))</span><span class="w"></span>
+<span class="w">      </span><span class="k">allocate</span><span class="p">(</span><span class="n">dkij2dt2</span><span class="p">(</span><span class="n">nc</span><span class="p">,</span><span class="n">nc</span><span class="p">))</span><span class="w"></span>
+
+<span class="w">      </span><span class="n">kij</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">kij_inf</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">kij_0</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="nb">exp</span><span class="p">(</span><span class="o">-</span><span class="n">T</span><span class="o">/</span><span class="n">T_star</span><span class="p">)</span><span class="w"></span>
+<span class="w">      </span><span class="n">dkijdt</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="o">-</span><span class="n">kij_0</span><span class="o">/</span><span class="n">T_star</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="nb">exp</span><span class="p">(</span><span class="o">-</span><span class="n">T</span><span class="o">/</span><span class="n">T_star</span><span class="p">)</span><span class="w"></span>
+<span class="w">      </span><span class="n">dkij2dt2</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">kij_0</span><span class="o">/</span><span class="n">T_star</span><span class="o">**</span><span class="mi">2</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="nb">exp</span><span class="p">(</span><span class="o">-</span><span class="n">T</span><span class="o">/</span><span class="n">T_star</span><span class="p">)</span><span class="w"></span>
+
+<span class="w">      </span><span class="n">self</span><span class="p">%</span><span class="n">kij</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">kij</span><span class="w"></span>
+<span class="w">      </span><span class="n">self</span><span class="p">%</span><span class="n">dkijdt</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">dkijdt</span><span class="w"></span>
+<span class="w">      </span><span class="n">self</span><span class="p">%</span><span class="n">dkij2dt2</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">dkij2dt2</span><span class="w"></span>
+<span class="w">   </span><span class="k">end subroutine </span><span class="n">kij_tdep</span><span class="w"></span>
 </pre></div>
 
     </section>
@@ -265,14 +296,14 @@ The parameters of the equation are obtained from the mixture module</p>
     <footer>
       <div class="container">
       <div class="row">
-        <div class="col-xs-6 col-md-6"><p>fedebenelli/rkpr was developed by Federico Benelli<br>&copy; 2022 <a rel="license" href="https://opensource.org/licenses/MIT">MIT</a>
+        <div class="col-xs-6 col-md-6"><p>Multicomponent Equations of State was developed by Federico Benelli<br>&copy; 2022 <a rel="license" href="https://opensource.org/licenses/MIT">MIT</a>
 </p>
         </div>
         <div class="col-xs-6 col-md-6">
           <p class="text-right">
             Documentation generated by 
             <a href="https://github.com/Fortran-FOSS-Programmers/ford">FORD</a>
- on 2022-05-11 17:22            </p>
+ on 2022-06-23 11:49            </p>
         </div>
       </div>
       <br>

@@ -8,7 +8,7 @@
     <meta name="author" content="Federico Benelli" >
     <link rel="icon" href="../favicon.png">
 
-    <title>mixture &ndash; fedebenelli/rkpr</title>
+    <title>mixture &ndash; Multicomponent Equations of State</title>
 
     <link href="../css/bootstrap.min.css" rel="stylesheet">
     <link href="../css/pygments.css" rel="stylesheet">
@@ -39,7 +39,7 @@
             <span class="icon-bar"></span>
             <span class="icon-bar"></span>
           </button>
-          <a class="navbar-brand" href="../index.html">fedebenelli/rkpr </a>
+          <a class="navbar-brand" href="../index.html">Multicomponent Equations of State </a>
         </div>
         <div id="navbar" class="navbar-collapse collapse">
           <ul class="nav navbar-nav">
@@ -53,7 +53,7 @@
             <li><a href="../lists/modules.html">Modules</a></li>
             <li><a href="../lists/procedures.html">Procedures</a></li>
                    <li><a href="../lists/types.html">Derived Types</a></li>
-            <li><a href="../program/main.html">Program</a></li>
+            <li><a href="../lists/programs.html">Programs</a></li>
        
             </ul>
         
@@ -62,7 +62,7 @@
 <li class="visible-xs hidden-sm visible-lg"><a href="../lists/modules.html">Modules</a></li>
 <li class="visible-xs hidden-sm visible-lg"><a href="../lists/procedures.html">Procedures</a></li>
                              <li class="visible-xs hidden-sm visible-lg"><a href="../lists/types.html">Derived Types</a></li>
-<li class="visible-xs hidden-sm visible-lg"><a href="../program/main.html">Program</a></li>
+<li class="visible-xs hidden-sm visible-lg"><a href="../lists/programs.html">Programs</a></li>
           </ul>
         <form action="../search.html" class="navbar-form navbar-right" role="search">
         <div class="form-group">
@@ -89,7 +89,7 @@
      <li><i class="fa fa-list-ol"></i>
        <a data-toggle="tooltip"
     data-placement="bottom" data-html="true"
-    title=" 4.0% of total for modules and submodules.">32 statements</a>
+    title=" 9.0% of total for modules and submodules.">55 statements</a>
      </li> 
     <li><i class="fa fa-code"></i><a href="../src/mixture.f90"> Source File</a></li>
   </ul>
@@ -114,29 +114,10 @@
   <h3>Contents</h3>
  
 <div class="panel panel-primary">
-  <div class="panel-heading text-left"><h3 class="panel-title"><a data-toggle="collapse" href="#vars-0">Variables</a></h3></div>
-  <div id="vars-0" class="panel-collapse collapse">
+  <div class="panel-heading text-left"><h3 class="panel-title"><a data-toggle="collapse" href="#types-0">Derived Types</a></h3></div>
+  <div id="types-0" class="panel-collapse collapse">
     <div class="list-group">
-      <a class="list-group-item" href="../module/mixture.html#variable-t_star~2">T_star</a>
-      <a class="list-group-item" href="../module/mixture.html#variable-ac~10">ac</a>
-      <a class="list-group-item" href="../module/mixture.html#variable-aij~7">aij</a>
-      <a class="list-group-item" href="../module/mixture.html#variable-b~17">b</a>
-      <a class="list-group-item" href="../module/mixture.html#variable-dc~4">dc</a>
-      <a class="list-group-item" href="../module/mixture.html#variable-del1~15">del1</a>
-      <a class="list-group-item" href="../module/mixture.html#variable-k~5">k</a>
-      <a class="list-group-item" href="../module/mixture.html#variable-kij~5">kij</a>
-      <a class="list-group-item" href="../module/mixture.html#variable-kij_0">kij_0</a>
-      <a class="list-group-item" href="../module/mixture.html#variable-kij_inf~2">kij_inf</a>
-      <a class="list-group-item" href="../module/mixture.html#variable-lij~4">lij</a>
-      <a class="list-group-item" href="../module/mixture.html#variable-n~6">n</a>
-      <a class="list-group-item" href="../module/mixture.html#variable-names~2">names</a>
-      <a class="list-group-item" href="../module/mixture.html#variable-nc~8">nc</a>
-      <a class="list-group-item" href="../module/mixture.html#variable-ncomb~2">ncomb</a>
-      <a class="list-group-item" href="../module/mixture.html#variable-nmodel~2">nmodel</a>
-      <a class="list-group-item" href="../module/mixture.html#variable-ntdep~2">ntdep</a>
-      <a class="list-group-item" href="../module/mixture.html#variable-pc~3">pc</a>
-      <a class="list-group-item" href="../module/mixture.html#variable-tc~3">tc</a>
-      <a class="list-group-item" href="../module/mixture.html#variable-w~9">w</a>
+      <a class="list-group-item" href="../module/mixture.html#type-mix">mix</a>
     </div>
   </div>
 </div>
@@ -144,7 +125,7 @@
   <div class="panel-heading text-left"><h3 class="panel-title"><a data-toggle="collapse" href="#subs-0">Subroutines</a></h3></div>
   <div class="list-group">
     <div id="subs-0" class="panel-collapse collapse">
-      <a class="list-group-item" href="../module/mixture.html#proc-setup">setup</a>
+      <a class="list-group-item" href="../module/mixture.html#proc-aij">aij</a>
     </div>
   </div>
 </div>
@@ -154,17 +135,7 @@
     </div>
     
     <div class="col-md-9" id='text'>
-    <p>Module to represent a mixture of fluids, it&rsquo;s used to save the
-multiple component&rsquo;s properties to be used by different subroutines.
-It also includes a set of subroutines to read the data and save it
-in the module.</p>
-<p>System of units: This units are asumed, if the user wants to use another
-system, the RGAS constant should be changed at the module <code>constants</code></p>
-<ul>
-<li>Volume: Liter</li>
-<li>Pressure: bar</li>
-<li>Temperature: Kelvin</li>
-</ul>
+    
 <br>        <div class="panel panel-default">
       <div class="panel-heading">
   <h3 class="panel-title">Uses</h3>
@@ -172,8 +143,152 @@ system, the RGAS constant should be changed at the module <code>constants</code>
       <ul class="list-group">
       <li class="list-group-item">
   <ul class="list-inline">
+    <li><a href='../module/cubic_eos.html'>cubic_eos</a></li>
+    <li><a href='../module/mixing_rules.html'>mixing_rules</a></li>
     <li><a href='../module/constants.html'>constants</a></li>
   </ul>
+      </li>
+      <li class="list-group-item">
+  <div class="depgraph"><?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN"
+ "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
+<!-- Generated by graphviz version 4.0.0 (0)
+ -->
+<!-- Title: module~~mixture~~UsesGraph Pages: 1 -->
+<svg id="modulemixtureUsesGraph" width="362pt" height="72pt"
+ viewBox="0.00 0.00 362.00 72.21" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+<g id="module~~mixture~~UsesGraph" class="graph" transform="scale(1 1) rotate(0) translate(4 68.21)">
+<title>module~~mixture~~UsesGraph</title>
+<polygon fill="white" stroke="transparent" points="-4,4 -4,-68.21 358,-68.21 358,4 -4,4"/>
+<!-- module~mixture -->
+<g id="module~~mixture~~UsesGraph_node1" class="node">
+<title>module~mixture</title>
+<polygon fill="none" stroke="black" points="354,-36.17 300,-36.17 300,-12.17 354,-12.17 354,-36.17"/>
+<text text-anchor="middle" x="327" y="-21.77" font-family="Helvetica,sans-Serif" font-size="10.50">mixture</text>
+</g>
+<!-- module~constants -->
+<g id="module~~mixture~~UsesGraph_node2" class="node">
+<title>module~constants</title>
+<g id="a_module~~mixture~~UsesGraph_node2"><a xlink:href=".././module/constants.html" xlink:title="constants">
+<polygon fill="#337ab7" stroke="#337ab7" points="58,-56.17 0,-56.17 0,-32.17 58,-32.17 58,-56.17"/>
+<text text-anchor="middle" x="29" y="-41.77" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">constants</text>
+</a>
+</g>
+</g>
+<!-- module~mixture&#45;&gt;module~constants -->
+<g id="module~~mixture~~UsesGraph_edge1" class="edge">
+<title>module~mixture&#45;&gt;module~constants</title>
+<path fill="none" stroke="#000000" stroke-dasharray="5,2" d="M299.76,-34.25C288.84,-38.13 275.94,-42.32 264,-45.17 206.14,-58.99 190.99,-64.25 131.5,-64.17"/>
+</g>
+<!-- module~cubic_eos -->
+<g id="module~~mixture~~UsesGraph_node3" class="node">
+<title>module~cubic_eos</title>
+<g id="a_module~~mixture~~UsesGraph_node3"><a xlink:href=".././module/cubic_eos.html" xlink:title="cubic_eos">
+<polygon fill="#337ab7" stroke="#337ab7" points="264,-36.17 203,-36.17 203,-12.17 264,-12.17 264,-36.17"/>
+<text text-anchor="middle" x="233.5" y="-21.77" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">cubic_eos</text>
+</a>
+</g>
+</g>
+<!-- module~mixture&#45;&gt;module~cubic_eos -->
+<g id="module~~mixture~~UsesGraph_edge2" class="edge">
+<title>module~mixture&#45;&gt;module~cubic_eos</title>
+<path fill="none" stroke="#000000" stroke-dasharray="5,2" d="M299.53,-24.17C291.65,-24.17 282.84,-24.17 274.31,-24.17"/>
+<polygon fill="#000000" stroke="#000000" points="274.12,-20.67 264.12,-24.17 274.12,-27.67 274.12,-20.67"/>
+</g>
+<!-- module~mixing_rules -->
+<g id="module~~mixture~~UsesGraph_node4" class="node">
+<title>module~mixing_rules</title>
+<g id="a_module~~mixture~~UsesGraph_node4"><a xlink:href=".././module/mixing_rules.html" xlink:title="mixing_rules">
+<polygon fill="#337ab7" stroke="#337ab7" points="167,-36.17 94,-36.17 94,-12.17 167,-12.17 167,-36.17"/>
+<text text-anchor="middle" x="130.5" y="-21.77" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">mixing_rules</text>
+</a>
+</g>
+</g>
+<!-- module~mixture&#45;&gt;module~mixing_rules -->
+<g id="module~~mixture~~UsesGraph_edge3" class="edge">
+<title>module~mixture&#45;&gt;module~mixing_rules</title>
+<path fill="none" stroke="#000000" stroke-dasharray="5,2" d="M299.94,-13.23C289.04,-9.21 276.11,-5.16 264,-3.17 237.25,1.24 229.84,0.69 203,-3.17 193.78,-4.49 184.1,-6.73 174.94,-9.27"/>
+<polygon fill="#000000" stroke="#000000" points="173.86,-5.94 165.25,-12.11 175.83,-12.66 173.86,-5.94"/>
+</g>
+<!-- module~cubic_eos&#45;&gt;module~constants -->
+<g id="module~~mixture~~UsesGraph_edge4" class="edge">
+<title>module~cubic_eos&#45;&gt;module~constants</title>
+<path fill="none" stroke="#000000" stroke-dasharray="5,2" d="M214.37,-36.19C194.78,-47.98 162.24,-64.21 131.5,-64.17"/>
+<path fill="none" stroke="#000000" stroke-dasharray="5,2" d="M129.5,-64.17C108.84,-64.14 86.22,-59.94 67.78,-55.4"/>
+<polygon fill="#000000" stroke="#000000" points="68.56,-51.98 58.01,-52.86 66.81,-58.76 68.56,-51.98"/>
+</g>
+<!-- module~cubic_eos&#45;&gt;module~mixing_rules -->
+<g id="module~~mixture~~UsesGraph_edge5" class="edge">
+<title>module~cubic_eos&#45;&gt;module~mixing_rules</title>
+<path fill="none" stroke="#000000" stroke-dasharray="5,2" d="M202.74,-24.17C194.71,-24.17 185.84,-24.17 177.15,-24.17"/>
+<polygon fill="#000000" stroke="#000000" points="177.11,-20.67 167.11,-24.17 177.11,-27.67 177.11,-20.67"/>
+</g>
+<!-- module~mixing_rules&#45;&gt;module~constants -->
+<g id="module~~mixture~~UsesGraph_edge6" class="edge">
+<title>module~mixing_rules&#45;&gt;module~constants</title>
+<path fill="none" stroke="#000000" stroke-dasharray="5,2" d="M93.86,-31.33C85.53,-33.01 76.63,-34.79 68.2,-36.49"/>
+<polygon fill="#000000" stroke="#000000" points="67.33,-33.09 58.22,-38.5 68.71,-39.96 67.33,-33.09"/>
+</g>
+</g>
+</svg>
+</div><div><a type="button" class="graph-help" data-toggle="modal" href="#graph-help-text">Help</a></div><div class="modal fade" id="graph-help-text" tabindex="-1" role="dialog"><div class="modal-dialog modal-lg" role="document"><div class="modal-content"><div class="modal-header"><button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button><h4 class="modal-title" id="-graph-help-label">Graph Key</h4></div><div class="modal-body">
+    <p>Nodes of different colours represent the following: </p>
+    <?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN"
+ "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
+<!-- Generated by graphviz version 4.0.0 (0)
+ -->
+<!-- Title: Graph Key Pages: 1 -->
+<svg width="490pt" height="32pt"
+ viewBox="0.00 0.00 489.50 32.00" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+<g id="graph0" class="graph" transform="scale(1 1) rotate(0) translate(4 28)">
+<title>Graph Key</title>
+<polygon fill="white" stroke="transparent" points="-4,4 -4,-28 485.5,-28 485.5,4 -4,4"/>
+<!-- Module -->
+<g id="node1" class="node">
+<title>Module</title>
+<polygon fill="#337ab7" stroke="#337ab7" points="54,-24 0,-24 0,0 54,0 54,-24"/>
+<text text-anchor="middle" x="27" y="-9.6" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">Module</text>
+</g>
+<!-- Submodule -->
+<g id="node2" class="node">
+<title>Submodule</title>
+<polygon fill="#5bc0de" stroke="#5bc0de" points="139.5,-24 72.5,-24 72.5,0 139.5,0 139.5,-24"/>
+<text text-anchor="middle" x="106" y="-9.6" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">Submodule</text>
+</g>
+<!-- Subroutine -->
+<g id="node3" class="node">
+<title>Subroutine</title>
+<polygon fill="#d9534f" stroke="#d9534f" points="222,-24 158,-24 158,0 222,0 222,-24"/>
+<text text-anchor="middle" x="190" y="-9.6" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">Subroutine</text>
+</g>
+<!-- Function -->
+<g id="node4" class="node">
+<title>Function</title>
+<polygon fill="#d94e8f" stroke="#d94e8f" points="294,-24 240,-24 240,0 294,0 294,-24"/>
+<text text-anchor="middle" x="267" y="-9.6" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">Function</text>
+</g>
+<!-- Program -->
+<g id="node5" class="node">
+<title>Program</title>
+<polygon fill="#f0ad4e" stroke="#f0ad4e" points="366,-24 312,-24 312,0 366,0 366,-24"/>
+<text text-anchor="middle" x="339" y="-9.6" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">Program</text>
+</g>
+<!-- This Page&#39;s Entity -->
+<g id="node6" class="node">
+<title>This Page&#39;s Entity</title>
+<polygon fill="none" stroke="black" points="481.5,-24 384.5,-24 384.5,0 481.5,0 481.5,-24"/>
+<text text-anchor="middle" x="433" y="-9.6" font-family="Helvetica,sans-Serif" font-size="10.50">This Page&#39;s Entity</text>
+</g>
+</g>
+</svg>
+
+    
+    <p>Solid arrows point from a submodule to the (sub)module which it is
+    descended from. Dashed arrows point from a module or program unit to 
+    modules which it uses.
+    </p>
+    </div></div></div></div>
       </li>
       </ul>
     </div>
@@ -185,29 +300,10 @@ system, the RGAS constant should be changed at the module <code>constants</code>
       <h3>Contents</h3>
  
 <div class="panel panel-primary">
-  <div class="panel-heading text-left"><h3 class="panel-title"><a data-toggle="collapse" href="#vars-1">Variables</a></h3></div>
-  <div id="vars-1" class="panel-collapse collapse">
+  <div class="panel-heading text-left"><h3 class="panel-title"><a data-toggle="collapse" href="#types-1">Derived Types</a></h3></div>
+  <div id="types-1" class="panel-collapse collapse">
     <div class="list-group">
-      <a class="list-group-item" href="../module/mixture.html#variable-t_star~2">T_star</a>
-      <a class="list-group-item" href="../module/mixture.html#variable-ac~10">ac</a>
-      <a class="list-group-item" href="../module/mixture.html#variable-aij~7">aij</a>
-      <a class="list-group-item" href="../module/mixture.html#variable-b~17">b</a>
-      <a class="list-group-item" href="../module/mixture.html#variable-dc~4">dc</a>
-      <a class="list-group-item" href="../module/mixture.html#variable-del1~15">del1</a>
-      <a class="list-group-item" href="../module/mixture.html#variable-k~5">k</a>
-      <a class="list-group-item" href="../module/mixture.html#variable-kij~5">kij</a>
-      <a class="list-group-item" href="../module/mixture.html#variable-kij_0">kij_0</a>
-      <a class="list-group-item" href="../module/mixture.html#variable-kij_inf~2">kij_inf</a>
-      <a class="list-group-item" href="../module/mixture.html#variable-lij~4">lij</a>
-      <a class="list-group-item" href="../module/mixture.html#variable-n~6">n</a>
-      <a class="list-group-item" href="../module/mixture.html#variable-names~2">names</a>
-      <a class="list-group-item" href="../module/mixture.html#variable-nc~8">nc</a>
-      <a class="list-group-item" href="../module/mixture.html#variable-ncomb~2">ncomb</a>
-      <a class="list-group-item" href="../module/mixture.html#variable-nmodel~2">nmodel</a>
-      <a class="list-group-item" href="../module/mixture.html#variable-ntdep~2">ntdep</a>
-      <a class="list-group-item" href="../module/mixture.html#variable-pc~3">pc</a>
-      <a class="list-group-item" href="../module/mixture.html#variable-tc~3">tc</a>
-      <a class="list-group-item" href="../module/mixture.html#variable-w~9">w</a>
+      <a class="list-group-item" href="../module/mixture.html#type-mix">mix</a>
     </div>
   </div>
 </div>
@@ -215,7 +311,7 @@ system, the RGAS constant should be changed at the module <code>constants</code>
   <div class="panel-heading text-left"><h3 class="panel-title"><a data-toggle="collapse" href="#subs-1">Subroutines</a></h3></div>
   <div class="list-group">
     <div id="subs-1" class="panel-collapse collapse">
-      <a class="list-group-item" href="../module/mixture.html#proc-setup">setup</a>
+      <a class="list-group-item" href="../module/mixture.html#proc-aij">aij</a>
     </div>
   </div>
 </div>
@@ -224,145 +320,87 @@ system, the RGAS constant should be changed at the module <code>constants</code>
     <br class="visible-xs visible-sm hidden-md">
 
 
+    
+    
+
+    
     <section>
-    <h2>Variables</h2>
+     <h2>Derived Types</h2>
+     <div class="panel panel-default">
+  <div class="panel-heading codesum"><span class="anchor" id="type-mix"></span><h3>type, public :: <a href='../type/mix.html'>mix</a>  </h3></div>
+  <div class="panel-body">
+     <h4>Components</h4>
     <table class="table table-striped varlist">
 <thead><tr><th>Type</th><th>Visibility</th><th>Attributes</th><th></th><th>Name</th><th></th><th>Initial</th><th></th></thead>
 <tbody>
 <tr>
-  <td><span class="anchor" id="variable-t_star~2"></span>real(kind=wp),</td>
-<td>public,</td>  <td>dimension(:, :), allocatable</td><td>::</td>
-  <td><strong>T_star</strong></td><td></td><td></td><td><p>Reference temperature for temperature dependent Kij</p></td>
+  <td><span class="anchor" id="variable-aij"></span>real(kind=wp),</td>
+<td>public,</td>  <td>allocatable</td><td>::</td>
+  <td><strong>aij</strong>(:,:)</td><td></td><td></td><td></td>
 </tr>
 <tr>
-  <td><span class="anchor" id="variable-ac~10"></span>real(kind=wp),</td>
-<td>public,</td>  <td>dimension(:), allocatable</td><td>::</td>
-  <td><strong>ac</strong></td><td></td><td></td><td><p>EOS atractive parameter</p></td>
+  <td><span class="anchor" id="variable-bij"></span>real(kind=wp),</td>
+<td>public,</td>  <td>allocatable</td><td>::</td>
+  <td><strong>bij</strong>(:,:)</td><td></td><td></td><td></td>
 </tr>
 <tr>
-  <td><span class="anchor" id="variable-aij~7"></span>real(kind=wp),</td>
-<td>public,</td>  <td>dimension(:, :), allocatable</td><td>::</td>
-  <td><strong>aij</strong></td><td></td><td></td><td><p>EOS atractive parameter matrix</p></td>
+  <td><span class="anchor" id="variable-compounds"></span>class(<a href='../type/pure_compound.html'>pure_compound</a>),</td>
+<td>public,</td>  <td>allocatable</td><td>::</td>
+  <td><strong>compounds</strong>(:)</td><td></td><td></td><td></td>
 </tr>
 <tr>
-  <td><span class="anchor" id="variable-b~17"></span>real(kind=wp),</td>
-<td>public,</td>  <td>dimension(:), allocatable</td><td>::</td>
-  <td><strong>b</strong></td><td></td><td></td><td><p>EOS repulsive parameter</p></td>
+  <td><span class="anchor" id="variable-kij_calculator"></span>class(<a href='../type/kij_constant.html'>kij_constant</a>),</td>
+<td>public,</td>  <td>allocatable</td><td>::</td>
+  <td><strong>kij_calculator</strong></td><td></td><td></td><td></td>
 </tr>
 <tr>
-  <td><span class="anchor" id="variable-dc~4"></span>real(kind=wp),</td>
-<td>public,</td>  <td>dimension(:), allocatable</td><td>::</td>
-  <td><strong>dc</strong></td><td></td><td></td><td><p>Critical Densities (from EOS)</p></td>
+  <td><span class="anchor" id="variable-kij_matrix"></span>real(kind=wp),</td>
+<td>public,</td>  <td>allocatable</td><td>::</td>
+  <td><strong>kij_matrix</strong>(:,:)</td><td></td><td></td><td></td>
 </tr>
 <tr>
-  <td><span class="anchor" id="variable-del1~15"></span>real(kind=wp),</td>
-<td>public,</td>  <td>dimension(:), allocatable</td><td>::</td>
-  <td><strong>del1</strong></td><td></td><td></td><td><p>EOS delta_1</p></td>
-</tr>
-<tr>
-  <td><span class="anchor" id="variable-k~5"></span>real(kind=wp),</td>
-<td>public,</td>  <td>dimension(:), allocatable</td><td>::</td>
-  <td><strong>k</strong></td><td></td><td></td><td><p>k parameter to calculate the a parameter</p></td>
-</tr>
-<tr>
-  <td><span class="anchor" id="variable-kij~5"></span>real(kind=wp),</td>
-<td>public,</td>  <td>dimension(:, :), allocatable</td><td>::</td>
-  <td><strong>kij</strong></td><td></td><td></td><td><p>Kij matrix</p></td>
-</tr>
-<tr>
-  <td><span class="anchor" id="variable-kij_0"></span>real(kind=wp),</td>
-<td>public,</td>  <td>dimension(:, :), allocatable</td><td>::</td>
-  <td><strong>kij_0</strong></td><td></td><td></td><td><p>Kij standard</p></td>
-</tr>
-<tr>
-  <td><span class="anchor" id="variable-kij_inf~2"></span>real(kind=wp),</td>
-<td>public,</td>  <td>dimension(:, :), allocatable</td><td>::</td>
-  <td><strong>kij_inf</strong></td><td></td><td></td><td><p>Kij at infinite temperature</p></td>
-</tr>
-<tr>
-  <td><span class="anchor" id="variable-lij~4"></span>real(kind=wp),</td>
-<td>public,</td>  <td>dimension(:, :), allocatable</td><td>::</td>
-  <td><strong>lij</strong></td><td></td><td></td><td><p>lij matrix</p></td>
-</tr>
-<tr>
-  <td><span class="anchor" id="variable-n~6"></span>real(kind=wp),</td>
-<td>public,</td>  <td>dimension(:), allocatable</td><td>::</td>
-  <td><strong>n</strong></td><td></td><td></td><td><p>Number of moles</p></td>
-</tr>
-<tr>
-  <td><span class="anchor" id="variable-names~2"></span>character(len=:),</td>
-<td>public,</td>  <td>dimension(:), allocatable</td><td>::</td>
-  <td><strong>names</strong></td><td></td><td></td><td><p>Components names</p></td>
-</tr>
-<tr>
-  <td><span class="anchor" id="variable-nc~8"></span>integer,</td>
-<td>public</td>  <td></td><td>::</td>
-  <td><strong>nc</strong></td><td></td><td></td><td><p>Number of components</p></td>
-</tr>
-<tr>
-  <td><span class="anchor" id="variable-ncomb~2"></span>integer,</td>
-<td>public</td>  <td></td><td>::</td>
-  <td><strong>ncomb</strong></td><td></td><td></td><td><p>Combining rule</p></td>
-</tr>
-<tr>
-  <td><span class="anchor" id="variable-nmodel~2"></span>integer,</td>
-<td>public</td>  <td></td><td>::</td>
-  <td><strong>nmodel</strong></td><td></td><td></td><td><p>Model to use</p></td>
-</tr>
-<tr>
-  <td><span class="anchor" id="variable-ntdep~2"></span>integer,</td>
-<td>public</td>  <td></td><td>::</td>
-  <td><strong>ntdep</strong></td><td></td><td></td><td><p>Temperature dependence</p></td>
-</tr>
-<tr>
-  <td><span class="anchor" id="variable-pc~3"></span>real(kind=wp),</td>
-<td>public,</td>  <td>dimension(:), allocatable</td><td>::</td>
-  <td><strong>pc</strong></td><td></td><td></td><td><p>Critical Pressures</p></td>
-</tr>
-<tr>
-  <td><span class="anchor" id="variable-tc~3"></span>real(kind=wp),</td>
-<td>public,</td>  <td>dimension(:), allocatable</td><td>::</td>
-  <td><strong>tc</strong></td><td></td><td></td><td><p>Critical Temperatures</p></td>
-</tr>
-<tr>
-  <td><span class="anchor" id="variable-w~9"></span>real(kind=wp),</td>
-<td>public,</td>  <td>dimension(:), allocatable</td><td>::</td>
-  <td><strong>w</strong></td><td></td><td></td><td><p>Accentric factors</p></td>
+  <td><span class="anchor" id="variable-lij_calculator"></span>class(<a href='../type/lij_constant.html'>lij_constant</a>),</td>
+<td>public,</td>  <td>allocatable</td><td>::</td>
+  <td><strong>lij_calculator</strong></td><td></td><td></td><td></td>
 </tr>
 </tbody>
 </table>
 
-    </section>
-    <br>
-    
-    
+     
+     <h4>Type-Bound Procedures</h4>
+      <table class="table table-striped varlist">
+      <tbody>
+       <tr><td>procedure, public :: <strong><a href='../type/mix.html#boundprocedure-get_aij'>get_aij</a></strong>  => aij </td>
+       <td></td></tr>
+       </tbody>
+       </table>
+  </div>
+</div>
 
-    
+    </section>
+  <br>
     
 
     <section>
     <h2>Subroutines</h2>
       <div class="panel panel-default">
-  <div class="panel-heading codesum"><span class="anchor" id="proc-setup"></span><h3>public subroutine <a href='../proc/setup.html'>setup</a>(nin, filename)</h3></div>
+  <div class="panel-heading codesum"><span class="anchor" id="proc-aij"></span><h3>public subroutine <a href='../proc/aij.html'>aij</a>(self, T)</h3></div>
   <div class="panel-body">
-       
-<p>This subroutine will be used to read data files and get the
-mixture properties</p>
-    
+           
 <h4>Arguments</h4>      <table class="table table-striped varlist">
 <thead><tr><th>Type</th><th>Intent</th><th>Optional</th><th>Attributes</th><th></th><th>Name</th><th></th></thead>
 <tbody>
 <tr>
-  <td><span class="anchor" ></span>integer,</td>
-<td>intent(in)</td>
+  <td><span class="anchor" ></span>class(<a href='../type/mix.html'>mix</a>)</td>
+<td></td>
   <td></td>  <td></td><td>::</td>
-  <td><strong>nin</strong></td><td></td>
+  <td><strong>self</strong></td><td><p>Mixture object</p></td>
 </tr>
 <tr>
-  <td><span class="anchor" ></span>character(len=:),</td>
-<td>intent(in),</td>
-  <td></td>  <td>allocatable</td><td>::</td>
-  <td><strong>filename</strong></td><td></td>
+  <td><span class="anchor" ></span>real(kind=wp),</td>
+<td>intent(in)</td>
+  <td></td>  <td></td><td>::</td>
+  <td><strong>T</strong></td><td><p>Temperature [K]</p></td>
 </tr>
 </tbody>
 </table>
@@ -382,14 +420,14 @@ mixture properties</p>
     <footer>
       <div class="container">
       <div class="row">
-        <div class="col-xs-6 col-md-6"><p>fedebenelli/rkpr was developed by Federico Benelli<br>&copy; 2022 <a rel="license" href="https://opensource.org/licenses/MIT">MIT</a>
+        <div class="col-xs-6 col-md-6"><p>Multicomponent Equations of State was developed by Federico Benelli<br>&copy; 2022 <a rel="license" href="https://opensource.org/licenses/MIT">MIT</a>
 </p>
         </div>
         <div class="col-xs-6 col-md-6">
           <p class="text-right">
             Documentation generated by 
             <a href="https://github.com/Fortran-FOSS-Programmers/ford">FORD</a>
- on 2022-05-11 17:22            </p>
+ on 2022-06-23 11:49            </p>
         </div>
       </div>
       <br>
