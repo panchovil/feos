@@ -14,25 +14,35 @@ module mixing_rules
 
 contains
    subroutine kij_tdep(self, T, kij, dkijdt, dkij2dt2)
-      !! Kij with temperature dependance according to the equation:
-      !! \[ K_{ij}(T) = K_{ij\infty} + K_{ij0} e^{T/T^*} \]
-      !! The parameters of the equation are obtained from the mixture module
       implicit none
       class(kij_exp_t) :: self
       real(wp), intent(in) :: T !! Temperature
 
-      integer :: nc = self%nc
-      real(wp), intent(out) :: kij(nc, nc) !! Binary interaction parameter matrix
-      real(wp), intent(out) :: dkijdt(nc, nc) !! Binary interaction parameter first derivative with T matrix
-      real(wp), intent(out) :: dkij2dt2(nc, nc) !! Binary interaction parameter second derivative with T matrix
+      real(wp), allocatable, intent(out) :: kij(:, :) !! Binary interaction parameter matrix
+      real(wp), allocatable, intent(out) :: dkijdt(:, :) !! Binary interaction parameter first derivative with T matrix
+      real(wp), allocatable, intent(out) :: dkij2dt2(:, :) !! Binary interaction parameter second derivative with T matrix
 
-      integer :: i
+      real(wp), allocatable :: kij_inf(:, :), kij_0(:, :), T_star(:, :)
+      integer :: nc, sp(2)
 
-      do i = 1, nc
-         kij(:i - 1, i) = kij_inf(:i - 1, i) + kij_0(:i - 1, i)*exp(-T/T_star(:i - 1, i))
-         dkijdt(:i - 1, i) = -kij_0(:i - 1, i)/T_star(:i - 1, i)*exp(-T/T_star(:i - 1, i))
-         dkij2dt2(:i - 1, i) = kij_0(:i - 1, i)/T_star(:i - 1, i)**2*exp(-T/T_star(:i - 1, i))
-      end do
+      kij_0 = self%kij_0
+      kij_inf = self%kij_inf
+      T_star = self%T_star
+
+      sp = shape(self%kij_0)
+      nc = sp(1)
+
+      allocate(kij(nc,nc))
+      allocate(dkijdt(nc,nc))
+      allocate(dkij2dt2(nc,nc))
+
+      kij = kij_inf + kij_0 * exp(-T/T_star)
+      dkijdt = -kij_0/T_star * exp(-T/T_star)
+      dkij2dt2 = kij_0/T_star**2 * exp(-T/T_star)
+
+      self%kij = kij
+      self%dkijdt = dkijdt
+      self%dkij2dt2 = dkij2dt2
    end subroutine kij_tdep
 
    subroutine kij_const(self, T, kij, dkijdt, dkij2dt2)
