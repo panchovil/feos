@@ -8,8 +8,11 @@ module mixing_rules
    type :: quadratic
       !! Basic Mixing rule with constant \[K_ij\] and \[l_ij\]
       real(wp), allocatable :: kij(:, :) !! \[K_ij\] matrix
-      contains
-         procedure :: get_kij => kij_const
+      real(wp), allocatable :: lij(:, :) !! \[l_ij\] matrix
+      real(wp), allocatable :: aij(:, :) !! \[a_ij\] matrix
+      real(wp), allocatable :: bij(:, :) !! \[b_ij\] matrix
+    contains 
+        procedure :: mix => quadratic_mix
    end type
 
    type, extends(kij_constant) :: kij_exp_t
