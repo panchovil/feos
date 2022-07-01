@@ -36,8 +36,8 @@ jobs:
       
       - name: Install ford and graphviz
         run: 
-          pip install ford
-          apt-get install graphviz 
+          - pip install ford
+          - apt install graphviz 
         
       - name: Install fpm
         run: bash tools/install_fpm.sh install
