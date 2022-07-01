@@ -2,7 +2,6 @@ module cubic_eos
    !! Module that encompass the calculations of the residual Helmholtz energy
    !! and related properties like fugacity coefficents.
    use constants
-   use mixing_rules
    implicit none
 
    type :: pure_compound
@@ -16,9 +15,9 @@ module cubic_eos
       real(8) :: k !! Atractive parameter constant
       real(8) :: a = 0 !! Atractive parameter valuated at temperature
       real(8) :: dadt = 0 !! Atractive parameter first derivative with tempetarue
-      real(8) :: da2dt2 = 0 !! Atractive parameter second derivative with tempetarue 
-      contains
-         procedure :: a_t => a_parameter
+      real(8) :: da2dt2 = 0 !! Atractive parameter second derivative with tempetarue
+   contains
+      procedure :: a_t => a_parameter
    end type pure_compound
 
    type, extends(pure_compound) :: pr
