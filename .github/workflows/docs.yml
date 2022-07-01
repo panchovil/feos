@@ -34,8 +34,10 @@ jobs:
         with:
           python-version: ${{ matrix.python-version}}
       
-      - name: Install ford
-        run: pip install ford
+      - name: Install ford and graphviz
+        run: 
+          pip install ford
+          apt-get install graphviz 
         
       - name: Install fpm
         run: bash tools/install_fpm.sh install
@@ -50,9 +52,9 @@ jobs:
           file_pattern: docs/*
           repository: .
 
-          commit_user_name: DocsBot # defaults to "github-actions[bot]"
-            #commit_user_email: my-github-actions-bot@example.org # defaults to "github-actions[bot]@users.noreply.github.com"
-            #commit_author: DocsBot <actions@github.com> # defaults to author of the commit that triggered the run
+          commit_user_name: DocsBot
+          commit_user_email: DocsBot@mail.com
+          commit_author: DocsBot <actions@github.com>
 
           # Optional. Options used by `git-push`.
           # See https://git-scm.com/docs/git-push#_options

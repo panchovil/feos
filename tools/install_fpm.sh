@@ -9,7 +9,6 @@ run_test() {
     ./fpm test
 }
 
-
 case $1 in
     "install")  install;;
     "test") run_test;;
