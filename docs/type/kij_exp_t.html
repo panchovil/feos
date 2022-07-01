@@ -8,7 +8,7 @@
     <meta name="author" content="Federico Benelli" >
     <link rel="icon" href="../favicon.png">
 
-    <title>mixing_rules &ndash; Multicomponent Equations of State</title>
+    <title>kij_exp_t &ndash; Multicomponent Equations of State </title>
 
     <link href="../css/bootstrap.min.css" rel="stylesheet">
     <link href="../css/pygments.css" rel="stylesheet">
@@ -78,8 +78,8 @@
 
     <div class="container">
   <div class="row">
-    <h1>mixing_rules 
-    <small>Module</small>
+    <h1>kij_exp_t
+    <small>Derived Type</small>
     </h1>
     <div class="row">
   <div class="col-lg-12">
@@ -89,13 +89,14 @@
      <li><i class="fa fa-list-ol"></i>
        <a data-toggle="tooltip"
     data-placement="bottom" data-html="true"
-    title="57.9% of total for modules and submodules.">92 statements</a>
+    title="<p>20.5% of total for derived types.</p>Including implementation: 78 statements, 32.8% of total for derived types.">9 statements</a>
      </li> 
     <li><i class="fa fa-code"></i><a href="../src/mixing_rules.f90"> Source File</a></li>
   </ul>
   <ol class="breadcrumb in-well text-right">
      <li><a href='../sourcefile/mixing_rules.f90.html'>mixing_rules.f90</a></li>
-     <li class="active">mixing_rules</li>
+     <li><a href='../module/mixing_rules.html'>mixing_rules</a></li>
+     <li class="active">kij_exp_t</li>
   </ol>
 </div>
 </div>
@@ -114,20 +115,27 @@
   <h3>Contents</h3>
  
 <div class="panel panel-primary">
-  <div class="panel-heading text-left"><h3 class="panel-title"><a data-toggle="collapse" href="#types-0">Derived Types</a></h3></div>
-  <div id="types-0" class="panel-collapse collapse">
+  <div class="panel-heading text-left"><h3 class="panel-title"><a data-toggle="collapse" href="#vars-0">Variables</a></h3></div>
+  <div id="vars-0" class="panel-collapse collapse">
     <div class="list-group">
-      <a class="list-group-item" href="../module/mixing_rules.html#type-kij_exp_t">kij_exp_t</a>
-      <a class="list-group-item" href="../module/mixing_rules.html#type-quadratic">quadratic</a>
+      <a class="list-group-item" href="../type/kij_exp_t.html#variable-t_star">T_star</a>
+      <a class="list-group-item" href="../type/kij_exp_t.html#variable-aij">aij</a>
+      <a class="list-group-item" href="../type/kij_exp_t.html#variable-bij">bij</a>
+      <a class="list-group-item" href="../type/kij_exp_t.html#variable-dkij2dt2">dkij2dt2</a>
+      <a class="list-group-item" href="../type/kij_exp_t.html#variable-dkijdt">dkijdt</a>
+      <a class="list-group-item" href="../type/kij_exp_t.html#variable-kij">kij</a>
+      <a class="list-group-item" href="../type/kij_exp_t.html#variable-kij_0">kij_0</a>
+      <a class="list-group-item" href="../type/kij_exp_t.html#variable-kij_inf">kij_inf</a>
+      <a class="list-group-item" href="../type/kij_exp_t.html#variable-lij">lij</a>
     </div>
   </div>
 </div>
 <div class="panel panel-primary">
-  <div class="panel-heading text-left"><h3 class="panel-title"><a data-toggle="collapse" href="#subs-0">Subroutines</a></h3></div>
-  <div class="list-group">
-    <div id="subs-0" class="panel-collapse collapse">
-      <a class="list-group-item" href="../module/mixing_rules.html#proc-kij_tdep">kij_tdep</a>
-      <a class="list-group-item" href="../module/mixing_rules.html#proc-quadratic_mix">quadratic_mix</a>
+  <div class="panel-heading text-left"><h3 class="panel-title"><a data-toggle="collapse" href="#boundprocs-0">Type-Bound Procedures</a></h3></div>
+  <div id="boundprocs-0" class="panel-collapse collapse">
+    <div class="list-group">
+      <a class="list-group-item" href="../type/kij_exp_t.html#boundprocedure-get_kij">get_kij</a>
+      <a class="list-group-item" href="../type/kij_exp_t.html#boundprocedure-mix">mix</a>
     </div>
   </div>
 </div>
@@ -137,42 +145,37 @@
     </div>
     
     <div class="col-md-9" id='text'>
-    <p>Module that contains the available mixing rules to be used.</p>
-<br>        <div class="panel panel-default">
-      <div class="panel-heading">
-  <h3 class="panel-title">Uses</h3>
-      </div>
-      <ul class="list-group">
-      <li class="list-group-item">
-  <ul class="list-inline">
-    <li><a href='../module/constants.html'>constants</a></li>
-    <li><a href='../module/cubic_eos.html'>cubic_eos</a></li>
-  </ul>
-      </li>
-      </ul>
-    </div>
-
-    
+      <h2>type, public, extends(<a href='../type/quadratic.html'>quadratic</a>) :: kij_exp_t</h2>
+    <p>Kij with temperature dependance according to the equation:
+<script type="math/tex; mode=display"> K_{ij}(T) = K_{ij\infty} + K_{ij0} e^{-T/T^*} </script>
+The parameters of the equation are obtained from the mixture module.</p>
     <br>
 
     <section class="visible-xs visible-sm hidden-md">
       <h3>Contents</h3>
  
 <div class="panel panel-primary">
-  <div class="panel-heading text-left"><h3 class="panel-title"><a data-toggle="collapse" href="#types-1">Derived Types</a></h3></div>
-  <div id="types-1" class="panel-collapse collapse">
+  <div class="panel-heading text-left"><h3 class="panel-title"><a data-toggle="collapse" href="#vars-1">Variables</a></h3></div>
+  <div id="vars-1" class="panel-collapse collapse">
     <div class="list-group">
-      <a class="list-group-item" href="../module/mixing_rules.html#type-kij_exp_t">kij_exp_t</a>
-      <a class="list-group-item" href="../module/mixing_rules.html#type-quadratic">quadratic</a>
+      <a class="list-group-item" href="../type/kij_exp_t.html#variable-t_star">T_star</a>
+      <a class="list-group-item" href="../type/kij_exp_t.html#variable-aij">aij</a>
+      <a class="list-group-item" href="../type/kij_exp_t.html#variable-bij">bij</a>
+      <a class="list-group-item" href="../type/kij_exp_t.html#variable-dkij2dt2">dkij2dt2</a>
+      <a class="list-group-item" href="../type/kij_exp_t.html#variable-dkijdt">dkijdt</a>
+      <a class="list-group-item" href="../type/kij_exp_t.html#variable-kij">kij</a>
+      <a class="list-group-item" href="../type/kij_exp_t.html#variable-kij_0">kij_0</a>
+      <a class="list-group-item" href="../type/kij_exp_t.html#variable-kij_inf">kij_inf</a>
+      <a class="list-group-item" href="../type/kij_exp_t.html#variable-lij">lij</a>
     </div>
   </div>
 </div>
 <div class="panel panel-primary">
-  <div class="panel-heading text-left"><h3 class="panel-title"><a data-toggle="collapse" href="#subs-1">Subroutines</a></h3></div>
-  <div class="list-group">
-    <div id="subs-1" class="panel-collapse collapse">
-      <a class="list-group-item" href="../module/mixing_rules.html#proc-kij_tdep">kij_tdep</a>
-      <a class="list-group-item" href="../module/mixing_rules.html#proc-quadratic_mix">quadratic_mix</a>
+  <div class="panel-heading text-left"><h3 class="panel-title"><a data-toggle="collapse" href="#boundprocs-1">Type-Bound Procedures</a></h3></div>
+  <div id="boundprocs-1" class="panel-collapse collapse">
+    <div class="list-group">
+      <a class="list-group-item" href="../type/kij_exp_t.html#boundprocedure-get_kij">get_kij</a>
+      <a class="list-group-item" href="../type/kij_exp_t.html#boundprocedure-mix">mix</a>
     </div>
   </div>
 </div>
@@ -180,20 +183,8 @@
     </section>
     <br class="visible-xs visible-sm hidden-md">
 
-
-    
-    
-
-    
     <section>
-     <h2>Derived Types</h2>
-     <div class="panel panel-default">
-  <div class="panel-heading codesum"><span class="anchor" id="type-kij_exp_t"></span><h3>type, public, extends(<a href='../type/quadratic.html'>quadratic</a>) :: <a href='../type/kij_exp_t.html'>kij_exp_t</a>  </h3></div>
-  <div class="panel-body">
-    <p>Kij with temperature dependance according to the equation:
-<script type="math/tex; mode=display"> K_{ij}(T) = K_{ij\infty} + K_{ij0} e^{-T/T^*} </script>
-The parameters of the equation are obtained from the mixture module.</p>
-     <h4>Components</h4>
+    <h2>Components</h2>
     <table class="table table-striped varlist">
 <thead><tr><th>Type</th><th>Visibility</th><th>Attributes</th><th></th><th>Name</th><th></th><th>Initial</th><th></th></thead>
 <tbody>
@@ -251,76 +242,19 @@ The parameters of the equation are obtained from the mixture module.</p>
 </tbody>
 </table>
 
-     
-     <h4>Type-Bound Procedures</h4>
-      <table class="table table-striped varlist">
-      <tbody>
-       <tr><td>procedure, public :: <strong><a href='../type/kij_exp_t.html#boundprocedure-get_kij'>get_kij</a></strong>  => kij_tdep </td>
-       <td></td></tr>
-       <tr><td>procedure, public :: <strong><a href='../type/quadratic.html#boundprocedure-mix'>mix</a></strong>  => quadratic_mix </td>
-       <td></td></tr>
-       </tbody>
-       </table>
-  </div>
-</div>
-
-     <div class="panel panel-default">
-  <div class="panel-heading codesum"><span class="anchor" id="type-quadratic"></span><h3>type, public :: <a href='../type/quadratic.html'>quadratic</a>  </h3></div>
-  <div class="panel-body">
-    <p>Basic Mixing rule with constant <script type="math/tex; mode=display">K_ij</script> and <script type="math/tex; mode=display">l_ij</script>
-</p>
-     <h4>Components</h4>
-    <table class="table table-striped varlist">
-<thead><tr><th>Type</th><th>Visibility</th><th>Attributes</th><th></th><th>Name</th><th></th><th>Initial</th><th></th></thead>
-<tbody>
-<tr>
-  <td><span class="anchor" id="variable-aij"></span>real(kind=wp),</td>
-<td>public,</td>  <td>allocatable</td><td>::</td>
-  <td><strong>aij</strong>(:,:)</td><td></td><td></td><td><p>
-<script type="math/tex; mode=display">a_ij</script> matrix</p></td>
-</tr>
-<tr>
-  <td><span class="anchor" id="variable-bij"></span>real(kind=wp),</td>
-<td>public,</td>  <td>allocatable</td><td>::</td>
-  <td><strong>bij</strong>(:,:)</td><td></td><td></td><td><p>
-<script type="math/tex; mode=display">b_ij</script> matrix</p></td>
-</tr>
-<tr>
-  <td><span class="anchor" id="variable-kij"></span>real(kind=wp),</td>
-<td>public,</td>  <td>allocatable</td><td>::</td>
-  <td><strong>kij</strong>(:,:)</td><td></td><td></td><td><p>
-<script type="math/tex; mode=display">K_ij</script> matrix</p></td>
-</tr>
-<tr>
-  <td><span class="anchor" id="variable-lij"></span>real(kind=wp),</td>
-<td>public,</td>  <td>allocatable</td><td>::</td>
-  <td><strong>lij</strong>(:,:)</td><td></td><td></td><td><p>
-<script type="math/tex; mode=display">l_ij</script> matrix</p></td>
-</tr>
-</tbody>
-</table>
-
-     
-     <h4>Type-Bound Procedures</h4>
-      <table class="table table-striped varlist">
-      <tbody>
-       <tr><td>procedure, public :: <strong><a href='../type/quadratic.html#boundprocedure-mix'>mix</a></strong>  => quadratic_mix </td>
-       <td></td></tr>
-       </tbody>
-       </table>
-  </div>
-</div>
-
     </section>
-  <br>
+    <br>
     
-
+    
+    
+ 
     <section>
-    <h2>Subroutines</h2>
-      <div class="panel panel-default">
-  <div class="panel-heading codesum"><span class="anchor" id="proc-kij_tdep"></span><h3>public subroutine <a href='../proc/kij_tdep.html'>kij_tdep</a>(self, T, kij, dkijdt, dkij2dt2)</h3></div>
-  <div class="panel-body">
-           
+    <h2>Type-Bound Procedures</h2>
+     <div class="panel panel-default">
+  <div class="panel-heading codesum"><span class="anchor" id="boundprocedure-get_kij"></span><h3>procedure, public :: <strong>get_kij</strong>  => <a href='../proc/kij_tdep.html'>kij_tdep</a>   </h3></div>
+  <ul class="list-group">
+      <li class="list-group-item">
+          <h3>public subroutine <a href='../proc/kij_tdep.html'>kij_tdep</a>(self, T, kij, dkijdt, dkij2dt2)</h3>    
 <h4>Arguments</h4>      <table class="table table-striped varlist">
 <thead><tr><th>Type</th><th>Intent</th><th>Optional</th><th>Attributes</th><th></th><th>Name</th><th></th></thead>
 <tbody>
@@ -358,13 +292,15 @@ The parameters of the equation are obtained from the mixture module.</p>
 </table>
 
 
-  </div>
-  </div>
+      </li>
+  </ul>
+</div>
 
-      <div class="panel panel-default">
-  <div class="panel-heading codesum"><span class="anchor" id="proc-quadratic_mix"></span><h3>public subroutine <a href='../proc/quadratic_mix.html'>quadratic_mix</a>(self, T, compounds)</h3></div>
-  <div class="panel-body">
-           
+     <div class="panel panel-default">
+  <div class="panel-heading codesum"><span class="anchor" id="boundprocedure-mix"></span><h3>procedure, public :: <strong>mix</strong>  => <a href='../proc/quadratic_mix.html'>quadratic_mix</a>   </h3></div>
+  <ul class="list-group">
+      <li class="list-group-item">
+          <h3>public subroutine <a href='../proc/quadratic_mix.html'>quadratic_mix</a>(self, T, compounds)</h3>    
 <h4>Arguments</h4>      <table class="table table-striped varlist">
 <thead><tr><th>Type</th><th>Intent</th><th>Optional</th><th>Attributes</th><th></th><th>Name</th><th></th></thead>
 <tbody>
@@ -390,11 +326,12 @@ The parameters of the equation are obtained from the mixture module.</p>
 </table>
 
 
-  </div>
-  </div>
+      </li>
+  </ul>
+</div>
 
-    </section>    
-    <br>
+    </section>
+    
     
     </div>
   </div>
