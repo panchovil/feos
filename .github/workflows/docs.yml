@@ -2,13 +2,6 @@ name: Docs Generation
 
 # Controls when the workflow will run
 on:
-  # Triggers the workflow on push or pull request events but only for the "main" branch
-  push:
-    branches: [ "main" ]
-  pull_request:
-    branches: [ "main" ]
-
-  # Allows you to run this workflow manually from the Actions tab
   workflow_dispatch:
 
 # A workflow run is made up of one or more jobs that can run sequentially or in parallel
@@ -46,30 +39,30 @@ jobs:
       - name: make docs
         run: ford docs.md
 
-          #      - uses: stefanzweifel/git-auto-commit-action@v4
-          #        with:
-          #          commit_message: Update docs
-          #          commit_options: '--no-verify --signoff'
-          #          file_pattern: docs/*
-          #          repository: .
-          #
-          #          commit_user_name: DocsBot
-          #          commit_user_email: DocsBot@mail.com
-          #          commit_author: DocsBot <actions@github.com>
-          #
-          #          # Optional. Options used by `git-push`.
-          #          # See https://git-scm.com/docs/git-push#_options
-          #          push_options: '--force'
-          #          
-          #          # Optional. Disable dirty check and always try to create a commit and push
-          #          skip_dirty_check: true    
-          #          
-          #          # Optional. Skip internal call to `git fetch`
-          #          skip_fetch: true    
-          #          
-          #          # Optional. Skip internal call to `git checkout`
-          #          skip_checkout: true
-          #
-          #          # Optional. Prevents the shell from expanding filenames. 
-          #          # Details: https://www.gnu.org/software/bash/manual/html_node/Filename-Expansion.html
-          #          disable_globbing: true
+      - uses: stefanzweifel/git-auto-commit-action@v4
+        with:
+          commit_message: Update docs
+          commit_options: '--no-verify --signoff'
+          file_pattern: docs/*
+          repository: .
+      
+          commit_user_name: DocsBot
+          commit_user_email: DocsBot@mail.com
+          commit_author: DocsBot <actions@github.com>
+      
+          # Optional. Options used by `git-push`.
+          # See https://git-scm.com/docs/git-push#_options
+          push_options: '--force'
+          
+          # Optional. Disable dirty check and always try to create a commit and push
+          skip_dirty_check: true    
+          
+          # Optional. Skip internal call to `git fetch`
+          skip_fetch: true    
+          
+          # Optional. Skip internal call to `git checkout`
+          skip_checkout: true
+      
+          # Optional. Prevents the shell from expanding filenames. 
+          # Details: https://www.gnu.org/software/bash/manual/html_node/Filename-Expansion.html
+          disable_globbing: true
