@@ -27,7 +27,7 @@ jobs:
       # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
       - uses: actions/checkout@v3
         with:
-          token: "Fortran Docs"
+          token: ${{ secrets.FORD_DOCS }}
         
       - name: Set up Python ${{ matrix.python-version }}
         uses: actions/setup-python@v2
