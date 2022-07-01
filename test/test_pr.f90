@@ -25,7 +25,7 @@ contains
 
         compound = pr("methane", 1, 2, 3, 4, 5, 6)
 
-        call check(error, abs(compound%del1 - 1_wp) > ERRMAX)
+        call check(error, abs(compound%del1 - 1_wp) < ERRMAX)
         if (allocated(error)) return
 
     end subroutine test_valid
