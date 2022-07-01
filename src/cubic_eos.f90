@@ -22,12 +22,12 @@ module cubic_eos
 
    type, extends(pure_compound) :: pr
       !! Peng-Robinson EoS
-      real(8), private :: del1 = 1 !! \[\delta_1\] parameter.
+      real(8) :: del1 = 1 !! \[\delta_1\] parameter.
    end type pr
-   
+
    type, extends(pure_compound) :: srk
       !! Soave-Redlich-Kwong EoS
-      real(8), private :: del1 = 1 + sqrt(2.d0) !! \[\delta_1\] parameter.
+      real(8) :: del1 = 1 + sqrt(2.d0) !! \[\delta_1\] parameter.
    end type srk
 
    type, extends(pure_compound) :: rkpr
