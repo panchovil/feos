@@ -41,7 +41,7 @@ contains
       !! the subroutine will read the mixture's model and based on that
       !! will use the corresponding rule.
       class(pure_compound) :: self
-      real(8), intent(in) :: T !! Temperature where to calculate 
+      real(8), intent(in) :: T !! Temperature where to calculate
 
       real(8) :: Tr
       real(8) :: ac, k, Tc
