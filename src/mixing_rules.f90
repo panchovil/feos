@@ -5,8 +5,8 @@ module mixing_rules
 
    implicit none
 
-   type :: kij_constant
-      !! \[K_ij\] constant type
+   type :: quadratic
+      !! Basic Mixing rule with constant \[K_ij\] and \[l_ij\]
       real(wp), allocatable :: kij(:, :) !! \[K_ij\] matrix
       contains
          procedure :: get_kij => kij_const
