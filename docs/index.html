@@ -43,6 +43,7 @@
         </div>
         <div id="navbar" class="navbar-collapse collapse">
           <ul class="nav navbar-nav">
+            <li><a href='./page/index.html'>Multi</a></li>
             <li class="dropdown hidden-xs visible-sm visible-md hidden-lg">
               <a href="#" class="dropdown-toggle"
               data-toggle="dropdown" role="button"
@@ -53,7 +54,7 @@
             <li><a href="./lists/modules.html">Modules</a></li>
             <li><a href="./lists/procedures.html">Procedures</a></li>
                    <li><a href="./lists/types.html">Derived Types</a></li>
-            <li><a href="./lists/programs.html">Programs</a></li>
+            <li><a href="./program/main.html">Program</a></li>
        
             </ul>
         
@@ -62,7 +63,7 @@
 <li class="visible-xs hidden-sm visible-lg"><a href="./lists/modules.html">Modules</a></li>
 <li class="visible-xs hidden-sm visible-lg"><a href="./lists/procedures.html">Procedures</a></li>
                              <li class="visible-xs hidden-sm visible-lg"><a href="./lists/types.html">Derived Types</a></li>
-<li class="visible-xs hidden-sm visible-lg"><a href="./lists/programs.html">Programs</a></li>
+<li class="visible-xs hidden-sm visible-lg"><a href="./program/main.html">Program</a></li>
           </ul>
         <form action="./search.html" class="navbar-form navbar-right" role="search">
         <div class="form-group">
@@ -89,7 +90,8 @@
       <div class="row" id='text'>
         <div class="col-md-8">
           <h1>Multicomponent Equations of State</h1>
-          
+          <p>Fortran program for the calculation of the residual Helmholtz Energy using the
+RKPR EoS (hence, PR and SRK are also included), for multicomponent mixtures.</p>
         </div>
         <div class="col-md-4">
 	  <div class="well">
@@ -107,37 +109,28 @@
               <h3>Source Files</h3>
               <ul>                    <li><a href='./sourcefile/constants.f90.html'>constants.f90</a></li>
                     <li><a href='./sourcefile/cubic_eos.f90.html'>cubic_eos.f90</a></li>
-                    <li><a href='./sourcefile/cubic_parameter.f90.html'>cubic_parameter.f90</a></li>
                     <li><a href='./sourcefile/main.f90.html'>main.f90</a></li>
                     <li><a href='./sourcefile/mixing_rules.f90.html'>mixing_rules.f90</a></li>
                     <li><a href='./sourcefile/mixture.f90.html'>mixture.f90</a></li>
                     <li><a href='./sourcefile/rkpr.f90.html'>rkpr.f90</a></li>
-                    <li><a href='./sourcefile/tmp.f90.html'>tmp.f90</a></li>
 </ul>
           </div>
 		  <div class="col-xs-6 col-sm-3">
               <h3>Modules</h3>
               <ul>                    <li><a href='./module/constants.html'>constants</a></li>
-                    <li><a href='./module/converter.html'>converter</a></li>
                     <li><a href='./module/cubic_eos.html'>cubic_eos</a></li>
-                    <li><a href='./module/g.html'>g</a></li>
                     <li><a href='./module/mixing_rules.html'>mixing_rules</a></li>
-                    <li><a href='./module/mixture.html'>mixture</a></li>
-                    <li><a href='./module/parameters.html'>parameters</a></li>
+                    <li><a href='./module/multicomponent_eos.html'>multicomponent_eos</a></li>
                     <li><a href='./module/rkpr.html'>rkpr</a></li>
 </ul>
           </div>
 		  <div class="col-xs-6 col-sm-3">
               <h3>Procedures</h3>
               <ul>                    <li><a href='./proc/a_parameter.html'>a_parameter</a></li>
-                    <li><a href='./proc/aij.html'>aij</a></li>
-                    <li><a href='./proc/fug_calc.html'>FUG_CALC</a></li>
-                    <li><a href='./proc/get_zc_oma_omb.html'>get_Zc_OMa_OMb</a></li>
-                    <li><a href='./proc/getdel1.html'>getdel1</a></li>
                     <li><a href='./proc/kij_const.html'>kij_const</a></li>
                     <li><a href='./proc/kij_tdep.html'>kij_tdep</a></li>
-                    <li><a href='./proc/pr_critical_from_params.html'>pr_critical_from_params</a></li>
-                    <li><a href='./proc/pr_params_from_crit.html'>pr_params_from_crit</a></li>
+                    <li><a href='./proc/lij_const.html'>lij_const</a></li>
+                    <li><a href='./proc/mix.html'>mix</a></li>
                     <li><a href='./proc/quadratic.html'>quadratic</a></li>
 </ul>
           </div>
@@ -146,10 +139,9 @@
               <ul>                    <li><a href='./type/kij_constant.html'>kij_constant</a></li>
                     <li><a href='./type/kij_exp_t.html'>kij_exp_t</a></li>
                     <li><a href='./type/lij_constant.html'>lij_constant</a></li>
-                    <li><a href='./type/mix.html'>mix</a></li>
+                    <li><a href='./type/mixture.html'>mixture</a></li>
                     <li><a href='./type/pr.html'>pr</a></li>
                     <li><a href='./type/pure_compound.html'>pure_compound</a></li>
-                    <li><a href='./type/rectangle.html'>Rectangle</a></li>
                     <li><a href='./type/rkpr.html'>rkpr</a></li>
                     <li><a href='./type/srk.html'>srk</a></li>
 </ul>
@@ -167,7 +159,7 @@
           <p class="text-right">
             Documentation generated by 
             <a href="https://github.com/Fortran-FOSS-Programmers/ford">FORD</a>
- on 2022-06-23 11:49            </p>
+ on 2022-06-28 13:54            </p>
         </div>
       </div>
       <br>

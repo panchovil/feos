@@ -6,8 +6,8 @@ module mixing_rules
    type :: kij_constant
       !! \[K_ij\] constant type
       real(wp), allocatable :: kij(:, :) !! \[K_ij\] matrix
-      contains
-         procedure :: get_kij => kij_const
+   contains
+      procedure :: get_kij => kij_const
    end type
 
    type, extends(kij_constant) :: kij_exp_t
@@ -15,16 +15,19 @@ module mixing_rules
       !! \[ K_{ij}(T) = K_{ij\infty} + K_{ij0} e^{-T/T^*} \]
       !! The parameters of the equation are obtained from the mixture module.
       real(wp), allocatable :: dkijdt(:, :) !! \[K_ij\] matrix
-      real(wp), allocatable :: dkij2dt2(:, :) !! \[K_ij\] matrix      
-      real(wp), allocatable :: kij_0(:, :) !! Exponential 
+      real(wp), allocatable :: dkij2dt2(:, :) !! \[K_ij\] matrix
+      real(wp), allocatable :: kij_0(:, :) !! Exponential
       real(wp), allocatable :: kij_inf(:, :) !! K_ij at infinite Temperature
       real(wp), allocatable :: T_star(:, :) !! Reference temperature
-      contains
-         procedure :: get_kij => kij_tdep
+   contains
+      procedure :: get_kij => kij_tdep
    end type
 
    type :: lij_constant
-      real(wp), allocatable :: lij(:, :)
+      !! Constant \[l_{ij}\]
+      real(wp), allocatable :: lij(:, :) !! \[l_{ij}\] values
+   contains
+      procedure :: get_lij => lij_const
    end type lij_constant
 
 contains
@@ -48,13 +51,13 @@ contains
       sp = shape(self%kij_0)
       nc = sp(1)
 
-      allocate(kij(nc,nc))
-      allocate(dkijdt(nc,nc))
-      allocate(dkij2dt2(nc,nc))
+      allocate (kij(nc, nc))
+      allocate (dkijdt(nc, nc))
+      allocate (dkij2dt2(nc, nc))
 
-      kij = kij_inf + kij_0 * exp(-T/T_star)
-      dkijdt = -kij_0/T_star * exp(-T/T_star)
-      dkij2dt2 = kij_0/T_star**2 * exp(-T/T_star)
+      kij = kij_inf + kij_0*exp(-T/T_star)
+      dkijdt = -kij_0/T_star*exp(-T/T_star)
+      dkij2dt2 = kij_0/T_star**2*exp(-T/T_star)
 
       self%kij = kij
       self%dkijdt = dkijdt
@@ -73,6 +76,14 @@ contains
       dkijdt = 0*kij
       dkij2dt2 = 0*kij
    end subroutine kij_const
+
+   subroutine lij_const(self, T, lij)
+      class(lij_constant) :: self
+      real(wp), intent(in) :: T !! Temperature
+      real(wp), allocatable, intent(out) :: lij(:, :) !! Binary repulsive parameter matrix
+
+      lij = self%lij
+   end subroutine lij_const
 
    subroutine quadratic(nc, a, b, kij, dadt, da2dt2, dkijdt, dkij2dt2, lij, aij, daijdt, daij2dt2, bij)
       !! Classic quadratic mixing rules.
@@ -106,8 +117,8 @@ contains
             daijdt(i, j) = daijdT(j, i)
 
             daij2dt2(j, i) = (1 - Kij(j, i))*(dadt(j)*dadt(i)/sqrt(a(i)*a(j)) &
-                                              + sqrt(a(i)/a(j))*(da2dt2(j) - dadt(j)**2/(2*a(j))) &
-                                              + sqrt(a(j)/a(i))*(da2dt2(i) - dadt(i)**2/(2*a(i))))/2 &
+                             + sqrt(a(i)/a(j))*(da2dt2(j) - dadt(j)**2/(2*a(j))) &
+                             + sqrt(a(j)/a(i))*(da2dt2(i) - dadt(i)**2/(2*a(i))))/2 &
                              - dkijdt(j, i)*(a(j)*dadt(i) + a(i)*dadt(j))/sqrt(a(j)*a(i)) &
                              - dkij2dt2(j, i)*sqrt(a(j)*a(i))
             daij2dT2(i, j) = daij2dT2(j, i)

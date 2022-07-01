@@ -7,6 +7,7 @@ module cubic_eos
 
    type :: pure_compound
       !! Generic EoS
+      character(len=100) :: name !! Compound name
       real(8) :: ac !! Critical atractive parameter
       real(8) :: b !! Repulsive parameter
       real(8) :: tc !! Critical temperature
@@ -15,16 +16,16 @@ module cubic_eos
       real(8) :: k !! Atractive parameter constant
       real(8) :: a = 0 !! Atractive parameter valuated at temperature
       real(8) :: dadt = 0 !! Atractive parameter first derivative with tempetarue
-      real(8) :: da2dt2 = 0 !! Atractive parameter second derivative with tempetarue 
-      contains
-         procedure :: a_t => a_parameter
+      real(8) :: da2dt2 = 0 !! Atractive parameter second derivative with tempetarue
+   contains
+      procedure :: a_t => a_parameter
    end type pure_compound
 
    type, extends(pure_compound) :: pr
       !! Peng-Robinson EoS
       real(8), private :: del1 = 1 !! \[\delta_1\] parameter.
    end type pr
-   
+
    type, extends(pure_compound) :: srk
       !! Soave-Redlich-Kwong EoS
       real(8), private :: del1 = 1 + sqrt(2.d0) !! \[\delta_1\] parameter.
@@ -41,7 +42,7 @@ contains
       !! the subroutine will read the mixture's model and based on that
       !! will use the corresponding rule.
       class(pure_compound) :: self
-      real(8), intent(in) :: T !! Temperature where to calculate 
+      real(8), intent(in) :: T !! Temperature where to calculate
 
       real(8) :: Tr
       real(8) :: ac, k, Tc
@@ -94,7 +95,7 @@ contains
    !      call kij_calc%get_kij(T, kij, dkijdt, dkij2dt2)
    !   type is (kij_exp_t)
    !      call kij_calc%get_kij(T, kij, dkijdt, dkij2dt2)
-   !   end select 
+   !   end select
    !end subroutine aijTder
 
    !subroutine DmixTnder(&
@@ -154,7 +155,7 @@ contains
    !   integer, intent(in) :: nc !! Number of components.
    !   real(wp), intent(in) :: n(nc) !! Array of mole numbers for each component.
    !   real(wp), intent(in) :: d1(nc) !! Array of delta 1 parameters for each component.
-   !   real(wp), intent(out) :: d1_mix !! Mixture's delta 1 
+   !   real(wp), intent(out) :: d1_mix !! Mixture's delta 1
    !   real(wp), intent(out) :: dD1dni(nc) !! delta1 parameter first derivative with composition.
    !   real(wp), intent(out) :: dD12dnij2(nc, nc) !! delta1 parameter second derivative with composition.
 

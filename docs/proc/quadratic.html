@@ -43,6 +43,7 @@
         </div>
         <div id="navbar" class="navbar-collapse collapse">
           <ul class="nav navbar-nav">
+            <li><a href='../page/index.html'>Multi</a></li>
             <li class="dropdown hidden-xs visible-sm visible-md hidden-lg">
               <a href="#" class="dropdown-toggle"
               data-toggle="dropdown" role="button"
@@ -53,7 +54,7 @@
             <li><a href="../lists/modules.html">Modules</a></li>
             <li><a href="../lists/procedures.html">Procedures</a></li>
                    <li><a href="../lists/types.html">Derived Types</a></li>
-            <li><a href="../lists/programs.html">Programs</a></li>
+            <li><a href="../program/main.html">Program</a></li>
        
             </ul>
         
@@ -62,7 +63,7 @@
 <li class="visible-xs hidden-sm visible-lg"><a href="../lists/modules.html">Modules</a></li>
 <li class="visible-xs hidden-sm visible-lg"><a href="../lists/procedures.html">Procedures</a></li>
                              <li class="visible-xs hidden-sm visible-lg"><a href="../lists/types.html">Derived Types</a></li>
-<li class="visible-xs hidden-sm visible-lg"><a href="../lists/programs.html">Programs</a></li>
+<li class="visible-xs hidden-sm visible-lg"><a href="../program/main.html">Program</a></li>
           </ul>
         <form action="../search.html" class="navbar-form navbar-right" role="search">
         <div class="form-group">
@@ -89,7 +90,7 @@
      <li><i class="fa fa-list-ol"></i>
        <a data-toggle="tooltip"
     data-placement="bottom" data-html="true"
-    title=" 6.1% of total for procedures.">31 statements</a>
+    title="22.3% of total for procedures.">31 statements</a>
      </li> 
     <li><i class="fa fa-code"></i><a href="../src/mixing_rules.f90"> Source File</a></li>
   </ul>
@@ -119,7 +120,7 @@
   <div id="vars-0" class="panel-collapse collapse">
     <div class="list-group">
       <a class="list-group-item" href="../proc/quadratic.html#variable-i~2">i</a>
-      <a class="list-group-item" href="../proc/quadratic.html#variable-j~2">j</a>
+      <a class="list-group-item" href="../proc/quadratic.html#variable-j">j</a>
     </div>
   </div>
 </div>
@@ -193,7 +194,7 @@
   <td><strong>dkij2dt2</strong>(nc,nc)</td><td><p>Kij matrix second derivative</p></td>
 </tr>
 <tr>
-  <td><span class="anchor" id="variable-lij~2"></span>real(kind=wp),</td>
+  <td><span class="anchor" id="variable-lij~4"></span>real(kind=wp),</td>
 <td>intent(in)</td>
   <td></td>  <td></td><td>::</td>
   <td><strong>lij</strong>(nc,nc)</td><td><p>Lij matrix</p></td>
@@ -217,7 +218,7 @@
   <td><strong>daij2dt2</strong>(nc,nc)</td><td><p>Second derivative with T</p></td>
 </tr>
 <tr>
-  <td><span class="anchor" id="variable-bij~2"></span>real(kind=wp),</td>
+  <td><span class="anchor" id="variable-bij~3"></span>real(kind=wp),</td>
 <td>intent(out)</td>
   <td></td>  <td></td><td>::</td>
   <td><strong>bij</strong>(nc,nc)</td><td><p>Repulse parameter matrix</p></td>
@@ -235,7 +236,7 @@
   <div id="vars-1" class="panel-collapse collapse">
     <div class="list-group">
       <a class="list-group-item" href="../proc/quadratic.html#variable-i~2">i</a>
-      <a class="list-group-item" href="../proc/quadratic.html#variable-j~2">j</a>
+      <a class="list-group-item" href="../proc/quadratic.html#variable-j">j</a>
     </div>
   </div>
 </div>
@@ -261,7 +262,7 @@
   <td><strong>i</strong></td><td></td><td></td><td></td>
 </tr>
 <tr>
-  <td><span class="anchor" id="variable-j~2"></span>integer,</td>
+  <td><span class="anchor" id="variable-j"></span>integer,</td>
 <td>public</td>  <td></td><td>::</td>
   <td><strong>j</strong></td><td></td><td></td><td></td>
 </tr>
@@ -312,8 +313,8 @@
 <span class="w">            </span><span class="n">daijdt</span><span class="p">(</span><span class="n">i</span><span class="p">,</span><span class="w"> </span><span class="n">j</span><span class="p">)</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">daijdT</span><span class="p">(</span><span class="n">j</span><span class="p">,</span><span class="w"> </span><span class="n">i</span><span class="p">)</span><span class="w"></span>
 
 <span class="w">            </span><span class="n">daij2dt2</span><span class="p">(</span><span class="n">j</span><span class="p">,</span><span class="w"> </span><span class="n">i</span><span class="p">)</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">(</span><span class="mi">1</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="n">Kij</span><span class="p">(</span><span class="n">j</span><span class="p">,</span><span class="w"> </span><span class="n">i</span><span class="p">))</span><span class="o">*</span><span class="p">(</span><span class="n">dadt</span><span class="p">(</span><span class="n">j</span><span class="p">)</span><span class="o">*</span><span class="n">dadt</span><span class="p">(</span><span class="n">i</span><span class="p">)</span><span class="o">/</span><span class="nb">sqrt</span><span class="p">(</span><span class="n">a</span><span class="p">(</span><span class="n">i</span><span class="p">)</span><span class="o">*</span><span class="n">a</span><span class="p">(</span><span class="n">j</span><span class="p">))</span><span class="w"> </span><span class="p">&amp;</span><span class="w"></span>
-<span class="w">                                              </span><span class="o">+</span><span class="w"> </span><span class="nb">sqrt</span><span class="p">(</span><span class="n">a</span><span class="p">(</span><span class="n">i</span><span class="p">)</span><span class="o">/</span><span class="n">a</span><span class="p">(</span><span class="n">j</span><span class="p">))</span><span class="o">*</span><span class="p">(</span><span class="n">da2dt2</span><span class="p">(</span><span class="n">j</span><span class="p">)</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="n">dadt</span><span class="p">(</span><span class="n">j</span><span class="p">)</span><span class="o">**</span><span class="mi">2</span><span class="o">/</span><span class="p">(</span><span class="mi">2</span><span class="o">*</span><span class="n">a</span><span class="p">(</span><span class="n">j</span><span class="p">)))</span><span class="w"> </span><span class="p">&amp;</span><span class="w"></span>
-<span class="w">                                              </span><span class="o">+</span><span class="w"> </span><span class="nb">sqrt</span><span class="p">(</span><span class="n">a</span><span class="p">(</span><span class="n">j</span><span class="p">)</span><span class="o">/</span><span class="n">a</span><span class="p">(</span><span class="n">i</span><span class="p">))</span><span class="o">*</span><span class="p">(</span><span class="n">da2dt2</span><span class="p">(</span><span class="n">i</span><span class="p">)</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="n">dadt</span><span class="p">(</span><span class="n">i</span><span class="p">)</span><span class="o">**</span><span class="mi">2</span><span class="o">/</span><span class="p">(</span><span class="mi">2</span><span class="o">*</span><span class="n">a</span><span class="p">(</span><span class="n">i</span><span class="p">))))</span><span class="o">/</span><span class="mi">2</span><span class="w"> </span><span class="p">&amp;</span><span class="w"></span>
+<span class="w">                             </span><span class="o">+</span><span class="w"> </span><span class="nb">sqrt</span><span class="p">(</span><span class="n">a</span><span class="p">(</span><span class="n">i</span><span class="p">)</span><span class="o">/</span><span class="n">a</span><span class="p">(</span><span class="n">j</span><span class="p">))</span><span class="o">*</span><span class="p">(</span><span class="n">da2dt2</span><span class="p">(</span><span class="n">j</span><span class="p">)</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="n">dadt</span><span class="p">(</span><span class="n">j</span><span class="p">)</span><span class="o">**</span><span class="mi">2</span><span class="o">/</span><span class="p">(</span><span class="mi">2</span><span class="o">*</span><span class="n">a</span><span class="p">(</span><span class="n">j</span><span class="p">)))</span><span class="w"> </span><span class="p">&amp;</span><span class="w"></span>
+<span class="w">                             </span><span class="o">+</span><span class="w"> </span><span class="nb">sqrt</span><span class="p">(</span><span class="n">a</span><span class="p">(</span><span class="n">j</span><span class="p">)</span><span class="o">/</span><span class="n">a</span><span class="p">(</span><span class="n">i</span><span class="p">))</span><span class="o">*</span><span class="p">(</span><span class="n">da2dt2</span><span class="p">(</span><span class="n">i</span><span class="p">)</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="n">dadt</span><span class="p">(</span><span class="n">i</span><span class="p">)</span><span class="o">**</span><span class="mi">2</span><span class="o">/</span><span class="p">(</span><span class="mi">2</span><span class="o">*</span><span class="n">a</span><span class="p">(</span><span class="n">i</span><span class="p">))))</span><span class="o">/</span><span class="mi">2</span><span class="w"> </span><span class="p">&amp;</span><span class="w"></span>
 <span class="w">                             </span><span class="o">-</span><span class="w"> </span><span class="n">dkijdt</span><span class="p">(</span><span class="n">j</span><span class="p">,</span><span class="w"> </span><span class="n">i</span><span class="p">)</span><span class="o">*</span><span class="p">(</span><span class="n">a</span><span class="p">(</span><span class="n">j</span><span class="p">)</span><span class="o">*</span><span class="n">dadt</span><span class="p">(</span><span class="n">i</span><span class="p">)</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">a</span><span class="p">(</span><span class="n">i</span><span class="p">)</span><span class="o">*</span><span class="n">dadt</span><span class="p">(</span><span class="n">j</span><span class="p">))</span><span class="o">/</span><span class="nb">sqrt</span><span class="p">(</span><span class="n">a</span><span class="p">(</span><span class="n">j</span><span class="p">)</span><span class="o">*</span><span class="n">a</span><span class="p">(</span><span class="n">i</span><span class="p">))</span><span class="w"> </span><span class="p">&amp;</span><span class="w"></span>
 <span class="w">                             </span><span class="o">-</span><span class="w"> </span><span class="n">dkij2dt2</span><span class="p">(</span><span class="n">j</span><span class="p">,</span><span class="w"> </span><span class="n">i</span><span class="p">)</span><span class="o">*</span><span class="nb">sqrt</span><span class="p">(</span><span class="n">a</span><span class="p">(</span><span class="n">j</span><span class="p">)</span><span class="o">*</span><span class="n">a</span><span class="p">(</span><span class="n">i</span><span class="p">))</span><span class="w"></span>
 <span class="w">            </span><span class="n">daij2dT2</span><span class="p">(</span><span class="n">i</span><span class="p">,</span><span class="w"> </span><span class="n">j</span><span class="p">)</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">daij2dT2</span><span class="p">(</span><span class="n">j</span><span class="p">,</span><span class="w"> </span><span class="n">i</span><span class="p">)</span><span class="w"></span>
@@ -343,7 +344,7 @@
           <p class="text-right">
             Documentation generated by 
             <a href="https://github.com/Fortran-FOSS-Programmers/ford">FORD</a>
- on 2022-06-23 11:49            </p>
+ on 2022-06-28 13:54            </p>
         </div>
       </div>
       <br>
