@@ -34,10 +34,11 @@ jobs:
         with:
           python-version: ${{ matrix.python-version}}
       
-      - name: Install ford and graphviz
-        run: 
-          - pip install ford
-          - apt install graphviz 
+      - name: Install FORD
+        run: pip install ford
+
+      - name: Install Graphviz
+        run:  sudo apt-get install -y graphviz 
         
       - name: Install fpm
         run: bash tools/install_fpm.sh install
