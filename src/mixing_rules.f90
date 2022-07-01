@@ -1,6 +1,8 @@
 module mixing_rules
    !! Module that contains the available mixing rules to be used.
    use constants
+   use cubic_eos
+
    implicit none
 
    type :: kij_constant
