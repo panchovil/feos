@@ -49,13 +49,13 @@ contains
       sp = shape(self%kij_0)
       nc = sp(1)
 
-      allocate(kij(nc,nc))
-      allocate(dkijdt(nc,nc))
-      allocate(dkij2dt2(nc,nc))
+      allocate (kij(nc, nc))
+      allocate (dkijdt(nc, nc))
+      allocate (dkij2dt2(nc, nc))
 
-      kij = kij_inf + kij_0 * exp(-T/T_star)
-      dkijdt = -kij_0/T_star * exp(-T/T_star)
-      dkij2dt2 = kij_0/T_star**2 * exp(-T/T_star)
+      kij = kij_inf + kij_0*exp(-T/T_star)
+      dkijdt = -kij_0/T_star*exp(-T/T_star)
+      dkij2dt2 = kij_0/T_star**2*exp(-T/T_star)
 
       self%kij = kij
       self%dkijdt = dkijdt
