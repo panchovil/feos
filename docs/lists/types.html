@@ -111,57 +111,49 @@ The parameters of the equation are obtained from the mixture module.</p></td></t
 <g id="type~~graph~~TypeGraph_node1" class="node">
 <title>type~quadratic</title>
 <g id="a_type~~graph~~TypeGraph_node1"><a xlink:href=".././type/quadratic.html" xlink:title="quadratic">
-<polygon fill="#5cb85c" stroke="#5cb85c" points="81.5,-171 17.5,-171 17.5,-147 81.5,-147 81.5,-171"/>
-<text text-anchor="middle" x="49.5" y="-156.6" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">quadratic</text>
+<polygon fill="#5cb85c" stroke="#5cb85c" points="81.5,-163 17.5,-163 17.5,-139 81.5,-139 81.5,-163"/>
+<text text-anchor="middle" x="49.5" y="-148.6" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">quadratic</text>
 </a>
 </g>
 </g>
-<!-- type~kij_exp_t -->
+<!-- type~srk -->
 <g id="type~~graph~~TypeGraph_node2" class="node">
-<title>type~kij_exp_t</title>
-<g id="a_type~~graph~~TypeGraph_node2"><a xlink:href=".././type/kij_exp_t.html" xlink:title="kij_exp_t">
-<polygon fill="#5cb85c" stroke="#5cb85c" points="249,-192 191,-192 191,-168 249,-168 249,-192"/>
-<text text-anchor="middle" x="220" y="-177.6" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">kij_exp_t</text>
+<title>type~srk</title>
+<g id="a_type~~graph~~TypeGraph_node2"><a xlink:href=".././type/srk.html" xlink:title="srk">
+<polygon fill="#5cb85c" stroke="#5cb85c" points="247,-66 193,-66 193,-42 247,-42 247,-66"/>
+<text text-anchor="middle" x="220" y="-51.6" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">srk</text>
 </a>
 </g>
-</g>
-<!-- type~kij_exp_t&#45;&gt;type~quadratic -->
-<g id="type~~graph~~TypeGraph_edge1" class="edge">
-<title>type~kij_exp_t&#45;&gt;type~quadratic</title>
-<path fill="none" stroke="#000000" d="M190.8,-176.49C163.69,-173.11 122.43,-167.96 91.66,-164.13"/>
-<polygon fill="#000000" stroke="#000000" points="92.01,-160.65 81.66,-162.88 91.15,-167.59 92.01,-160.65"/>
-</g>
-<!-- type~mixture -->
-<g id="type~~graph~~TypeGraph_node3" class="node">
-<title>type~mixture</title>
-<g id="a_type~~graph~~TypeGraph_node3"><a xlink:href=".././type/mixture.html" xlink:title="mixture">
-<polygon fill="#5cb85c" stroke="#5cb85c" points="247,-150 193,-150 193,-126 247,-126 247,-150"/>
-<text text-anchor="middle" x="220" y="-135.6" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">mixture</text>
-</a>
-</g>
-</g>
-<!-- type~mixture&#45;&gt;type~quadratic -->
-<g id="type~~graph~~TypeGraph_edge3" class="edge">
-<title>type~mixture&#45;&gt;type~quadratic</title>
-<path fill="none" stroke="#000000" stroke-dasharray="5,2" d="M192.67,-141.28C165.65,-144.65 123.21,-149.94 91.72,-153.86"/>
-<polygon fill="#000000" stroke="#000000" points="90.99,-150.43 81.5,-155.14 91.86,-157.37 90.99,-150.43"/>
-<text text-anchor="middle" x="145" y="-152.4" font-family="Helvetica,sans-Serif" font-size="9.50">mixing_rule</text>
 </g>
 <!-- type~pure_compound -->
 <g id="type~~graph~~TypeGraph_node5" class="node">
 <title>type~pure_compound</title>
 <g id="a_type~~graph~~TypeGraph_node5"><a xlink:href=".././type/pure_compound.html" xlink:title="pure_compound">
-<polygon fill="#5cb85c" stroke="#5cb85c" points="99,-100 0,-100 0,-76 99,-76 99,-100"/>
-<text text-anchor="middle" x="49.5" y="-85.6" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">pure_compound</text>
+<polygon fill="#5cb85c" stroke="#5cb85c" points="99,-115 0,-115 0,-91 99,-91 99,-115"/>
+<text text-anchor="middle" x="49.5" y="-100.6" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">pure_compound</text>
 </a>
 </g>
 </g>
-<!-- type~mixture&#45;&gt;type~pure_compound -->
+<!-- type~srk&#45;&gt;type~pure_compound -->
+<g id="type~~graph~~TypeGraph_edge1" class="edge">
+<title>type~srk&#45;&gt;type~pure_compound</title>
+<path fill="none" stroke="#000000" d="M192.97,-51.06C178.88,-50.19 161.28,-50.31 146,-54"/>
+</g>
+<!-- type~rkpr -->
+<g id="type~~graph~~TypeGraph_node3" class="node">
+<title>type~rkpr</title>
+<g id="a_type~~graph~~TypeGraph_node3"><a xlink:href=".././type/rkpr.html" xlink:title="rkpr">
+<polygon fill="#5cb85c" stroke="#5cb85c" points="247,-24 193,-24 193,0 247,0 247,-24"/>
+<text text-anchor="middle" x="220" y="-9.6" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">rkpr</text>
+</a>
+</g>
+</g>
+<!-- type~rkpr&#45;&gt;type~pure_compound -->
 <g id="type~~graph~~TypeGraph_edge2" class="edge">
-<title>type~mixture&#45;&gt;type~pure_compound</title>
-<path fill="none" stroke="#000000" stroke-dasharray="5,2" d="M192.67,-130.19C168.22,-122.93 131.16,-111.94 101.01,-102.99"/>
-<polygon fill="#000000" stroke="#000000" points="101.66,-99.53 91.07,-100.04 99.67,-106.24 101.66,-99.53"/>
-<text text-anchor="middle" x="145" y="-125.4" font-family="Helvetica,sans-Serif" font-size="9.50">compounds</text>
+<title>type~rkpr&#45;&gt;type~pure_compound</title>
+<path fill="none" stroke="#000000" d="M200.7,-24.13C183.04,-35.53 157.37,-51.25 146,-54"/>
+<path fill="none" stroke="#000000" d="M144,-54C119.42,-59.94 94.18,-73.7 76.13,-85.14"/>
+<polygon fill="#000000" stroke="#000000" points="73.85,-82.45 67.39,-90.85 77.67,-88.31 73.85,-82.45"/>
 </g>
 <!-- type~pr -->
 <g id="type~~graph~~TypeGraph_node4" class="node">
@@ -173,39 +165,47 @@ The parameters of the equation are obtained from the mixture module.</p></td></t
 </g>
 </g>
 <!-- type~pr&#45;&gt;type~pure_compound -->
-<g id="type~~graph~~TypeGraph_edge4" class="edge">
+<g id="type~~graph~~TypeGraph_edge3" class="edge">
 <title>type~pr&#45;&gt;type~pure_compound</title>
-<path fill="none" stroke="#000000" d="M200.85,-83.92C181.25,-71.15 152.02,-52.96 146,-54"/>
+<path fill="none" stroke="#000000" d="M200.82,-83.78C181.19,-70.88 151.93,-52.57 146,-54"/>
 </g>
-<!-- type~rkpr -->
+<!-- type~mixture -->
 <g id="type~~graph~~TypeGraph_node6" class="node">
-<title>type~rkpr</title>
-<g id="a_type~~graph~~TypeGraph_node6"><a xlink:href=".././type/rkpr.html" xlink:title="rkpr">
-<polygon fill="#5cb85c" stroke="#5cb85c" points="247,-66 193,-66 193,-42 247,-42 247,-66"/>
-<text text-anchor="middle" x="220" y="-51.6" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">rkpr</text>
+<title>type~mixture</title>
+<g id="a_type~~graph~~TypeGraph_node6"><a xlink:href=".././type/mixture.html" xlink:title="mixture">
+<polygon fill="#5cb85c" stroke="#5cb85c" points="247,-150 193,-150 193,-126 247,-126 247,-150"/>
+<text text-anchor="middle" x="220" y="-135.6" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">mixture</text>
 </a>
 </g>
 </g>
-<!-- type~rkpr&#45;&gt;type~pure_compound -->
+<!-- type~mixture&#45;&gt;type~quadratic -->
 <g id="type~~graph~~TypeGraph_edge5" class="edge">
-<title>type~rkpr&#45;&gt;type~pure_compound</title>
-<path fill="none" stroke="#000000" d="M192.8,-51.85C178.81,-51.24 161.36,-51.35 146,-54"/>
+<title>type~mixture&#45;&gt;type~quadratic</title>
+<path fill="none" stroke="#000000" stroke-dasharray="5,2" d="M192.67,-140.03C165.65,-142.12 123.21,-145.39 91.72,-147.82"/>
+<polygon fill="#000000" stroke="#000000" points="91.2,-144.35 81.5,-148.61 91.74,-151.33 91.2,-144.35"/>
+<text text-anchor="middle" x="145" y="-147.4" font-family="Helvetica,sans-Serif" font-size="9.50">mixing_rule</text>
 </g>
-<!-- type~srk -->
+<!-- type~mixture&#45;&gt;type~pure_compound -->
+<g id="type~~graph~~TypeGraph_edge4" class="edge">
+<title>type~mixture&#45;&gt;type~pure_compound</title>
+<path fill="none" stroke="#000000" stroke-dasharray="5,2" d="M192.77,-131.53C186.32,-129.99 179.42,-128.4 173,-127 152.26,-122.49 129.45,-117.92 109.2,-113.99"/>
+<polygon fill="#000000" stroke="#000000" points="109.66,-110.51 99.18,-112.06 108.34,-117.39 109.66,-110.51"/>
+<text text-anchor="middle" x="145" y="-129.4" font-family="Helvetica,sans-Serif" font-size="9.50">compounds</text>
+</g>
+<!-- type~kij_exp_t -->
 <g id="type~~graph~~TypeGraph_node7" class="node">
-<title>type~srk</title>
-<g id="a_type~~graph~~TypeGraph_node7"><a xlink:href=".././type/srk.html" xlink:title="srk">
-<polygon fill="#5cb85c" stroke="#5cb85c" points="247,-24 193,-24 193,0 247,0 247,-24"/>
-<text text-anchor="middle" x="220" y="-9.6" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">srk</text>
+<title>type~kij_exp_t</title>
+<g id="a_type~~graph~~TypeGraph_node7"><a xlink:href=".././type/kij_exp_t.html" xlink:title="kij_exp_t">
+<polygon fill="#5cb85c" stroke="#5cb85c" points="249,-192 191,-192 191,-168 249,-168 249,-192"/>
+<text text-anchor="middle" x="220" y="-177.6" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">kij_exp_t</text>
 </a>
 </g>
 </g>
-<!-- type~srk&#45;&gt;type~pure_compound -->
+<!-- type~kij_exp_t&#45;&gt;type~quadratic -->
 <g id="type~~graph~~TypeGraph_edge6" class="edge">
-<title>type~srk&#45;&gt;type~pure_compound</title>
-<path fill="none" stroke="#000000" d="M201.42,-24.01C183.8,-35.7 157.67,-51.98 146,-54"/>
-<path fill="none" stroke="#000000" d="M144,-54C124.08,-57.44 102.83,-64.84 85.63,-71.86"/>
-<polygon fill="#000000" stroke="#000000" points="83.87,-68.81 76.02,-75.92 86.59,-75.26 83.87,-68.81"/>
+<title>type~kij_exp_t&#45;&gt;type~quadratic</title>
+<path fill="none" stroke="#000000" d="M190.8,-175.15C163.69,-170.48 122.43,-163.38 91.66,-158.08"/>
+<polygon fill="#000000" stroke="#000000" points="92.11,-154.61 81.66,-156.36 90.92,-161.51 92.11,-154.61"/>
 </g>
 </g>
 </svg>
@@ -258,7 +258,7 @@ The parameters of the equation are obtained from the mixture module.</p></td></t
           <p class="text-right">
             Documentation generated by 
             <a href="https://github.com/Fortran-FOSS-Programmers/ford">FORD</a>
- on 2022-07-01 15:46            </p>
+ on 2022-07-01 18:29            </p>
         </div>
       </div>
       <br>
