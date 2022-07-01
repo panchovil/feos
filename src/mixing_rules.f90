@@ -15,17 +15,17 @@ module mixing_rules
         procedure :: mix => quadratic_mix
    end type
 
-   type, extends(kij_constant) :: kij_exp_t
+   type, extends(quadratic) :: kij_exp_t
       !! Kij with temperature dependance according to the equation:
       !! \[ K_{ij}(T) = K_{ij\infty} + K_{ij0} e^{-T/T^*} \]
       !! The parameters of the equation are obtained from the mixture module.
       real(wp), allocatable :: dkijdt(:, :) !! \[K_ij\] matrix
-      real(wp), allocatable :: dkij2dt2(:, :) !! \[K_ij\] matrix      
-      real(wp), allocatable :: kij_0(:, :) !! Exponential 
+      real(wp), allocatable :: dkij2dt2(:, :) !! \[K_ij\] matrix
+      real(wp), allocatable :: kij_0(:, :) !! Exponential term
       real(wp), allocatable :: kij_inf(:, :) !! K_ij at infinite Temperature
       real(wp), allocatable :: T_star(:, :) !! Reference temperature
-      contains
-         procedure :: get_kij => kij_tdep
+   contains
+      procedure :: get_kij => kij_tdep
    end type
 
    type :: lij_constant
