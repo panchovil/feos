@@ -1,5 +1,3 @@
-# This is a basic workflow to help you get started with Actions
-
 name: Docs Generation
 
 # Controls when the workflow will run
@@ -39,9 +37,6 @@ jobs:
         
       - name: Install fpm
         run: bash tools/install_fpm.sh install
-      
-      - name: fpm test
-        run: bash tools/install_fpm.sh test
       
       - name: make docs
         run: ford docs.md
