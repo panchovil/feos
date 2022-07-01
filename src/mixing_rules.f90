@@ -28,12 +28,6 @@ module mixing_rules
       procedure :: get_kij => kij_tdep
    end type
 
-   type :: lij_constant
-      real(wp), allocatable :: lij(:, :)
-      contains
-         procedure :: get_lij => lij_const
-   end type lij_constant
-
 contains
 
    subroutine kij_tdep(self, T, kij, dkijdt, dkij2dt2)
