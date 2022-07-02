@@ -6,7 +6,7 @@ install() {
 }
 
 run_test() {
-    ./fpm test
+    ./fpm test --flag "--coverage"
 }
 
 case $1 in
