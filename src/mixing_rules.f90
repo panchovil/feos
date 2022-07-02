@@ -98,18 +98,15 @@ contains
       !  Calculate the kij and lij matrices
       ! -----------------------------------------------------------------------
       select type(self)
-         class is (quadratic)
-             kij = self%kij
-             lij = self%lij
-             dkijdt = 0*kij
-             dkij2dt2 = 0*kij
-
          class is (kij_exp_t)
             call self%get_kij(T, kij, dkijdt, dkij2dt2)
             lij = self%lij
 
          class default
-            print *, "Not implemented Kij rule"
+             kij = self%kij
+             lij = self%lij
+             dkijdt = 0*kij
+             dkij2dt2 = 0*kij
       end select
 
       self%kij = kij
