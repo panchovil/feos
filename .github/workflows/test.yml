@@ -29,8 +29,14 @@ jobs:
         with:
           python-version: ${{ matrix.python-version}}
       
+      - name: Install gcovr
+        run: pip install gcovr
+
       - name: Install fpm
         run: bash tools/install_fpm.sh install
       
       - name: fpm test
         run: bash tools/install_fpm.sh test
+
+      - name: coverage
+        run: gcovr --exclude "build/dependencies/.*"
