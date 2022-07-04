@@ -96,38 +96,4 @@ contains
    !   end do
    !end subroutine d1nder
 
-   !subroutine Bmixnder(nc, n, bij, B_mix, dBdni, dB2dnij2)
-   !   !! Repulsive parameter of the mixture and it's compositional derivatives.
-   !   integer, intent(in) :: nc !! Number of components
-   !   real(wp), intent(in) :: n(nc) !! Number of moles of each component
-   !   real(wp), intent(in) :: bij(nc, nc) !! Repulsive parameter matrix
-
-   !   real(wp), intent(out) :: B_mix !! Mixture repulsive parameter
-   !   real(wp), intent(out) :: dBdni(nc) !! Repulsive parameter derivatives wrt number of moles
-   !   real(wp), intent(out) :: dB2dnij2(nc, nc) !! Repulsive parameter second derivatives wrt number of moles
-
-   !   real(wp) :: totn, aux(nc)
-   !   integer :: i, j
-
-   !   totn = sum(n)
-   !   B_mix = 0.0_wp
-   !   aux = 0.0_wp
-
-   !   do i = 1, nc
-   !      do j = 1, nc
-   !         aux(i) = aux(i) + n(j)*bij(i, j)
-   !      end do
-   !      B_mix = B_mix + n(i)*aux(i)
-   !   end do
-
-   !   B_mix = B_mix/totn
-
-   !   do i = 1, nc
-   !      dBdni(i) = (2*aux(i) - B_mix)/totn
-   !      do j = 1, i
-   !         dB2dnij2(i, j) = (2*bij(i, j) - dBdni(i) - dBdni(j))/totn
-   !         dB2dnij2(j, i) = dB2dnij2(i, j)
-   !      end do
-   !   end do
-   !end subroutine Bmixnder
 end module cubic_eos
