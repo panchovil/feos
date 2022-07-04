@@ -6,7 +6,6 @@ module mixing_rules
    implicit none
 
    private
-
    public :: quadratic
    public :: kij_exp_t
 
@@ -15,9 +14,24 @@ module mixing_rules
       real(wp), allocatable :: kij(:, :) !! \[K_ij\] matrix
       real(wp), allocatable :: lij(:, :) !! \[l_ij\] matrix
       real(wp), allocatable :: aij(:, :) !! \[a_ij\] matrix
+      real(wp), allocatable :: daijdt(:, :)
+      real(wp), allocatable :: daij2dt2(:, :)
       real(wp), allocatable :: bij(:, :) !! \[b_ij\] matrix
-    contains 
-        procedure :: mix => quadratic_mix
+      real(wp) :: D
+      real(wp) :: dDdt
+      real(wp) :: dD2dt2
+      real(wp), allocatable :: dDdni(:)
+      real(wp), allocatable :: dD2dnit2(:)
+      real(wp), allocatable :: dD2dnij2(:, :)
+
+      real(wp) :: B
+      real(wp), allocatable :: dBdni(:)
+      real(wp), allocatable :: dB2dnij2(:, :)
+    contains
+      !! Atractive and repulsive matrices calculation
+      procedure :: mix => quadratic_mix
+      procedure :: d_mix => attractive_mix
+      procedure :: b_mix => repulsive_mix
    end type
 
    type, extends(quadratic) :: kij_exp_t
@@ -36,6 +50,9 @@ module mixing_rules
 contains
 
    subroutine kij_tdep(self, T)
+      !! Kij with temperature dependance according to the equation:
+      !! \[ K_{ij}(T) = K_{ij\infty} + K_{ij0} e^{-T/T^*} \]
+      !! The parameters of the equation are obtained from the mixture module.
       implicit none
       class(kij_exp_t) :: self
       real(wp), intent(in) :: T !! Temperature
@@ -61,22 +78,25 @@ contains
       self%kij = kij_inf + kij_0*exp(-T/T_star)
       self%dkijdt = -kij_0/T_star*exp(-T/T_star)
       self%dkij2dt2 = kij_0/T_star**2*exp(-T/T_star)
-
    end subroutine kij_tdep
 
-   subroutine quadratic_mix(self, T, compounds)
+   subroutine quadratic_mix(self, T, compounds, concentrations)
+      !! Calculate aij, bij and kij matrices.
       class(quadratic) :: self !! Mixing rule
-      class(pure_compound), allocatable, intent(in) :: compounds(:) !! Compounds to mix
       real(wp), intent(in) :: T !! Temperature [K]
+      class(pure_compound), allocatable, intent(in) :: compounds(:) !! Compounds to mix
+      real(wp), allocatable, intent(in) :: concentrations(:) !! Number of moles of each component
 
       real(wp), allocatable :: a(:), aij(:, :)
       real(wp), allocatable :: dadt(:), daijdt(:, :)
       real(wp), allocatable :: da2dt2(:), daij2dt2(:, :)
       real(wp), allocatable :: b(:), bij(:, :), lij(:, :)
       real(wp), allocatable :: kij(:, :), dkijdt(:, :), dkij2dt2(:, :)
+
       integer :: i, nc
 
       nc = size(compounds)
+      
       ! =======================================================================
       !   Calculate all the pure compounds atractive and repulsive
       !    parameters at T
@@ -102,11 +122,10 @@ contains
       select type(self)
          class is (kij_exp_t)
             call self%get_kij(T)
-            lij = self%lij
+            dkijdt = self%dkijdt
+            dkij2dt2 = self%dkij2dt2
 
          class default
-             kij = self%kij
-             lij = self%lij
              dkijdt = 0*kij
              dkij2dt2 = 0*kij
       end select
@@ -119,15 +138,147 @@ contains
       ! Calculate each aij
       ! -----------------------------------------------------------------------
       allocate(aij(nc, nc))
+      allocate(daijdt(nc, nc))
+      allocate(daij2dt2(nc, nc))
       allocate(bij(nc, nc))
 
       do i = 1, nc
          aij(i, :) = sqrt(a(i)*a)*(1 - kij(i, :))
+         daijdt(i, :) = - (kij(i, :) - 1) * (a * dadt(i) + a(i) * dadt) &
+                          * (a(i)*a)**(-1._wp/2._wp)/2._wp
+         
+         daij2dt2(i, :) = (1 - kij(i, :)) * &
+                            ((a*da2dt2(i) + 2._wp * dadt(i)*dadt + a(i)) * (a(i)*a)**(-1._wp/2._wp)/2._wp) &
+                          - (a*dadt(i) + a(i)*dadt)**(3._wp/4._wp)
          bij(i, :) = (1 - lij(i, :))*(b(i) + b(:))/2
       end do
 
       self%aij = aij
+      self%daijdt = daijdt
+      self%daij2dt2 = daij2dt2
       self%bij = bij
       ! =======================================================================
+
+      ! =======================================================================
+      !  Calculate mixture attractive and repulsive parameter, 
+      !  and their derivatives
+      ! -----------------------------------------------------------------------
+      associate (eos => compounds(1))
+      select type(eos)
+      type is (rkpr)
+          call self%d_mix(concentrations)
+          call self%b_mix(concentrations)
+          !call self%del1_mix()
+      class default
+          call self%d_mix(concentrations)
+          call self%b_mix(concentrations)
+      end select
+      end associate
+      ! =======================================================================
    end subroutine quadratic_mix
+
+   subroutine attractive_mix(self, concentrations)
+      !! Attractive term
+      class(quadratic) :: self
+      real(wp), allocatable, intent(in) :: concentrations(:) !! Vector of concentrations of the mixture
+
+      integer :: i, j, nc
+      real(wp) :: D, dDdt, dD2dT2, aux, aux2
+      real(wp), allocatable :: dDdni(:), dD2dnit2(:), dD2dnij2(:, :)
+      real(wp), allocatable :: aij(:, :), daijdt(:, :), daij2dt2(:, :)
+      real(wp), allocatable :: n(:)
+
+      n = concentrations
+      nc = size(n)
+
+      D = 0.0_wp
+      dDdt = 0.0_wp
+      dD2dt2 = 0.0_wp
+
+      allocate(dDdni(nc))
+      allocate(dD2dnit2(nc))
+      allocate(dD2dnij2(nc, nc))
+
+      aij = self%aij
+      daijdt = self%daijdt
+      daij2dt2 = self%daij2dt2
+
+
+      do i = 1, nc
+         aux = 0.0_wp
+         aux2 = 0.0_wp
+         dDdni(i) = 0.0_wp
+         dD2dniT2(i) = 0.0_wp
+         do j = 1, nc
+            dDdni(i) = dDdni(i) + 2*n(j)*aij(i, j)
+            dD2dniT2(i) = dD2dniT2(i) + 2*n(j)*daijdT(i, j)
+            dD2dnij2(i, j) = 2*aij(i, j)
+
+            aux = aux + n(j)*aij(i, j)
+            aux2 = aux2 + n(j)*daij2dT2(i, j)
+         end do
+         D = D + n(i)*aux
+         dDdT = dDdT + n(i)*dD2dniT2(i)/2
+         dD2dT2 = dD2dT2 + n(i)*aux2
+      end do
+
+      self%D = D 
+      self%dDdt = dDdt 
+      self%dD2dt2 = dD2dt2 
+               
+      self%dDdni = dDdni
+      self%dD2dnit2 = dD2dnit2
+      self%dD2dnij2 = dD2dnij2
+   end subroutine attractive_mix
+
+   subroutine repulsive_mix(self, concentrations)
+       !! Repulsive parameter of the mixture and it's compositional derivatives.
+       class(quadratic) :: self
+       real(wp), allocatable :: concentrations(:)
+
+       real(wp) :: B_mix !! Mixture repulsive parameter
+       real(wp), allocatable :: dBdni(:) !! Repulsive parameter derivatives wrt number of moles
+       real(wp), allocatable :: dB2dnij2(:, :) !! Repulsive parameter second derivatives wrt number of moles
+       real(wp), allocatable :: aux(:)
+       real(wp) :: totn
+       real(wp), allocatable :: n(:)
+       real(wp), allocatable :: bij(:, :)
+
+       integer :: i, j, nc
+
+       n = concentrations
+       nc = size(n)
+
+       allocate(aux(nc))
+       allocate(dBdni(nc))
+       allocate(dB2dnij2(nc, nc))
+
+       bij = self%bij
+
+       totn = sum(concentrations)
+       B_mix = 0.0_wp
+       aux = 0.0_wp
+
+       do i = 1, nc
+          do j = 1, nc
+             aux(i) = aux(i) + n(j)*bij(i, j)
+          end do
+          B_mix = B_mix + n(i)*aux(i)
+       end do
+
+       B_mix = B_mix/totn
+
+       do i = 1, nc
+          dBdni(i) = (2*aux(i) - B_mix)/totn
+          do j = 1, i
+             dB2dnij2(i, j) = (2*bij(i, j) - dBdni(i) - dBdni(j))/totn
+             dB2dnij2(j, i) = dB2dnij2(i, j)
+          end do
+       end do
+
+       self%B = B_mix
+       self%dBdni = dBdni
+       self%dB2dnij2 = dB2dnij2
+   end subroutine repulsive_mix
+
 end module mixing_rules
