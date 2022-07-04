@@ -23,6 +23,8 @@ jobs:
     steps:
       # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
       - uses: actions/checkout@v3
+      # Use fpm
+      - uses: fortran-lang/setup-fpm@v4
       
       - name: Set up Python ${{ matrix.python-version }}
         uses: actions/setup-python@v2
@@ -32,9 +34,6 @@ jobs:
       - name: Install gcovr
         run: pip install gcovr
 
-      - name: Install fpm
-        run: bash tools/install_fpm.sh install
-      
       - name: fpm test
         run: bash tools/install_fpm.sh test
 
