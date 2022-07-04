@@ -27,11 +27,16 @@ module mixing_rules
       real(wp) :: B
       real(wp), allocatable :: dBdni(:)
       real(wp), allocatable :: dB2dnij2(:, :)
+
+      real(wp) :: D1
+      real(wp), allocatable :: dD1dni(:)
+      real(wp), allocatable :: dD12dnij2(:, :)
     contains
       !! Atractive and repulsive matrices calculation
       procedure :: mix => quadratic_mix
       procedure :: d_mix => attractive_mix
       procedure :: b_mix => repulsive_mix
+      procedure :: d1_mix => delta1_mix
    end type
 
    type, extends(quadratic) :: kij_exp_t
@@ -163,17 +168,15 @@ contains
       !  Calculate mixture attractive and repulsive parameter, 
       !  and their derivatives
       ! -----------------------------------------------------------------------
-      associate (eos => compounds(1))
-      select type(eos)
+      select type(compounds)
       type is (rkpr)
           call self%d_mix(concentrations)
           call self%b_mix(concentrations)
-          !call self%del1_mix()
+          call self%d1_mix(concentrations, (compounds(i), i=1,nc))
       class default
           call self%d_mix(concentrations)
           call self%b_mix(concentrations)
       end select
-      end associate
       ! =======================================================================
    end subroutine quadratic_mix
 
@@ -281,4 +284,37 @@ contains
        self%dB2dnij2 = dB2dnij2
    end subroutine repulsive_mix
 
+   subroutine delta1_mix(self, concentrations, d1)
+      !! Delta 1 parameter and compositional derivatives
+      class(quadratic) :: self
+      real(wp), allocatable, intent(in) :: concentrations(:)
+      real(wp), allocatable, intent(in) :: d1(:)
+
+      real(wp) :: totn ! Total number of moles
+      real(wp) :: d1_mix
+      real(wp), allocatable :: n(:) ! Concentrations copy
+      real(wp), allocatable :: dD1dni(:)
+      real(wp), allocatable :: dD12dnij2(:, :)
+      
+      integer :: i, j, nc
+
+      n = concentrations
+      nc = size(n)
+      totn = sum(n)
+
+      d1_mix = sum(n*d1)/totn
+      dD1dni = (d1 - d1_mix)/totn
+
+      allocate(dD12dnij2(nc, nc))
+
+      do i = 1, nc
+         do j = 1, nc
+            dD12dnij2(i, j) = (2.0_wp*d1_mix - d1(i) - d1(j))/totn**2.0_wp
+         end do
+      end do
+
+      self%D1 = d1_mix
+      self%dD1dni = dD1dni
+      self%dD12dnij2 = dD12dnij2
+   end subroutine delta1_mix
 end module mixing_rules
