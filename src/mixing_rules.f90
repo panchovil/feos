@@ -30,14 +30,10 @@ module mixing_rules
 
 contains
 
-   subroutine kij_tdep(self, T, kij, dkijdt, dkij2dt2)
+   subroutine kij_tdep(self, T)
       implicit none
       class(kij_exp_t) :: self
       real(wp), intent(in) :: T !! Temperature
-
-      real(wp), allocatable, intent(out) :: kij(:, :) !! Binary interaction parameter matrix
-      real(wp), allocatable, intent(out) :: dkijdt(:, :) !! Binary interaction parameter first derivative with T matrix
-      real(wp), allocatable, intent(out) :: dkij2dt2(:, :) !! Binary interaction parameter second derivative with T matrix
 
       real(wp), allocatable :: kij_inf(:, :), kij_0(:, :), T_star(:, :)
       integer :: nc, sp(2)
@@ -49,17 +45,18 @@ contains
       sp = shape(self%kij_0)
       nc = sp(1)
 
-      allocate (kij(nc, nc))
-      allocate (dkijdt(nc, nc))
-      allocate (dkij2dt2(nc, nc))
+      if (allocated(self%kij)) deallocate(self%kij)
+      if (allocated(self%dkijdt)) deallocate(self%dkijdt)
+      if (allocated(self%dkij2dt2)) deallocate(self%dkij2dt2)
 
-      kij = kij_inf + kij_0*exp(-T/T_star)
-      dkijdt = -kij_0/T_star*exp(-T/T_star)
-      dkij2dt2 = kij_0/T_star**2*exp(-T/T_star)
+      allocate (self%kij(nc, nc))
+      allocate (self%dkijdt(nc, nc))
+      allocate (self%dkij2dt2(nc, nc))
 
-      self%kij = kij
-      self%dkijdt = dkijdt
-      self%dkij2dt2 = dkij2dt2
+      self%kij = kij_inf + kij_0*exp(-T/T_star)
+      self%dkijdt = -kij_0/T_star*exp(-T/T_star)
+      self%dkij2dt2 = kij_0/T_star**2*exp(-T/T_star)
+
    end subroutine kij_tdep
 
    subroutine quadratic_mix(self, T, compounds)
@@ -99,7 +96,7 @@ contains
       ! -----------------------------------------------------------------------
       select type(self)
          class is (kij_exp_t)
-            call self%get_kij(T, kij, dkijdt, dkij2dt2)
+            call self%get_kij(T)
             lij = self%lij
 
          class default
@@ -109,8 +106,8 @@ contains
              dkij2dt2 = 0*kij
       end select
 
-      self%kij = kij
-      self%lij = lij
+      kij = self%kij
+      lij = self%lij
       ! =======================================================================
 
       ! =======================================================================
@@ -122,8 +119,6 @@ contains
       do i = 1, nc
          aij(i, :) = sqrt(a(i)*a)*(1 - kij(i, :))
          bij(i, :) = (1 - lij(i, :))*(b(i) + b(:))/2
-
-         
       end do
 
       self%aij = aij
