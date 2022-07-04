@@ -56,6 +56,7 @@ contains
       ac = self%ac
       k = self%k
       Tr = T/Tc
+
       select type (self)
       class is (rkpr)
          self%a = ac*(3/(2 + Tr))**k
