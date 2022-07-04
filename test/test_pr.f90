@@ -11,25 +11,46 @@ module test_pr
 contains
 
     subroutine collect_pr(testsuite)
-      !> Collection of tests
       type(unittest_type), allocatable, intent(out) :: testsuite(:)
 
       testsuite = [ &
-        new_unittest("valid", test_valid) &
+        new_unittest("peng robinson delta1", test_del1_definition), &
+        new_unittest("peng robinson attractive", test_attractive_parameter) &
         ]
     end subroutine collect_pr
 
-    subroutine test_valid(error)
+    subroutine test_attractive_parameter(error)
+        type(error_type), allocatable, intent(out) :: error
+        type(pr) :: compound1, compound2, compound3, compounds(3)
+        real(wp) :: a_values(3), real_values(3)
+        integer :: i
+
+        real_values = [2282.1884, 17672.3093, 3373.5233]
+
+        compound1 = pr("methane", 1, 2, 3, 4, 5, 6)
+        compound2 = pr("nitrogen", 7, 8, 9, 10, 11, 12)
+        compound3 = pr("ethane", 9, 5, 2, 15, 1, 2)
+
+        compounds = [compound1, compound2, compound3]
+
+        do i = 1, 3
+            call compounds(i)%a_t(250._wp)
+            a_values(i) = compounds(i)%a
+        end do
+        call check(error, maxval(abs(a_values - real_values)) > ERRMAX)
+        if (allocated(error)) return
+    end subroutine test_attractive_parameter
+
+    subroutine test_del1_definition(error)
         type(error_type), allocatable, intent(out) :: error
         type(pr) :: compound
 
         compound = pr("methane", 1, 2, 3, 4, 5, 6)
 
-        call check(error, abs(compound%del1 - 1_wp) < ERRMAX)
+        call check(error, 1._wp == compound%del1)
         if (allocated(error)) return
 
-    end subroutine test_valid
-
+    end subroutine test_del1_definition
 end module
 
 program main
@@ -45,7 +66,9 @@ program main
 
     stat = 0
 
-    testsuites = [new_testsuite("test_pr", collect_pr)]
+    testsuites = [&
+        new_testsuite("test_pr", collect_pr) &
+        ]
 
     do is = 1, size(testsuites)
         write(error_unit, fmt) "Testing:", testsuites(is)%name
