@@ -4,6 +4,12 @@ module cubic_eos
    use constants
    implicit none
 
+   private
+   public :: pure_compound
+   public :: pr
+   public :: srk
+   public :: rkpr
+
    type :: pure_compound
       !! Generic EoS
       character(len=100) :: name !! Compound name
