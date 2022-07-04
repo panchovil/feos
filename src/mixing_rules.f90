@@ -4,6 +4,10 @@ module mixing_rules
    use cubic_eos
 
    implicit none
+   private
+
+   public :: quadratic
+   public :: kij_exp_t
 
    type :: quadratic
       !! Basic Mixing rule with constant \[K_ij\] and \[l_ij\]
