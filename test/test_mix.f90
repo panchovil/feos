@@ -66,7 +66,7 @@ program main
     end do
 
 
-    call fluid%mixing_rule%mix(500.d0, fluid%compounds)
+    !call fluid%mixing_rule%mix(500.d0, fluid%compounds)
 
     print *, "a parameters-----------------------------------------------------"
     print *, (trim(fluid%compounds(i)%name), i=1,size(compounds))
