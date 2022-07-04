@@ -4,6 +4,7 @@ module mixing_rules
    use cubic_eos
 
    implicit none
+
    private
 
    public :: quadratic
