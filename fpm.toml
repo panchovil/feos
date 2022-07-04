@@ -1,4 +1,4 @@
-name = "rkpr"
+name = "multicomponent-eos"
 version = "0.1.0"
 license = "MIT"
 author = "Federico Benelli"
@@ -16,4 +16,6 @@ library = false
 [dependencies]
 #json-fortran.git = "https://github.com/jacobwilliams/json-fortran"
 ftools.git = "https://github.com/fedebenelli/ftools"
+
+[dev-dependencies]
 test-drive.git = "https://github.com/fortran-lang/test-drive"
