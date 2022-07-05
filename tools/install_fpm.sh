@@ -43,14 +43,7 @@ run_test() {
 }
 
 run_coverage() {
-    gcovr --exclude "build" --exclude "test"
-    coverage=$(gcovr --exclude "build" --exclude "test" \
-        | grep TOTAL \
-        | awk '{print $4}' \
-        | sed 's/%//')
-    if [ $coverage -le $DESIRED_COVERAGE ]; then
-        echoerr $(red Desired coverage not reached)
-    fi
+    gcovr --exclude "build" --exclude "test" --fail-under-branch 90
 }
 
 resumee() {
