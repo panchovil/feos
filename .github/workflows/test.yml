@@ -37,7 +37,7 @@ jobs:
         run: pip install gcovr
 
       - name: fpm test
-        run: test --flag "--coverage"
+        run: fpm test --flag "--coverage"
 
       - name: coverage
         run: gcovr --exclude "build" --exclude "test" --fail-under-branch 90
