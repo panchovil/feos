@@ -6,6 +6,7 @@ maintainer = "federico.benelli@mi.unc.edu.ar"
 copyright = "Copyright 2022, Federico Benelli"
 
 [build]
+link = ["lapack", "blas"]
 auto-executables = true
 auto-tests = true
 auto-examples = true
@@ -14,8 +15,8 @@ auto-examples = true
 library = false
 
 [dependencies]
-#json-fortran.git = "https://github.com/jacobwilliams/json-fortran"
 ftools.git = "https://github.com/fedebenelli/ftools"
 
 [dev-dependencies]
+# Testing dependencies
 test-drive.git = "https://github.com/fortran-lang/test-drive"
