@@ -1,9 +1,11 @@
 module multicomponent_eos
+
    use constants
    use mixing_rules
    use cubic_eos
 
    implicit none
+
    private
 
    public :: mixture
