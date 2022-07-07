@@ -14,7 +14,7 @@ module cubic_eos
 
    type :: pure_compound
       !! Generic EoS
-      character(len=100) :: name !! Compound name
+      character(len=:), allocatable :: name !! Compound name
       real(8) :: ac !! Critical atractive parameter
       real(8) :: b !! Repulsive parameter
       real(8) :: tc !! Critical temperature
