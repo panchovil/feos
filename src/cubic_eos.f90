@@ -12,18 +12,18 @@ module cubic_eos
    public :: srk
    public :: rkpr
 
-   type :: pure_compound
+   type, abstract :: pure_compound
       !! Generic EoS
       character(len=:), allocatable :: name !! Compound name
-      real(8) :: ac !! Critical atractive parameter
-      real(8) :: b !! Repulsive parameter
-      real(8) :: tc !! Critical temperature
-      real(8) :: pc !! Critical pressure
-      real(8) :: w !! Accentric factor
-      real(8) :: k !! Atractive parameter constant
-      real(8) :: a = 0 !! Atractive parameter valuated at temperature
-      real(8) :: dadt = 0 !! Atractive parameter first derivative with tempetarue
-      real(8) :: da2dt2 = 0 !! Atractive parameter second derivative with tempetarue
+      real(wp) :: ac !! Critical atractive parameter
+      real(wp) :: b !! Repulsive parameter
+      real(wp) :: tc !! Critical temperature
+      real(wp) :: pc ! Critical pressure
+      real(wp) :: w !! Accentric factor
+      real(wp) :: k !! Atractive parameter constant
+      real(wp) :: a = 0 !! Atractive parameter valuated at temperature
+      real(wp) :: dadt = 0 !! Atractive parameter first derivative with tempetarue
+      real(wp) :: da2dt2 = 0 !! Atractive parameter second derivative with tempetarue
    contains
       procedure :: a_t => a_parameter
    end type pure_compound
