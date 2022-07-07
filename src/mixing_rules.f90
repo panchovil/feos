@@ -26,18 +26,18 @@ module mixing_rules
       real(wp), allocatable :: dD2dnit2(:) !! Mixture's attractive parameter derivative with moles and temperature.
       real(wp), allocatable :: dD2dnij2(:, :) !! Mixture's attractive parameter second derivative with moles.
       ! Repulsive parameter
-      real(wp) :: B
-      real(wp), allocatable :: dBdni(:)
-      real(wp), allocatable :: dB2dnij2(:, :)
+      real(wp) :: B !! Mixture's repulsive parameter
+      real(wp), allocatable :: dBdni(:) !! Mixture's repulsive parameter first derivative with moles
+      real(wp), allocatable :: dB2dnij2(:, :) !! Mixture's repulsive parameter second derivative with moles
       ! Delta 1
-      real(wp) :: D1
-      real(wp), allocatable :: dD1dni(:)
-      real(wp), allocatable :: dD12dnij2(:, :)
+      real(wp) :: D1 !! Mixture's Delta 1 parameter
+      real(wp), allocatable :: dD1dni(:) !! Mixture's Delta 1 parameter first derivative with moles
+      real(wp), allocatable :: dD12dnij2(:, :) !! Mixture's Delta 1 parameter second derivative with moles
     contains
       procedure :: mix => quadratic_mix !! Atractive and repulsive matrices calculation
-      procedure :: d_mix => attractive_mix
-      procedure :: b_mix => repulsive_mix
-      procedure :: d1_mix => delta1_mix
+      procedure :: d_mix => attractive_mix !! Mixture's Attractive parameter calculation
+      procedure :: b_mix => repulsive_mix !! Mixture's Repulsive parameter calculation
+      procedure :: d1_mix => delta1_mix !! Mixture's Delta 1 calculation
    end type
 
    type, extends(quadratic) :: kij_exp_t
@@ -174,7 +174,6 @@ contains
       ! -----------------------------------------------------------------------
       select type(compounds)
       type is (rkpr)
-          !d1 = [(compounds(i)%del1, (i=1,nc))]
           allocate(aux(nc))
           do i = 1, nc
              aux(i) = compounds(i)%del1
@@ -182,12 +181,14 @@ contains
           call self%d_mix(concentrations)
           call self%b_mix(concentrations)
           call self%d1_mix(concentrations, d1)
+
       class default
           call self%d_mix(concentrations)
           call self%b_mix(concentrations)
       end select
       ! =======================================================================
    end subroutine quadratic_mix
+
 
    subroutine attractive_mix(self, concentrations)
       !! Attractive term
@@ -243,6 +244,7 @@ contains
       self%dD2dnij2 = dD2dnij2
    end subroutine attractive_mix
 
+
    subroutine repulsive_mix(self, concentrations)
        !! Repulsive parameter of the mixture and it's compositional derivatives.
        class(quadratic) :: self
@@ -294,6 +296,7 @@ contains
        self%dB2dnij2 = dB2dnij2
    end subroutine repulsive_mix
 
+
    subroutine delta1_mix(self, concentrations, d1)
       !! Delta 1 parameter and compositional derivatives
       class(quadratic) :: self
@@ -326,6 +329,5 @@ contains
       self%D1 = d1_mix
       self%dD1dni = dD1dni
       self%dD12dnij2 = dD12dnij2
-
    end subroutine delta1_mix
 end module mixing_rules
