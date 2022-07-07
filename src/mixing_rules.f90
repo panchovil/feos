@@ -1,5 +1,6 @@
 module mixing_rules
    !! Module that contains the available mixing rules to be used.
+
    use constants
    use cubic_eos
 
@@ -10,30 +11,30 @@ module mixing_rules
    public :: kij_exp_t
 
    type :: quadratic
-      !! Basic Mixing rule with constant \[K_ij\] and \[l_ij\]
-      real(wp), allocatable :: kij(:, :) !! \[K_ij\] matrix
-      real(wp), allocatable :: lij(:, :) !! \[l_ij\] matrix
-      real(wp), allocatable :: aij(:, :) !! \[a_ij\] matrix
-      real(wp), allocatable :: daijdt(:, :)
-      real(wp), allocatable :: daij2dt2(:, :)
-      real(wp), allocatable :: bij(:, :) !! \[b_ij\] matrix
-      real(wp) :: D
-      real(wp) :: dDdt
-      real(wp) :: dD2dt2
-      real(wp), allocatable :: dDdni(:)
-      real(wp), allocatable :: dD2dnit2(:)
-      real(wp), allocatable :: dD2dnij2(:, :)
-
+      !! Basic Mixing rule with constant K_ij and l_ij
+      real(wp), allocatable :: kij(:, :) !! K_ij matrix
+      real(wp), allocatable :: lij(:, :) !! l_ij matrix
+      real(wp), allocatable :: aij(:, :) !! a_ij matrix
+      real(wp), allocatable :: daijdt(:, :)  !! daijdt matrix
+      real(wp), allocatable :: daij2dt2(:, :) !! daij2d2 matrix
+      real(wp), allocatable :: bij(:, :) !! b_ij matrix.
+      ! Attractive parameter
+      real(wp) :: D !! Mixture's attractive parameter, times moles.
+      real(wp) :: dDdt !! Mixture's attractive parameter, times moles, first derivative with temperature.
+      real(wp) :: dD2dt2 !! Mixture's attractive parameter, times moles, second derivative with temperature.
+      real(wp), allocatable :: dDdni(:) !! Mixture's attractive parameter first derivative with moles.
+      real(wp), allocatable :: dD2dnit2(:) !! Mixture's attractive parameter derivative with moles and temperature.
+      real(wp), allocatable :: dD2dnij2(:, :) !! Mixture's attractive parameter second derivative with moles.
+      ! Repulsive parameter
       real(wp) :: B
       real(wp), allocatable :: dBdni(:)
       real(wp), allocatable :: dB2dnij2(:, :)
-
+      ! Delta 1
       real(wp) :: D1
       real(wp), allocatable :: dD1dni(:)
       real(wp), allocatable :: dD12dnij2(:, :)
     contains
-      !! Atractive and repulsive matrices calculation
-      procedure :: mix => quadratic_mix
+      procedure :: mix => quadratic_mix !! Atractive and repulsive matrices calculation
       procedure :: d_mix => attractive_mix
       procedure :: b_mix => repulsive_mix
       procedure :: d1_mix => delta1_mix
@@ -97,6 +98,9 @@ contains
       real(wp), allocatable :: da2dt2(:), daij2dt2(:, :)
       real(wp), allocatable :: b(:), bij(:, :), lij(:, :)
       real(wp), allocatable :: kij(:, :), dkijdt(:, :), dkij2dt2(:, :)
+      real(wp), allocatable :: d1(:)
+
+      real(wp), allocatable :: aux(:)
 
       integer :: i, nc
 
@@ -170,9 +174,14 @@ contains
       ! -----------------------------------------------------------------------
       select type(compounds)
       type is (rkpr)
+          !d1 = [(compounds(i)%del1, (i=1,nc))]
+          allocate(aux(nc))
+          do i = 1, nc
+             aux(i) = compounds(i)%del1
+          end do
           call self%d_mix(concentrations)
           call self%b_mix(concentrations)
-          call self%d1_mix(concentrations, (compounds(i), i=1,nc))
+          call self%d1_mix(concentrations, d1)
       class default
           call self%d_mix(concentrations)
           call self%b_mix(concentrations)
@@ -239,9 +248,10 @@ contains
        class(quadratic) :: self
        real(wp), allocatable :: concentrations(:)
 
-       real(wp) :: B_mix !! Mixture repulsive parameter
-       real(wp), allocatable :: dBdni(:) !! Repulsive parameter derivatives wrt number of moles
-       real(wp), allocatable :: dB2dnij2(:, :) !! Repulsive parameter second derivatives wrt number of moles
+       real(wp) :: B_mix ! Mixture repulsive parameter
+       real(wp), allocatable :: dBdni(:) ! Repulsive parameter derivatives wrt number of moles
+       real(wp), allocatable :: dB2dnij2(:, :) ! Repulsive parameter second derivatives wrt number of moles
+
        real(wp), allocatable :: aux(:)
        real(wp) :: totn
        real(wp), allocatable :: n(:)
@@ -287,11 +297,11 @@ contains
    subroutine delta1_mix(self, concentrations, d1)
       !! Delta 1 parameter and compositional derivatives
       class(quadratic) :: self
-      real(wp), allocatable, intent(in) :: concentrations(:)
-      real(wp), allocatable, intent(in) :: d1(:)
+      real(wp), allocatable, intent(in) :: concentrations(:) !! Array of concentrations
+      real(wp), allocatable, intent(in) :: d1(:) !! Array of delta_1 parameters
 
       real(wp) :: totn ! Total number of moles
-      real(wp) :: d1_mix
+      real(wp) :: d1_mix ! Mixture's d1
       real(wp), allocatable :: n(:) ! Concentrations copy
       real(wp), allocatable :: dD1dni(:)
       real(wp), allocatable :: dD12dnij2(:, :)
@@ -316,5 +326,6 @@ contains
       self%D1 = d1_mix
       self%dD1dni = dD1dni
       self%dD12dnij2 = dD12dnij2
+
    end subroutine delta1_mix
 end module mixing_rules
