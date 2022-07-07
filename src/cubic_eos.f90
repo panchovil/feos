@@ -1,7 +1,9 @@
 module cubic_eos
    !! Module that encompass the calculations of the residual Helmholtz energy
    !! and related properties like fugacity coefficents.
+
    use constants
+
    implicit none
 
    private
