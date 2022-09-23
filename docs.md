@@ -7,7 +7,6 @@ author_description: Doctoral student with focus on reservoir PVT simulation.
 author_email: federico.benelli@mi.unc.edu.ar
 github: https://github.com/fedebenelli
 src_dir: ./src
-         ./app
 output_dir: ./docs
 page_dir: ./docs
 media_dir: ./docs/media
