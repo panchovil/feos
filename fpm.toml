@@ -1,4 +1,4 @@
-name = "multicomponent-eos"
+name = "feos"
 version = "0.1.0"
 license = "MIT"
 author = "Federico Benelli"
@@ -12,7 +12,7 @@ auto-tests = true
 auto-examples = true
 
 [install]
-library = false
+library = true
 
 [dependencies]
 ftools.git = "https://github.com/fedebenelli/ftools"
