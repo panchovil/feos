@@ -17,6 +17,20 @@ The included Cubic EOS are:
 - Soave-Redlich-Kwong
 - RKPR
 
+Compounds can be defined by either their EoS parameters or by their critical
+constants, whatever is missing will be calculated automatically. In the case
+of the RKPR EoS more complex ways of obtaining the parameters can be used, 
+due to the freedom it's third parameter gives.
+
+```fortran
+! Definition of methane using the Peng Robinson EoS
+type(PengRobinson) :: compound
+character(len=:), allocatable :: name
+
+name="methane"
+compound = PR(name, ac=2.4885_wp, b=0.02664_wp, k=0.3923_wp)
+```
+
 ### Mixing rules
 - Classic Van der Waals
     - Constant $k_{ij}$ and $l_{ij}$
