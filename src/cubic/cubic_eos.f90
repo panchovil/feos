@@ -4,7 +4,7 @@ module cubic_eos
    !! \[P = \frac{RT}{V-b} - \frac{a(T)}{()}\]
 
    use constants, only: wp, R
-   use properties, only: scalar_property
+   use properties
 
    implicit none
 
@@ -23,19 +23,17 @@ module cubic_eos
 
    type :: CubicEoS
       !! Pure Compound parameters
-      character(len=200) :: name    !! Compound name
-      real(wp) :: T = 10000         !! Temperature
-      real(wp) :: V = 20            !! Volume
-      real(wp) :: ac                !! Critical atractive parameter
-      real(wp) :: b                 !! Repulsive parameter
-      real(wp) :: tc                !! Critical temperature
-      real(wp) :: pc                !! Critical pressure
-      real(wp) :: w                 !! Accentric factor
-      real(wp) :: k                 !! Atractive parameter constant
-      real(wp) :: del1              !! \[delta_1\] parameter
-      real(wp) :: a = 0             !! Atractive parameter valuated at temperature
-      real(wp) :: dadt = 0          !! Atractive parameter first derivative with tempetarue
-      real(wp) :: da2dt2 = 0        !! Atractive parameter second derivative with tempetarue
+      character(len=200) :: name       !! Compound name
+      real(wp) :: moles                !! Number of moles
+      real(wp) :: T = 10000.0_wp       !! Temperature
+      real(wp) :: V = 20.0_wp          !! Volume
+      real(wp) :: ac                   !! Critical atractive parameter
+      real(wp) :: Tc                   !! Critical temperature
+      real(wp) :: pc                   !! Critical pressure
+      real(wp) :: w                    !! Accentric factor
+      real(wp) :: k                    !! Atractive parameter constant
+      real(wp) :: del1                 !! \[delta_1\] parameter
+      real(wp) :: b                    !! Repulsive parameter
    contains
       procedure :: a_parameter => a_classic
       procedure :: b_parameter => b_classic
@@ -68,31 +66,33 @@ contains
    !  Peng Robinson EoS
    !  PR Equation of state methods
    ! --------------------------------------------------------------------------
-   function PR(name, ac, b, tc, pc, w, k)
+   function PR(name, moles, ac, b, tc, pc, w, k)
        !! PengRobinson factory
        type(PengRobinson) :: PR
-       character(len=:), allocatable, intent(in) :: name
-       real(wp),           optional, intent(in) :: ac
-       real(wp),           optional, intent(in) :: b
-       real(wp),           optional, intent(in) :: tc
-       real(wp),           optional, intent(in) :: pc
-       real(wp),           optional, intent(in) :: w
-       real(wp),           optional, intent(in) :: k
+       character(len=*),              intent(in) :: name
+       real(wp),            optional, intent(in) :: moles
+       real(wp),            optional, intent(in) :: ac
+       real(wp),            optional, intent(in) :: b
+       real(wp),            optional, intent(in) :: tc
+       real(wp),            optional, intent(in) :: pc
+       real(wp),            optional, intent(in) :: w
+       real(wp),            optional, intent(in) :: k
 
        character(len=200) :: name_in
-       real(wp) :: del1 = 1.0_wp + sqrt(2.0_wp)
+       real(wp) :: del1_pr = 1.0_wp + sqrt(2.0_wp)
+       real(wp) :: moles_in = 1.0_wp
 
+       if (present(moles)) moles_in = moles
        name_in = name
 
        if (present(ac) .and. present(b) .and. present(k)) then
            PR = PengRobinson(&
-              name=name, ac=ac, b=b, tc=0, pc=0, w=0, k=k, del1=del1&
+              name=name, moles=moles_in, ac=ac, b=b, tc=0, pc=0, w=0, k=k, del1=del1_pr &
               )
            call PR%get_critical_constants()
-
        else if (present(tc) .and. present(pc) .and. present(w)) then
            PR = PengRobinson(&
-              name=name, ac=0, b=0, tc=tc, pc=pc, w=w, k=0, del1=del1&
+              name=name, moles=moles_in, ac=0, b=0, tc=tc, pc=pc, w=w, k=0, del1=del1_pr &
               )
            call PR%get_params()
        end if
@@ -100,9 +100,10 @@ contains
 
    subroutine get_params_pr(self)
       class(PengRobinson) :: self
-      real(wp) :: Zc, OMa, OMb, RT, Vceos
+      real(wp) :: Zc, OMa, OMb, RT, Vceos, del1
       RT = R*self%Tc
-      call get_Zc_OMa_OMb(self%del1, Zc, OMa, OMb)
+      del1 = self%del1
+      call get_Zc_OMa_OMb(del1, Zc, OMa, OMb)
 
       self%ac = OMa*RT**2/self%Pc
       self%b = OMb*RT/self%Pc
@@ -142,10 +143,11 @@ contains
    !  SoaveRedlichKwong EoS
    !  SoaveRedlichKwong methdos
    ! --------------------------------------------------------------------------
-   function SRK(name, ac, b, tc, pc, w, k)
+   function SRK(name, moles, ac, b, tc, pc, w, k)
        !! SoaveRedlichKwong factory
        type(SoaveRedlichKwong) :: SRK
-       character(len=200), optional, intent(in) :: name
+       character(len=*), optional, intent(in) :: name
+       real(wp), optional, intent(in) :: moles
        real(wp), optional, intent(in) :: ac
        real(wp), optional, intent(in) :: b
        real(wp), optional, intent(in) :: tc
@@ -153,16 +155,20 @@ contains
        real(wp), optional, intent(in) :: w
        real(wp), optional, intent(in) :: k
 
-       real(wp) :: del1 = 1.0_wp
+       character(len=200) :: name_in
+       real(wp) :: del1_srk = 1.0_wp, moles_in = 1.0_wp
+       
+       if (present(moles)) moles_in = moles
+       name_in = name
 
        if (present(ac) .and. present(b) .and. present(k)) then
            SRK = SoaveRedlichKwong(&
-               name=name, ac=ac, b=b, tc=0, pc=0, w=0, k=k, del1=del1&
+               name=name, moles=moles_in, ac=ac, b=0, tc=0, pc=0, w=0, k=k, del1=del1_srk &
                )
            call SRK%get_critical_constants()
        else if (present(tc) .and. present(pc) .and. present(w)) then
            SRK = SoaveRedlichKwong(&
-               name=name, ac=0, b=0, tc=tc, pc=pc, w=w, k=0, del1=del1&
+               name=name, moles=moles_in, ac=0, b=0, tc=tc, pc=pc, w=w, k=0, del1=del1_srk&
                )
            call SRK%get_params()
        end if
@@ -204,23 +210,32 @@ contains
    ! ==========================================================================
    !  RKPR methods
    ! --------------------------------------------------------------------------
-   function RK_PR(name, ac, b, tc, pc, w, k, del1)
-       character(len=200), optional, intent(in) :: name
-       real(wp), optional, intent(in) :: ac
-       real(wp), optional, intent(in) :: b
-       real(wp), optional, intent(in) :: tc
-       real(wp), optional, intent(in) :: pc
-       real(wp), optional, intent(in) :: w
-       real(wp), optional, intent(in) :: k
-       real(wp), optional, intent(in) :: del1
+   function RK_PR(name, moles, ac, b, tc, pc, w, k, del1)
+       character(len=*),   optional, intent(in) :: name
+       real(wp),           optional, intent(in) :: moles
+       real(wp),           optional, intent(in) :: ac
+       real(wp),           optional, intent(in) :: b
+       real(wp),           optional, intent(in) :: tc
+       real(wp),           optional, intent(in) :: pc
+       real(wp),           optional, intent(in) :: w
+       real(wp),           optional, intent(in) :: k
+       real(wp),           optional, intent(in) :: del1
 
        type(RKPR) :: RK_PR
 
+       real(wp) :: moles_in = 1.0_wp
+       if (present(moles)) moles_in = moles
+
        if (present(ac) .and. present(b) .and. present(k)) then
-           RK_PR = RKPR(name=name, ac=ac, b=b, tc=0, pc=0, w=0, k=k, del1=del1)
+           RK_PR = RKPR(&
+              name=name, moles=moles_in, ac=ac, b=b, tc=0, pc=0, w=0, k=k, del1=del1&
+              )
            call RK_PR%get_critical_constants()
+
        else if (present(tc) .and. present(pc) .and. present(w)) then
-           RK_PR = RKPR(name=name, ac=0, b=0, tc=tc, pc=pc, w=w, k=0, del1=del1)
+           RK_PR = RKPR(&
+              name=name, moles=moles_in, ac=0, b=0, tc=tc, pc=pc, w=w, k=0, del1=0&
+              )
            call RK_PR%get_params()
        end if
    end function RK_PR
@@ -239,9 +254,11 @@ contains
    
    subroutine get_critical_constants_rkpr(self)
       class(RKPR) :: self
-      real(wp) :: Zc, OMa, OMb, RT, Vceos
+      real(wp) :: Zc, OMa, OMb, RT, Vceos, del1
       RT = R*self%Tc
-      call get_Zc_OMa_OMb(self%del1, Zc, OMa, OMb)
+      del1 = self%del1
+
+      call get_Zc_OMa_OMb(del1, Zc, OMa, OMb)
 
       self%ac = OMa*RT**2/self%Pc
       self%b = OMb*RT/self%Pc
@@ -253,45 +270,52 @@ contains
    ! ==========================================================================
    !  Attractive terms subroutines
    ! --------------------------------------------------------------------------
-   subroutine a_classic(self)
+   function a_classic(self) result(a)
       !! Calculate the atractive parameter at T temperature.
-      class(CubicEoS) :: self
+      class(CubicEoS), intent(in out) :: self
+      type(scalar_property) :: a
 
       real(8) :: Tr
-      real(8) :: ac
 
-     associate(T => self%T, Tc => self%Tc, k  => self%k)
+      a = null_scalar_property(1)
+      associate(ac => self%ac, T => self%T, Tc => self%Tc, k  => self%k)
          Tr = T/Tc
-         self%a = ac*(1 + k*(1 - sqrt(Tr)))**2
-         self%dadT = ac*k*(k - (k + 1)/sqrt(Tr))/Tc
-         self%da2dT2 = ac*k*(k + 1)/(2*Tc**2*Tr**1.5)
+         a%val = ac*(1 + k*(1 - sqrt(Tr)))**2
+         a%dt  = ac*k*(k - (k + 1)/sqrt(Tr))/Tc
+         a%dt2 = ac*k*(k + 1)/(2*Tc**2*Tr**1.5)
       end associate
-   end subroutine a_classic
+   end function a_classic
    
-   subroutine a_rkpr(self)
+   function a_rkpr(self) result(a)
       !! Calculate the atractive parameter at T temperature.
-      class(RKPR) :: self
+      class(RKPR), intent(in out) :: self
+      type(scalar_property) :: a
 
       real(8) :: Tr
       real(8) :: ac
+
+      a = null_scalar_property(1)
       
       associate(T => self%T, Tc => self%Tc, k  => self%k)
          Tr = T/Tc
-         self%a = ac*(3/(2 + Tr))**k
-         self%dadT = -k*self%a/Tc/(2 + Tr)
-         self%da2dT2 = -(k + 1)*self%dadT/Tc/(2 + Tr)
+         a = ac*(3/(2 + Tr))**k
+         a%dt = -k*a/Tc/(2 + Tr)
+         a%dT2 = -(k + 1) * a%dt/Tc/(2 + Tr)
       end associate
-   end subroutine a_rkpr
+   end function a_rkpr
    ! ==========================================================================
    
    ! ==========================================================================
    !  Repulsive term routines
    ! --------------------------------------------------------------------------
-   subroutine b_classic(self)
+   function b_classic(self) result(b)
       !! Classic CubicEoS has a constant repulsive parameter
-      class(CubicEoS) :: self
-      self%b = self%b
-   end subroutine b_classic
+      class(CubicEoS), intent(in) :: self
+      type(scalar_property) :: b
+
+      b = null_scalar_property(1)
+      b%val = self%b
+   end function b_classic
    ! ==========================================================================
 
    ! ==========================================================================
@@ -306,24 +330,24 @@ contains
 
       real(wp) :: d1, y
 
-      d1 = (1.d0 + del1**2.d0)/(1.d0 + del1)
-      y = 1.d0 + (2.d0*(1.d0 + del1))**(1.0d0/3.d0) + (4.d0/(1.d0 + del1))**(1.0d0/3)
-      OMa = (3.d0*y*y + 3.d0*y*d1 + d1**2.d0 + d1 - 1.0d0)/(3.d0*y + d1 - 1.0d0)**2.d0
-      OMb = 1.d0/(3.d0*y + d1 - 1.0d0)
-      Zc = y/(3.d0*y + d1 - 1.0d0)
+      d1  = (1._wp + del1**2._wp)/(1._wp + del1)
+      y   = 1._wp + (2._wp*(1._wp + del1))**(1.0_wp/3._wp) + (4._wp/(1._wp + del1))**(1.0_wp/3)
+      OMa = (3._wp*y*y + 3._wp*y*d1 + d1**2._wp + d1 - 1.0_wp)/(3._wp*y + d1 - 1.0_wp)**2._wp
+      OMb = 1._wp/(3._wp*y + d1 - 1.0_wp)
+      Zc  = y/(3._wp*y + d1 - 1.0_wp)
    end subroutine get_Zc_OMa_OMb
    ! ==========================================================================
    
-   subroutine residual_helmholtz(nc, V, T, D, D1, Bmix, Ar)
+   function residual_helmholtz(nc, V, T, D, D1, Bmix) result(Ar)
       !! Mixture of fluids helmholtz energy
-      integer, intent(in) :: nc !! Number of components
-      real(wp), intent(in) :: V !! Volume
-      real(wp), intent(in) :: T !! Temperature
+      integer, intent(in)  :: nc        !! Number of components
+      real(wp), intent(in) :: V         !! Volume
+      real(wp), intent(in) :: T         !! Temperature
 
-      real(wp), intent(in) :: D !! Atractive parameter times moles
-      real(wp), intent(in) :: D1 !! Delta_1 parameter
-      real(wp), intent(in) :: Bmix !! Repulsive parameter
-      type(scalar_property(nc)), intent(out) :: Ar !! Residual Helmholtz energy object
+      real(wp), intent(in) :: D         !! Atractive parameter times moles (n^2*sum(a))
+      real(wp), intent(in) :: D1        !! Delta_1 parameter
+      real(wp), intent(in) :: Bmix      !! Repulsive parameter
+      type(scalar_property(nc)) :: Ar   !! Residual Helmholtz energy object
 
       integer :: i, j
 
@@ -363,7 +387,7 @@ contains
       fD1D1 = fD1D1/(D1 - D2)
 
       ! Reduced Helmholtz Energy and derivatives
-      Ar%val = -TOTN*g*T - D*f
+      Ar = -TOTN*g*T - D*f
       Ar%dv = -TOTN*gv*T - D*fv
       Ar%dv2 = -TOTN*gv2*T - D*fv2
 
@@ -392,5 +416,5 @@ contains
       do i = 1, nc
          Ar%dtn(i) = -g + (TOTN*AUX/T - dDdT*fB)*dBi(i) - f*dDiT(i) - dDdT*fD1*dD1i(i)
       end do
-   end subroutine residual_helmholtz
+   end function residual_helmholtz
 end module cubic_eos
