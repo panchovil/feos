@@ -1,32 +1,40 @@
 program main
-   !use json_module
+   use constants
+   use properties
+   use cubic_eos
+   use mixing_rules
+
    implicit none
 
-   !type(json_file) :: json_data
+   integer, parameter :: n=3
+   type(PengRobinson) :: compounds(n)
 
-   !logical :: found
-   !integer :: n, i
+   type(scalar_property) :: a(n), d, b, d1
+   type(ClassicVdW) :: mixing_rule
 
-   !real(8), allocatable :: z(:)
-   !real(8), allocatable :: kijs(:, :)
-   !real(8), allocatable :: kij(:)
+   real(wp) :: kij(n, n)
+   real(wp) :: lij(n, n)
 
-   !character*50 :: id
+   integer :: i
 
-   !character(len=:), allocatable :: name
+   compounds(1) = PR("methane", tc=191.15_wp, pc=46.41_wp, w=0.0115_wp)
+   compounds(2) = PR("ethane",  tc=305.3_wp,  pc=49.0_wp,  w=0.099_wp)
+   compounds(3) = PR("propane", tc=369.9_wp,  pc=42.5_wp,  w=0.1521_wp)
 
-   !call json_data%initialize()
-   !call json_data%load("mixfile.json")
-   !call json_data%print()
+   compounds(1)%moles = 1.0_wp/3.0_wp
+   compounds(2)%moles = 1.0_wp/3.0_wp
+   compounds(3)%moles = 1.0_wp/3.0_wp
 
-   !call json_data%get('z', z, found)
-   !n = size(z)
+   kij = reshape(&
+       [0.0, 0.4, 0.3, &
+        0.4, 0.0, 0.1, &
+        0.3, 0.1, 0.0],&
+        [n, n] &
+       )
+   lij = 0*kij
 
-   !do i = 1, n
-   !   write (id, *) i
-   !   id = trim('compounds('//trim(adjustl(id))//').name')
-   !   print *, id
-   !   call json_data%get(id, name, found)
-   !   print *, name
-   !end do
+   mixing_rule = ClassicVdW(kij=kij, lij=lij)
+   call mixing_rule%mix(compounds, d, b, d1)
+
+   print *, d%val, b%val, d1%val
 end program main
