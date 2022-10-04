@@ -11,8 +11,13 @@ auto-executables = true
 auto-tests = true
 auto-examples = true
 
+[[executable]]
+name = "ex"
+source-dir = "app"
+main = "main.f90"
+
 [install]
-library = true
+library = false
 
 [dependencies]
 ftools.git = "https://github.com/fedebenelli/ftools"
