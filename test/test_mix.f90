@@ -1,7 +1,7 @@
 program main
-    use cubic_eos
-    use mixing_rules
-    use multicomponent_eos
+    !use cubic_eos
+    !use mixing_rules
+    !use multicomponent_eos
 
     implicit none
 
