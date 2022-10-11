@@ -1,3 +1,6 @@
+! TODO:
+!  - Fully support helmholtz energy
+
 module cubic_eos
    !! This module encompass the basic structure of equations of states.
    !! It considers the generic equation of 
@@ -5,6 +8,7 @@ module cubic_eos
 
    use constants, only: wp, R
    use properties
+   use base_ceos
 
    implicit none
 
@@ -15,13 +19,14 @@ module cubic_eos
    public :: PengRobinson
    public :: SoaveRedlichKwong
    public :: RKPR
+   public :: cubic_residual_helmholtz
 
    ! Objects factories
    public :: PR
    public :: SRK
    public :: RK_PR
 
-   type :: CubicEoS
+   type, extends(CEOS) :: CubicEoS
       !! Pure Compound parameters
       character(len=200) :: name       !! Compound name
       real(wp) :: moles                !! Number of moles
@@ -68,7 +73,7 @@ contains
    ! --------------------------------------------------------------------------
    function PR(name, moles, ac, b, tc, pc, w, k)
        !! PengRobinson factory
-       type(PengRobinson) :: PR
+       type(PengRobinson)                        :: PR
        character(len=*),              intent(in) :: name
        real(wp),            optional, intent(in) :: moles
        real(wp),            optional, intent(in) :: ac
@@ -270,9 +275,9 @@ contains
    ! ==========================================================================
    !  Attractive terms subroutines
    ! --------------------------------------------------------------------------
-   function a_classic(self) result(a)
+   elemental function a_classic(self) result(a)
       !! Calculate the atractive parameter at T temperature.
-      class(CubicEoS), intent(in out) :: self
+      class(CubicEoS), intent(in) :: self
       type(scalar_property) :: a
 
       real(8) :: Tr
@@ -286,17 +291,16 @@ contains
       end associate
    end function a_classic
    
-   function a_rkpr(self) result(a)
+   elemental function a_rkpr(self) result(a)
       !! Calculate the atractive parameter at T temperature.
-      class(RKPR), intent(in out) :: self
+      class(RKPR), intent(in) :: self
       type(scalar_property) :: a
 
       real(8) :: Tr
-      real(8) :: ac
 
       a = null_scalar_property(1)
       
-      associate(T => self%T, Tc => self%Tc, k  => self%k)
+      associate(ac => self%ac, T => self%T, Tc => self%Tc, k  => self%k)
          Tr = T/Tc
          a = ac*(3/(2 + Tr))**k
          a%dt = -k*a/Tc/(2 + Tr)
@@ -308,7 +312,7 @@ contains
    ! ==========================================================================
    !  Repulsive term routines
    ! --------------------------------------------------------------------------
-   function b_classic(self) result(b)
+   elemental function b_classic(self) result(b)
       !! Classic CubicEoS has a constant repulsive parameter
       class(CubicEoS), intent(in) :: self
       type(scalar_property) :: b
@@ -338,16 +342,17 @@ contains
    end subroutine get_Zc_OMa_OMb
    ! ==========================================================================
    
-   function residual_helmholtz(nc, V, T, D, D1, Bmix) result(Ar)
+   pure function cubic_residual_helmholtz(nc, moles, V, T, D, D1, Bmix) result(Ar)
       !! Mixture of fluids helmholtz energy
       integer, intent(in)  :: nc        !! Number of components
+      real(wp), intent(in) :: moles(nc) !! Number of moles per component
       real(wp), intent(in) :: V         !! Volume
       real(wp), intent(in) :: T         !! Temperature
 
-      real(wp), intent(in) :: D         !! Atractive parameter times moles (n^2*sum(a))
-      real(wp), intent(in) :: D1        !! Delta_1 parameter
-      real(wp), intent(in) :: Bmix      !! Repulsive parameter
-      type(scalar_property(nc)) :: Ar   !! Residual Helmholtz energy object
+      type(scalar_property), intent(in) :: D       !! Atractive parameter times moles (n^2*sum(a))
+      type(scalar_property), intent(in) :: D1      !! Delta_1 parameter
+      type(scalar_property), intent(in) :: Bmix    !! Repulsive parameter
+      type(scalar_property) :: Ar                  !! Residual Helmholtz energy object
 
       integer :: i, j
 
@@ -357,13 +362,11 @@ contains
       real(wp) :: auxD2, fD1, fBD1, fVD1, fD1D1
       real(wp) :: AUX, FFB, FFBV, FFBB
 
-      real(wp) :: dD1i(nc), dD1ij(nc, nc)
 
-      real(wp) :: dDdT, dDdT2, dDi(nc), dDiT(nc), dDij(nc, nc)
+      ar = null_scalar_property(nc)
+      totn = sum(moles)
 
-      real(wp) :: dBi(nc), dBij(nc, nc)
-
-      D2 = (1._wp - D1)/(1._wp + D1)
+      D2 = (1.0_wp - D1%val)/(1.0_wp + D1%val)
 
       ! The f's and g's used here are for Ar, not F (reduced Ar)
       ! This requires to multiply by R all g, f and its derivatives as defined by Mollerup
@@ -397,24 +400,26 @@ contains
       FFBB = TOTN*AUX/(V - Bmix) - D*(2*f + 4*V*fv + V**2*fv2)/Bmix**2
 
       do i = 1, nc
-         Ar%dn(i) = -g*T + FFB*dBi(i) - f*dDi(i) - D*fD1*dD1i(i)
-         Ar%dvn(i) = -gv*T + FFBV*dBi(i) - fv*dDi(i) - D*fVD1*dD1i(i)
+         Ar%dn(i) =  -g*T  + FFB *Bmix%dn(i)  - f*D%dn(i) - D*fD1*D1%dn(i)
+         Ar%dvn(i) = -gv*T + FFBV*Bmix%dn(i) - fv*D%dn(i) - D*fVD1*D1%dn(i)
          do j = 1, i
-            Ar%dn2(i, j) = AUX*(dBi(i) + dBi(j)) - fB*(dBi(i)*dDi(j) + dBi(j)*dDi(i)) &
-                         + FFB*dBij(i, j) + FFBB*dBi(i)*dBi(j) - f*dDij(i, j)
-            Ar%dn2(i, j) = Ar%dn2(i, j) - D*fBD1*(dBi(i)*dD1i(j) + dBi(j)*dD1i(i)) &
-                         - fD1*(dDi(i)*dD1i(j) + dDi(j)*dD1i(i)) &
-                         - D*fD1*dD1ij(i, j) - D*fD1D1*dD1i(i)*dD1i(j)
+            Ar%dn2(i, j) = AUX*(Bmix%dn(i) + Bmix%dn(j)) &
+                         - fB*(Bmix%dn(i)*D%dn(j) + Bmix%dn(j)*D%dn(i)) &
+                         + FFB*Bmix%dn2(i, j) + FFBB*Bmix%dn(i)*Bmix%dn(j) - f*D%dn2(i, j)
+
+            Ar%dn2(i, j) = Ar%dn2(i, j) - D*fBD1*(Bmix%dn(i)*D1%dn(j) + Bmix%dn(j)*D1%dn(i)) &
+                         - fD1*(D%dn(i)*D1%dn(j) + D%dn(j)*D1%dn(i)) &
+                         - D*fD1*D1%dn2(i, j) - D*fD1D1*D1%dn(i)*D1%dn(j)
             Ar%dn2(j, i) = Ar%dn2(i, j)
          end do
       end do
 
       ! TEMPERATURE DERIVATIVES
-      Ar%dt = -TOTN*g - dDdT*f
-      Ar%dtv = -TOTN*gv - dDdT*fV
-      Ar%dt2 = -dDdT2*f
+      Ar%dt = -TOTN*g - d%dt*f
+      Ar%dtv = -TOTN*gv - d%dt*fV
+      Ar%dt2 = -d%dt2*f
       do i = 1, nc
-         Ar%dtn(i) = -g + (TOTN*AUX/T - dDdT*fB)*dBi(i) - f*dDiT(i) - dDdT*fD1*dD1i(i)
+         Ar%dtn(i) = -g + (TOTN*AUX/T - d%dt*fB)*Bmix%dn(i) - f*d%dtn(i) - d%dt*fD1*D1%dn(i)
       end do
-   end function residual_helmholtz
+   end function cubic_residual_helmholtz
 end module cubic_eos
