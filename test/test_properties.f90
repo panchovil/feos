@@ -22,7 +22,7 @@ contains
     end subroutine collect_scalar
     ! =============================================================================
 
-    subroutine test_real_scalar_addition_right(error)
+    subroutine test_real_scalar_addition(error)
         type(error_type), allocatable, intent(out) :: error
         type(scalar_property) :: scalar
 
