@@ -12,8 +12,6 @@ module mixing_rules
 
     private
     public :: ClassicVdW
-    public :: aij_classic
-    public :: bij_classic
 
     type, abstract :: MixingRule
     contains
@@ -37,6 +35,7 @@ module mixing_rules
     end interface
 
     type, extends(MixingRule) :: ClassicVdW
+        !! Classic quadratric (or Van der Waals mixing rules)
         real(wp), allocatable :: kij(:, :) !! Kij matrix
         real(wp), allocatable :: lij(:, :) !! lij matrix
     contains
@@ -205,6 +204,7 @@ contains
     end function b_mix
 
     pure function delta1_mix(n, delta1, moles) result(d1)
+        !! Mixture delta_1 parameter
         integer, intent(in) :: n
         real(wp), intent(in) :: delta1(n)
         real(wp), intent(in) :: moles(n)
