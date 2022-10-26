@@ -3,7 +3,7 @@ module test_mixing
     use properties
     use cubic_eos
     use mixing_rules
-    use testdrive, only : new_unittest, unittest_type, error_type, check
+    use testdrive, only: new_unittest, unittest_type, error_type, check
 
     implicit none
 
@@ -11,10 +11,10 @@ contains
 
     subroutine test_classicvdw_def(error)
         type(error_type), allocatable, intent(out) :: error
-        integer, parameter :: n=2
+        integer, parameter :: n = 2
         integer :: i, j
         type(ClassicVdW) :: vdw_mix
-        
+
         character(len=:), allocatable :: name
         type(PengRobinson) :: compounds(n)
         type(scalar_property(n)) :: d, b, d1
@@ -23,36 +23,34 @@ contains
         real(wp) :: lij(n, n)
         real(wp) :: T = 250.0_wp
 
-        kij = reshape(&
-            [0.0_wp, 0.4_wp,&
-             0.4_wp, 0.0_wp], &
-            [n, n] &
-            )
-        lij = reshape(&
-            [0.0_wp, 0.6_wp ,&
-             0.6_wp, 0.0_wp], &
-            [n, n] &
-            )
+        kij = reshape( &
+              [0.0_wp, 0.4_wp, &
+               0.4_wp, 0.0_wp], &
+              [n, n] &
+              )
+        lij = reshape( &
+              [0.0_wp, 0.6_wp, &
+               0.6_wp, 0.0_wp], &
+              [n, n] &
+              )
 
         name = "methane"
-        !compounds(1) = PR(name, tc=191.15_wp, pc=46.41_wp, w=0.0115_wp)
-        compounds(1) = PR(name, ac=2.489_wp, b=0.0266_wp, k=0.3923_wp)
+        compounds(1) = PR("methane", ac=2.489_wp, b=0.0266_wp, k=0.3923_wp)
         compounds(1)%moles = 0.5_wp
         compounds(1)%T = T
         name = "ethane"
-        !compounds(2) = PR(name, tc=305.3_wp, pc=49.0_wp, w=0.099_wp)
-        !compounds(2) = PR(name, tc=305.3_wp, pc=49.0_wp, w=0.099_wp)
         compounds(2) = PR(name, ac=6.013_wp, b=0.0403_wp, k=0.5247_wp)
         compounds(2)%moles = 0.5_wp
         compounds(2)%T = T
 
         vdw_mix = ClassicVdW(kij=kij, lij=lij)
 
-        do i=1,2
-            print *, trim(compounds(i)%name), compounds(i)%ac, compounds(i)%b, compounds(i)%k
+        do i = 1, 2
+            print *, trim(compounds(i)%name), &
+                compounds(i)%ac, compounds(i)%b, compounds(i)%k
         end do
 
-        do i=1,2
+        do i = 1, 2
             print *, vdw_mix%kij(:, i)
         end do
         call vdw_mix%mix(compounds, d, b, d1)
@@ -63,7 +61,7 @@ end module test_mixing
 
 program main
     use test_mixing
-    use testdrive, only : new_unittest, unittest_type, error_type, check
+    use testdrive, only: new_unittest, unittest_type, error_type, check
     type(error_type), allocatable :: error
 
     call test_classicvdw_def(error)

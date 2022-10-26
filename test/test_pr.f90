@@ -2,7 +2,7 @@ module test_pr
     use constants
     use properties
     use cubic_eos, only: PengRobinson, PR
-    use testdrive, only : new_unittest, unittest_type, error_type, check
+    use testdrive, only: new_unittest, unittest_type, error_type, check
 
     implicit none
 
@@ -14,14 +14,14 @@ contains
     !  Tests that will be run
     ! -----------------------------------------------------------------------------
     subroutine collect_pr(testsuite)
-      type(unittest_type), allocatable, intent(out) :: testsuite(:)
+        type(unittest_type), allocatable, intent(out) :: testsuite(:)
 
-      testsuite = [ &
-        new_unittest("peng robinson delta1", test_del1_definition), &
-        new_unittest("peng robinson get parameters", test_get_params), &
-        new_unittest("peng robinson get critical constants", test_get_critical_constants), &
-        new_unittest("peng robinson attractive", test_attractive_parameter) &
-        ]
+        testsuite = [ &
+                    new_unittest("PR: delta1", test_del1_definition), &
+                    new_unittest("PR: get parameters", test_get_params), &
+     new_unittest("PR: get critical constants", test_get_critical_constants), &
+                    new_unittest("PR: attractive", test_attractive_parameter) &
+                    ]
     end subroutine collect_pr
     ! =============================================================================
 
@@ -51,7 +51,7 @@ contains
         character(len=:), allocatable :: name
         real(wp) :: real_values(3), calc_values(3)
 
-        name="methane"
+        name = "methane"
 
         compound = PR(name, ac=2.4885_wp, b=0.02664_wp, k=0.3923_wp)
         call compound%get_critical_constants()
@@ -68,34 +68,28 @@ contains
         type(error_type), allocatable, intent(out) :: error
 
         character(len=:), allocatable :: name
-        type(PengRobinson) :: compound1, compound2, compound3, compounds(3)
+        type(PengRobinson) :: compounds(3)
+        type(scalar_property) :: a_calc(3)
         real(wp) :: real_values(3)
-
-        type(scalar_property) :: a_scalar
         real(wp) :: temperature
-
         integer :: i
 
-        a_scalar = null_scalar_property(1)
-
-        real_values = [2282.1884, 17672.3093, 3373.5233]
+        real_values = [ &
+            2.2159967041164599_wp, &
+            6.6275760017729199_wp, &
+            12.476490465688833_wp &
+            ]
+        a_calc = null_scalar_property(3)
         temperature = 250.0_wp
 
-        name = "methane"
-        compound1 = PR(name, 1._wp, 2._wp, 3._wp, 4._wp, 5._wp, 6._wp)
-        name = "methane"
-        compound2 = PR(name, 7._wp, 8._wp, 9._wp, 10._wp, 11._wp, 12._wp)
-        name = "methane"
-        compound3 = PR(name, 9._wp, 5._wp, 2._wp, 15._wp, 1._wp, 2._wp)
+        compounds(1) = PR("methane", tc=191.15_wp, pc=46.41_wp, w=0.0115_wp)
+        compounds(2) = PR("ethane", tc=305.3_wp, pc=49.0_wp, w=0.099_wp)
+        compounds(3) = PR("propane", tc=369.9_wp, pc=42.5_wp, w=0.1521_wp)
 
-        compounds = [compound1, compound2, compound3]
+        compounds%T = temperature
+        a_calc = compounds%a_parameter()
 
-        do i = 1, 3
-            compounds(i)%T = temperature
-            a_scalar = compounds(i)%a_parameter()
-        end do
-
-        !call check(error, maxval(errors) > ERRMAX)
+        call check(error, maxval(abs(real_values - a_calc)) < ERRMAX)
 
         if (allocated(error)) return
     end subroutine test_attractive_parameter
@@ -105,7 +99,7 @@ contains
         character(len=:), allocatable :: name
         type(error_type), allocatable, intent(out) :: error
         type(PengRobinson) :: compound
-        
+
         name = "name"
         compound = PR(name, 1.d0, 2.d0, 3.d0, 4.d0, 5.d0, 6.d0)
         call check(error, abs(1.0_wp + sqrt(2.0_wp) - compound%del1) < errmax)
@@ -115,8 +109,8 @@ contains
 end module
 
 program main
-    use, intrinsic :: iso_fortran_env, only : error_unit
-    use testdrive, only : run_testsuite, new_testsuite, testsuite_type
+    use, intrinsic :: iso_fortran_env, only: error_unit
+    use testdrive, only: run_testsuite, new_testsuite, testsuite_type
     use test_pr, only: collect_pr
 
     implicit none
@@ -127,17 +121,17 @@ program main
 
     stat = 0
 
-    testsuites = [&
-        new_testsuite("test_pr", collect_pr) &
-        ]
+    testsuites = [ &
+                 new_testsuite("test_pr", collect_pr) &
+                 ]
 
     do is = 1, size(testsuites)
-        write(error_unit, fmt) "Testing:", testsuites(is)%name
+        write (error_unit, fmt) "Testing:", testsuites(is)%name
         call run_testsuite(testsuites(is)%collect, error_unit, stat)
     end do
 
     if (stat > 0) then
-        write(error_unit, '(i0, 1x, a)') stat, "test(s) failed!"
+        write (error_unit, '(i0, 1x, a)') stat, "test(s) failed!"
         error stop
     end if
 end program main
