@@ -17,10 +17,10 @@ source-dir = "app"
 main = "main.f90"
 
 [install]
-library = false
+library = true
 
 [dependencies]
-ftools.git = "https://github.com/fedebenelli/ftools"
+#ftools.git = "https://github.com/fedebenelli/ftools"
 
 [dev-dependencies]
 # Testing dependencies
