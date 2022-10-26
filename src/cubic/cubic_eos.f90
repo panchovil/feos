@@ -3,31 +3,34 @@
 
 module cubic_eos
    !! This module encompass the basic structure of equations of states.
-   !! It considers the generic equation of 
-   !! \[P = \frac{RT}{V-b} - \frac{a(T)}{()}\]
-
+   !!
+   !! 
+   !!\[ \alpha^r(T, V, n) = -n \ln(1 - B/V) - \frac{D(T)}{RTB(\delta_1 - \delta_2)}\ln\left(\frac{1+\delta_1 B/V}{1+\delta_2 B/V}\right) \]
+   !!
+   !! All cubic equations of state derived types must contain the attractive
+   !! and repulsive terms calculating methods, 
    use constants, only: wp, R
    use properties
-   use base_ceos
+   use cubic_eos_core
 
    implicit none
 
    private
 
    ! Base objects
-   public :: CubicEoS
+   public :: CubicEoS, BaseCEOS
    public :: PengRobinson
    public :: SoaveRedlichKwong
    public :: RKPR
-   public :: cubic_residual_helmholtz
+   public :: rkpr_residual_helmholtz
 
    ! Objects factories
    public :: PR
    public :: SRK
    public :: RK_PR
 
-   type, extends(CEOS) :: CubicEoS
-      !! Pure Compound parameters
+   type, extends(BaseCEOS) :: CubicEoS
+      !! Generic Equation of State
       character(len=200) :: name       !! Compound name
       real(wp) :: moles                !! Number of moles
       real(wp) :: T = 10000.0_wp       !! Temperature
@@ -40,8 +43,8 @@ module cubic_eos
       real(wp) :: del1                 !! \[delta_1\] parameter
       real(wp) :: b                    !! Repulsive parameter
    contains
-      procedure :: a_parameter => a_classic
-      procedure :: b_parameter => b_classic
+      procedure :: a_parameter => a_classic !! Attractive parameter calculator.
+      procedure :: b_parameter => b_classic !! Repulsive parameter calculator.
    end type CubicEoS
 
    type, extends(CubicEoS) :: PengRobinson
@@ -293,6 +296,10 @@ contains
    
    elemental function a_rkpr(self) result(a)
       !! Calculate the atractive parameter at T temperature.
+      !!
+      !! The RKPR Equation of State uses a diferent attractive parameter
+      !! correlation:
+      !! \[a = a_c (\frac{3}{2 + T/T_c})^k \]
       class(RKPR), intent(in) :: self
       type(scalar_property) :: a
 
@@ -342,7 +349,7 @@ contains
    end subroutine get_Zc_OMa_OMb
    ! ==========================================================================
    
-   pure function cubic_residual_helmholtz(nc, moles, V, T, D, D1, Bmix) result(Ar)
+   pure function rkpr_residual_helmholtz(nc, moles, V, T, D, D1, Bmix) result(Ar)
       !! Mixture of fluids helmholtz energy
       integer, intent(in)  :: nc        !! Number of components
       real(wp), intent(in) :: moles(nc) !! Number of moles per component
@@ -421,5 +428,5 @@ contains
       do i = 1, nc
          Ar%dtn(i) = -g + (TOTN*AUX/T - d%dt*fB)*Bmix%dn(i) - f*d%dtn(i) - d%dt*fD1*D1%dn(i)
       end do
-   end function cubic_residual_helmholtz
+   end function rkpr_residual_helmholtz
 end module cubic_eos
