@@ -1,5 +1,5 @@
 program main
-   use feos, only: wp, scalar_property, binary_property, PengRobinson, PR, ClassicVdW, bij_classic, CubicFluid
+   use feos, only: wp, scalar_property, binary_property, PengRobinson, PR, ClassicVdW, CubicFluid
    implicit none
 
    integer, parameter :: n=3
