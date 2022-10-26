@@ -1,6 +1,6 @@
 ---
-project: Multicomponent Equations of State
-summary: RKPR EoS
+project: feos
+summary: Fortran Equations of State
 project_github: https://github.com/fedebenelli/multicomponent-eos
 author: Federico Benelli
 author_description: Doctoral student with focus on reservoir PVT simulation.
@@ -27,5 +27,4 @@ graph: true
 license: MIT
 ---
 
-Fortran program for the calculation of the residual Helmholtz Energy using the
-RKPR EoS (hence, PR and SRK are also included), for multicomponent mixtures.
+Fortran Equations of State (feos) 
