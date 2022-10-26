@@ -24,11 +24,11 @@ jobs:
           pip install ford
           ford docs.md
      - name: Deploy Documentation for master
-      if: github.ref == 'refs/heads/main'
+       #if: github.ref == 'refs/heads/main'
       uses: JamesIves/github-pages-deploy-action@4.1.3
       with:
         branch: gh-pages # The branch the action should deploy to.
-        folder: docs  # The folder the action should deploy.
+        folder: docs     # The folder the action should deploy.
         clean: true
         clean-exclude: |
           prev
