@@ -4,6 +4,10 @@ for mixtures and the thermodynamic properties that are possible to calculate
 with it, as well as fluid equilibria.
 
 # What it provides?
+With the focus on ease of extensibility, feos doesn't provide much more than
+the calculation of Helmholtz Energy for the use in more complex thermodynamic
+models. But it intends to provide a wide range of Equations of State and 
+multiple kinds of mixing rules.
 
 ## Cubic equations of state
 feos includes the following three cubic equations of state, but it also
