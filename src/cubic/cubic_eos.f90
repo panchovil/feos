@@ -40,7 +40,7 @@ module cubic_eos
       real(wp) :: pc                   !! Critical pressure
       real(wp) :: w                    !! Accentric factor
       real(wp) :: k                    !! Atractive parameter constant
-      real(wp) :: del1                 !! \[delta_1\] parameter
+      real(wp) :: del1                 !! $$delta_1$$ parameter
       real(wp) :: b                    !! Repulsive parameter
    contains
       procedure :: a_parameter => a_classic !! Attractive parameter calculator.
