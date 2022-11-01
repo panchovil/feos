@@ -14,6 +14,7 @@ exclude_dir: ./example_packages
              ./test
 display: public
          protected
+         private
 source: true
 proc_internals: true
 sort: permission-alpha
@@ -65,11 +66,11 @@ compound = PR(name, ac=2.4885_wp, b=0.02664_wp, k=0.3923_wp)
 
 ### Mixing rules
 - Classic Van der Waals
-    - Constant $k_{ij}$ and $l_{ij}$
-    - Exponentialy dependant of temperature $k_{ij}$
+    - Constant $$k_{ij}$$ and $$l_{ij}$$
+    - Exponentialy dependant of temperature $$k_{ij}$$
 - Cubic mixing rules
-    - Constant $k_{ij}$ and $l_{ij}$
-    - Exponentialy dependant of temperature $k_{ij}$
+    - Constant $$k_{ij}$$ and $$l_{ij}$$
+    - Exponentialy dependant of temperature $$k_{ij}$$
 
 # Motivation
 A lot of Fortran code is used for thermodynamics calculation, either being
