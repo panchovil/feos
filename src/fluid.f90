@@ -22,6 +22,9 @@ module fluid
         !! Derived type that represents a fluid that uses a Cubic EOS.
         !! It contains an array of pure components (that are represented by
         !! a Cubic EOS) and the corresponding mixing rule that's used.
+        real(wp) :: p
+        real(wp) :: v
+        real(wp) :: t
         class(CubicEoS), allocatable :: components(:) !! Components
         class(ClassicVdW), allocatable :: mixing_rule !! Mixing rule
     contains
