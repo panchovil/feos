@@ -1,16 +1,20 @@
 program main
-   use feos, only: wp, scalar_property, binary_property, PengRobinson, PR, ClassicVdW, CubicFluid
+   use feos, only: wp, scalar_property, binary_property, PengRobinson, PR, ClassicVdW, CubicFluid, R
+   use root_module
    implicit none
 
    integer, parameter :: n=3
+   real(8), parameter:: RGAS=0.08314472
+   real(8) :: preal
    type(scalar_property) :: a(n), b(n), d, bmix, d1
-   type(scalar_property) :: ar
+   type(scalar_property) :: ar, p, lnfug(n)
 
-   type(PengRobinson) :: compounds(3)
-   real(wp) :: moles(n), V, T=250.0_wp
+   type(PengRobinson) :: compounds(n)
+   real(wp) :: moles(n), v, vsolved, t=250.0_wp
 
    type(ClassicVdW) :: mixing_rule
    type(binary_property) :: aij, bij
+
    real(wp) :: kij(n, n)
    real(wp) :: lij(n, n)
 
@@ -38,81 +42,16 @@ program main
 
    t = 250
    v = 10_wp
-   ar =  mixture%residual_helmholtz(v, t)
-   print *, ar%val, ar%dv, ar%dv2, ar%dtv
-   print *, ar%dn
+
+   ar = mixture%residual_helmholtz(v, t)
+   print *, ar%val
+
+   do i = 1, 500
+      v = real(i, 8)/200
+      ar = mixture%residual_helmholtz(v, t)
+      preal = RGAS * t/v - ar%dv
+      vsolved = mixture%vsolve(preal, t, max_it=25)
+
+      print *, preal, v, vsolved, v - vsolved
+   end do
 end program main
-
-!subroutine a_b(compounds)
-!   use feos
-!   class(CubicEoS) :: compounds(:)
-!   type(scalar_property) :: a(size(compounds)), b(size(compounds))
-!
-!   a = compounds%a_parameter()
-!   b = compounds%b_parameter()
-!   
-!   print *, "a:", a%val
-!   print *, "b:", b%val
-!end subroutine
-!
-!
-!subroutine mixing(compounds)
-!   use feos
-!
-!   class(CubicEoS) :: compounds
-!   real(wp) :: kij(n, n)
-!   real(wp) :: lij(n, n)
-!   
-!   kij = reshape(&
-!       [0.0, 0.4, 0.3, &
-!        0.4, 0.0, 0.1, &
-!        0.3, 0.1, 0.0],&
-!        [n, n] &
-!       )
-!   lij = 0*kij
-!   
-!   mixing_rule = ClassicVdW(kij=kij, lij=lij)
-!end subroutine
-
-!   print *, "-----------------"
-!   print *, "aij"
-!   print *, "-----------------"
-!   aij = aij_classic(n, a, kij)
-!   do i=1,n
-!      print *, aij%val(i, :)
-!   end do
-! 
-!   print *, "-----------------"
-!   print *, "bij"
-!   print *, "-----------------"
-!   bij = bij_classic(n, b, lij)
-!   do i=1,n
-!      print *, bij%val(i, :)
-!   end do
-!   print *, "-----------------"
-!   
-!   print *, "-----------------"
-!   print *, "D"
-!   print *, "-----------------"
-!   call mixing_rule%mix(compounds, d, bmix, d1)
-!   print *, "d:", d%val
-!   print *, "b:", bmix%val
-!   print *, "d1:", d1%val
-!   print *, "-----------------"
-!
-!   print *, "-----------------"
-!   print *, "kij"
-!   print *, "-----------------"
-!   do i=1,n
-!      print *, kij(i, :)
-!   end do
-!   print *, "-----------------"
-!print *, "-----------------"
-!print *, "components"
-!print *, "-----------------"
-!do i=1,3
-!   print *, compounds(i)%name
-!   print *, compounds(i)%tc, compounds(i)%pc, compounds(i)%w, 0.1
-!   print *, compounds(i)%ac, compounds(i)%b, compounds(i)%k
-!end do
-!print *, "-----------------"
