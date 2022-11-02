@@ -48,10 +48,8 @@ program main
 
    do i = 1, 500
       v = real(i, 8)/200
-      ar = mixture%residual_helmholtz(v, t)
-      preal = RGAS * t/v - ar%dv
-      vsolved = mixture%vsolve(preal, t, max_it=25)
-
-      print *, preal, v, vsolved, v - vsolved
+      p = mixture%pressure(v, t)
+      vsolved = mixture%vsolve(p%val, t, max_it=25)
+      print *, vsolved, p%val
    end do
 end program main
