@@ -108,9 +108,9 @@ contains
 
         ! Internal variables
         ! concentrations vector
-        real(wp) :: moles(size(self%components))
+        real(wp), allocatable :: moles(:)
         ! Set of compounds
-        class(CubicEoS), allocatable :: compounds(size(self%components))
+        class(CubicEoS), allocatable :: compounds(:)
         ! Fluid copy, this is used to avoid modifications of the original
         ! fluid.
         class(CubicFluid), allocatable :: fluid_tmp
