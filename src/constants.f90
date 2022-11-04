@@ -4,7 +4,7 @@ module constants
 
     implicit none
 
-    integer, parameter :: wp = kind(1.d0) !! Working precision
+    integer, parameter :: wp = 8 !! Working precision
     real(wp), parameter :: R = 0.08314472d0 !! Gas constant J/molK
     real(wp), parameter :: A0 = 0.0017, B0 = 1.9681, C0 = -2.7238
     real(wp), parameter :: A1 = -2.4407, B1 = 7.4513, C1 = 12.504
