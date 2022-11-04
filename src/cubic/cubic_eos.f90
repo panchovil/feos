@@ -349,7 +349,10 @@ contains
    end subroutine get_Zc_OMa_OMb
    ! ==========================================================================
    
-   pure function rkpr_residual_helmholtz(nc, moles, V, T, D, D1, Bmix) result(Ar)
+   pure function rkpr_residual_helmholtz(&
+         nc, moles, V, T, D, D1, Bmix, &
+         nder, tder &
+         ) result(Ar)
       !! Mixture of fluids helmholtz energy
       integer, intent(in)  :: nc        !! Number of components
       real(wp), intent(in) :: moles(nc) !! Number of moles per component
@@ -359,6 +362,12 @@ contains
       type(scalar_property), intent(in) :: D       !! Atractive parameter times moles (n^2*sum(a))
       type(scalar_property), intent(in) :: D1      !! Delta_1 parameter
       type(scalar_property), intent(in) :: Bmix    !! Repulsive parameter
+
+      !> Compute compositional derivatives
+      logical, optional, intent(in) :: nder
+      !> Compute temperature derivatives
+      logical, optional, intent(in) :: tder
+
       type(scalar_property) :: Ar                  !! Residual Helmholtz energy object
 
       integer :: i, j
