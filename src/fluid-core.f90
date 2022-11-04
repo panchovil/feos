@@ -8,7 +8,7 @@ module fluid_core
     end type BaseFluid
     
     abstract interface 
-    elemental function vt_property(self, v, t) result(prop)
+    elemental function vt_property(self, v, t, nder, tder) result(prop)
         !! Interface of a type procedure that receives volume and temperature
         !! and return some kind of scalar property.
         use properties, only: scalar_property
@@ -18,8 +18,10 @@ module fluid_core
 
         real(wp), intent(in) :: v
         real(wp), intent(in) :: t
-        type(scalar_property) :: prop
 
+        logical, optional, intent(in) :: nder
+        logical, optional, intent(in) :: tder
+        type(scalar_property) :: prop
     end function
     end interface
 end module fluid_core
