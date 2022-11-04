@@ -4,13 +4,13 @@ program main
    implicit none
 
    integer, parameter :: n=3
-   real(8), parameter:: RGAS=0.08314472
-   real(8) :: preal
+   real(wp), parameter:: RGAS=0.08314472
+   real(wp) :: preal, ps(1000)
    type(scalar_property) :: a(n), b(n), d, bmix, d1
    type(scalar_property) :: ar, p, lnfug(n)
 
    type(PengRobinson) :: compounds(n)
-   real(wp) :: moles(n), v, vsolved, t=250.0_wp
+   real(wp) :: moles(n), v, vsolved, t
 
    type(ClassicVdW) :: mixing_rule
    type(binary_property) :: aij, bij
@@ -40,16 +40,19 @@ program main
    mixture%components = compounds
    mixture%mixing_rule = mixing_rule
 
-   t = 250
-   v = 10_wp
+   t = 150_wp
+   v = 5_wp
+   ar = mixture%residual_helmholtz(v, t)   
 
-   ar = mixture%residual_helmholtz(v, t)
-   print *, ar%val
+   do i = 150, 800
+      ps(i) = real(i, 8)/1000
 
-   do i = 1, 500
-      v = real(i, 8)/200
-      p = mixture%pressure(v, t)
-      vsolved = mixture%vsolve(p%val, t, max_it=25)
-      print *, vsolved, p%val
+      p%val = ps(i)
+
+      vsolved = mixture%vsolve(p%val, t, max_it=50)
+      ar = mixture%residual_helmholtz(vsolved, t)
+
+      print *, vsolved, p%val, ar%val
    end do
+
 end program main
