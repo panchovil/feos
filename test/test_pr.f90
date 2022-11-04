@@ -19,7 +19,7 @@ contains
         testsuite = [ &
                     new_unittest("PR: delta1", test_del1_definition), &
                     new_unittest("PR: get parameters", test_get_params), &
-     new_unittest("PR: get critical constants", test_get_critical_constants), &
+                    new_unittest("PR: get critical", test_get_critical), &
                     new_unittest("PR: attractive", test_attractive_parameter) &
                     ]
     end subroutine collect_pr
@@ -45,7 +45,7 @@ contains
         if (allocated(error)) return
     end subroutine test_get_params
 
-    subroutine test_get_critical_constants(error)
+    subroutine test_get_critical(error)
         type(error_type), allocatable, intent(out) :: error
         type(PengRobinson) :: compound
         character(len=:), allocatable :: name
@@ -62,7 +62,7 @@ contains
         call check(error, maxval(abs(real_values - calc_values)) > errmax)
 
         if (allocated(error)) return
-    end subroutine test_get_critical_constants
+    end subroutine test_get_critical
 
     subroutine test_attractive_parameter(error)
         type(error_type), allocatable, intent(out) :: error
@@ -96,42 +96,12 @@ contains
 
     subroutine test_del1_definition(error)
         ! Use the correct delta 1 parameter
-        character(len=:), allocatable :: name
         type(error_type), allocatable, intent(out) :: error
         type(PengRobinson) :: compound
 
-        name = "name"
-        compound = PR(name, 1.d0, 2.d0, 3.d0, 4.d0, 5.d0, 6.d0)
+        compound = PR("name", 1.d0, 2.d0, 3.d0, 4.d0, 5.d0, 6.d0)
         call check(error, abs(1.0_wp + sqrt(2.0_wp) - compound%del1) < errmax)
 
         if (allocated(error)) return
     end subroutine test_del1_definition
 end module
-
-program main
-    use, intrinsic :: iso_fortran_env, only: error_unit
-    use testdrive, only: run_testsuite, new_testsuite, testsuite_type
-    use test_pr, only: collect_pr
-
-    implicit none
-
-    integer :: stat, is
-    type(testsuite_type), allocatable :: testsuites(:)
-    character(len=*), parameter :: fmt = '("#", *(1x, a))'
-
-    stat = 0
-
-    testsuites = [ &
-                 new_testsuite("test_pr", collect_pr) &
-                 ]
-
-    do is = 1, size(testsuites)
-        write (error_unit, fmt) "Testing:", testsuites(is)%name
-        call run_testsuite(testsuites(is)%collect, error_unit, stat)
-    end do
-
-    if (stat > 0) then
-        write (error_unit, '(i0, 1x, a)') stat, "test(s) failed!"
-        error stop
-    end if
-end program main

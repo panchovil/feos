@@ -43,6 +43,7 @@ program main
    t = 150_wp
    v = 5_wp
    ar = mixture%residual_helmholtz(v, t)   
+   print *, ar%val
 
    do i = 150, 800
       ps(i) = real(i, 8)/1000
