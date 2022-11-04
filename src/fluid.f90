@@ -81,7 +81,7 @@ contains
         new%t = self%t
     end function
     
-    elemental function residual_helm(self, v, t) result(ar)
+    elemental function residual_helm(self, v, t, nder, tder) result(ar)
         !! Residual Helmholtz Energy.
         !!
         !! This method calculates the residual Helholtz energy and it's relevant
@@ -105,14 +105,18 @@ contains
         real(wp), intent(in) :: t 
         !> Residual helmholtz energy and it's derivatives
         type(scalar_property) :: ar 
+        !> Compute compositional derivatives
+        logical, optional, intent(in) :: nder
+        !> Compute temperature derivatives
+        logical, optional, intent(in) :: tder
+
 
         ! Internal variables
         ! concentrations vector
         real(wp), allocatable :: moles(:)
         ! Set of compounds
         class(CubicEoS), allocatable :: compounds(:)
-        ! Fluid copy, this is used to avoid modifications of the original
-        ! fluid.
+        ! Fluid copy, this is used to avoid modifications of the original fluid.
         class(CubicFluid), allocatable :: fluid_tmp
         ! Number of components
         integer :: n
@@ -137,7 +141,7 @@ contains
         ar = rkpr_residual_helmholtz(n, moles, v, t, d, d1, b)
     end function residual_helm
 
-    elemental function pressure(self, v, t) result(p)
+    elemental function pressure(self, v, t, fast) result(p)
         !! Pressure calculation
         class(CubicFluid), intent(in) :: self
         !> Volume [dm^3]
@@ -146,6 +150,8 @@ contains
         real(wp), intent(in) :: t 
         !> Pressure and it's derivatives
         type(scalar_property) :: p 
+        !> Get all derivatives
+        logical, optional, intent(in) :: fast
         
         type(scalar_property) :: ar 
 
@@ -198,7 +204,7 @@ contains
         lnphi%dt = ar%dtn/RT
     end function fugacity
 
-    recursive pure function solve_volume(self, p_obj, t, root, max_it) result(v)
+    recursive function solve_volume(self, p_obj, t, root, max_it) result(v)
         !! Solve volume root for a specified pressure at the fluid's temperature
 
         !> Fluid
@@ -217,10 +223,10 @@ contains
         class(CubicFluid), allocatable :: fluid
 
         ! Mixture parameters and calculated pressure
-        type(scalar_property) :: d, b, d1, p
-        
+        type(scalar_property) :: d, b, d1, p, ar
+
         ! Inside variables
-        real(wp) :: error, v0, z_min, z_max, z
+        real(wp) :: error, v0, z_min, z_max, z, delta, dpdrho
         integer :: it, maxit
 
         if (.not. present(max_it)) then
@@ -234,32 +240,50 @@ contains
         call fluid%mixing_rule%mix(fluid%components, d, b, d1)
 
         z_min = 0
-        z_max = 1 - 0.01 * t / (10000*b)
+        z_max = 1 - 0.01 * t / (500*b)
 
         if (present(root)) then
             select case (root)
             case ("vapor")
                 z = min(0.5_wp, b * p_obj / (r * t))
-                v0 = b/z
             case ("liquid")
                 z = 0.5_wp
-                v0 = b/z
             end select
-            p = fluid%pressure(v0, t)
-            error = abs(p - p_obj)
 
+            delta = 10
+            p%val = -100
             it = 0
-            do while(error >= errmax .and. it < maxit)
+
+            do while(&
+                    (abs(delta) > 1e-10 .or. abs(p - p_obj) > 1e-12) &
+                    .and. it < maxit)
                 it = it + 1
-                v = v0 - (p - p_obj)/p%dv
-                p = fluid%pressure(v, t)
-                v0 = v
+                v = b/z
+
+                ar = fluid%residual_helmholtz(v, t)
+                p%val = r * t/v - ar%dv
+
+                if (p%val > p_obj) then
+                    z_max = z
+                else
+                    z_min = z
+                end if
+
+                dpdrho = (ar%dv2*v**2 + r*t)/b
+                delta = - (p%val - p_obj)/dpdrho
+
+                z = z + max(min(delta, 0.1), -0.1)
                 error = abs(p - p_obj)
+
+                if (z > z_max .or. z < z_min) z = (z_max + z_min)/2
             end do
         else
             find_stable: block
                 real(wp) :: vapor_v, liquid_v
                 type(scalar_property) :: vapor_ar, liquid_ar
+                real(wp) :: l_at, v_at, total_moles
+
+                total_moles = sum(fluid%components%moles)
 
                 vapor_v = fluid%vsolve(p_obj, t, "vapor")
                 liquid_v = fluid%vsolve(p_obj, t, "liquid")
@@ -267,7 +291,10 @@ contains
                 vapor_ar = fluid%residual_helmholtz(vapor_v, t)
                 liquid_ar = fluid%residual_helmholtz(liquid_v, t)
 
-                if (vapor_ar%dt < liquid_ar%dt) then
+                l_at = (liquid_ar + liquid_v*p_obj)/(t*r) - total_moles*log(liquid_v)
+                v_at = (vapor_ar + vapor_v*p_obj)/(t*r) - total_moles*log(vapor_v)
+
+                if (v_at < l_at) then
                     v = vapor_v
                 else
                     v = liquid_v
